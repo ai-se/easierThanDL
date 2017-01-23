@@ -1,8 +1,75 @@
 \section{Related Work}
 
 
-\subsection{Deep Learning and its application in SE}
-With the vast amounts of computational power and data , deep learning has been proven to be a very powerful method by researchers in many fields, like computer vision and natural language processing\cite{krizhevsky2012imagenet,mikolov2013distributed,sutskever2014sequence}.
+\subsection{Deep Learning in SE}
+With the vast amounts of computational power and data, deep learning
+ has been proven to be a very powerful method by researchers in many fields,
+  like computer vision and natural language processing\cite{krizhevsky2012imagenet,mikolov2013distributed,sutskever2014sequence}. 
+Recently, it also has attracted  attentions from researchers and practitioners in software
+ community\cite{wang2016automatically, gu2016deep, xu2016predicting,white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep}.
+ These researchers applied  deep learning techniques to solve various problems, including 
+ defect prediction, bug localization, clone code detection, API recommendation, 
+ effort estimation and linkable knowledge prediction.
+ 
+  By carefully reading, these work can be
+ divided into the following two categories:
+ 
+\begin{itemize}
+\item treat deep learning as a feature extractor, and then apply other regular machine learning to do further job.
+\item apply deep learning directly to solve the problems.
+\end{itemize}
+
+Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural network
+ in combination with rVSM to automatically locate the potential buggy files for a given
+ bug report. By comparing it to the baseline methods(learn-to-rank\cite{ye2014learning}, 
+ BugLocator~\cite{zhou2012should}), authors reported $8-20.8\%$  and $2.7-20.7\%$ 
+ higher top-1 accuracy than baseline methods, respectively. The training time for deep neural
+ network was reported from 70 to 122 minutes on a computer with 32 cores CPU,
+ 126 GB RAM machine. However,
+ no such time information reported about baseline methods.
+ 
+ Wang et al.~\cite{wang2016automatically} applied deep belief network to automatically
+ learn semantic features from token vectors extracted from the studied program. After
+ that, Naive Bayes and Logistic Regression methods are used to evaluate the effectiveness
+ of such feature generation method as well as PROMISE and AST features. In terms of
+ running time, Wang et al. only reported time for generating semantics features with deep belief network, which
+ ranged from 8 seconds to 32 seconds. However, the time for training and tuning deep belief network is
+ missing. Furthermore, to evaluate the effectiveness of deep belief network in terms of time, 
+ it would be favorable to include all the time spent on feature extraction, including
+ paring source code, token generation.
+ 
+ Choetkiertikul et al.~\cite{choetkiertikul2016deep} proposed to apply deep learning techniques
+ to solve effort estimation problem, where they used long short-term memory(LSTM) to learn
+ feature vectors from the title, description and comments associated with an issue report and
+ regular machine learning techniques applied afterwards. LSTM was reported to have a 
+ significant improvement over the baseline method bag-of-word. No further information regarding
+ runtime was reported for both methods.
+ 
+ White et al.~\cite{white2015toward, white2016deep} applied
+ recurrent neural networks, one type of  deep learning techniques, 
+ to address code clone detection and code suggestion. As they reported,
+ the average training time for 8 projects were ranging from 34 seconds
+  to 2977 seconds for each epoch on a two 3.3 GHz
+ CPUs computer and each project required at least 30 epochs~\cite{white2016deep}.
+ For the {\it JDK} project in their experiment, it would take 25 hours 
+ on the same computer to train the models before getting prediction.
+ For the time cost for code suggestions, authors didn't mention any related information~\cite{white2015toward}.
+
+Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network(RNN)
+ based method, D{\scriptsize EEP}API, to generate API usage sequences for a given natural language query. 
+ Compared with the baseline method {\it SWIM}~\cite{raghothaman2016swim} and 
+ {\it Lucene + UP-Miner}~\cite{wang2013mining},  D{\scriptsize EEP}API has improved the performance a lot.
+ However, one can't ignore the fact that such model was trained with a Nivdia K20 GPU for about 240 hours.
+ 
+ Xu et al.~\cite{xu2016predicting} utilized neural language model and  
+ convolutional neural network(CNN) to  learn word-level and document-level features to
+ predict semantically linkable knowledge units in Stack Overflow. 
+ In terms of performance metrics, like precision, recall and F1-score,
+ CNN method was evaluated much better than the baseline method SVM. 
+ However, the time cost for training CNN is not ignorable as it required
+ 14 hours to achieve the loss convergence on a 2.5GHz PC with 16 GB RAM.
+ 
+
 \subsection{Parameter Tuning in SE}
 
 
