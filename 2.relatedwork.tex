@@ -2,17 +2,16 @@
 
 
 \subsection{Deep Learning in SE}
-With the vast amounts of computational power and data, deep learning
- has been proven to be a very powerful method by researchers in many fields,
-  like computer vision and natural language processing\cite{krizhevsky2012imagenet,mikolov2013distributed,sutskever2014sequence}. 
+With the vast amounts of computational power and data, 
+deep learning has been proven to be a very powerful method 
+by researchers in many fields\cite{lecun2015deep}, like computer vision and natural language processing\cite{krizhevsky2012imagenet,mikolov2013distributed,sutskever2014sequence}. 
 Recently, it also has attracted  attentions from researchers and practitioners in software
  community\cite{wang2016automatically, gu2016deep, xu2016predicting,white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep}.
- These researchers applied  deep learning techniques to solve various problems, including 
- defect prediction, bug localization, clone code detection, API recommendation, 
+ These researchers applied  deep learning techniques to solve various problems,
+ including defect prediction, bug localization, clone code detection, API recommendation, 
  effort estimation and linkable knowledge prediction.
  
-  By carefully reading, these work can be
- divided into the following two categories:
+By carefully reading, these work can be divided into the following two categories:
  
 \begin{itemize}
 \item treat deep learning as a feature extractor, and then apply other regular machine learning to do further job.
@@ -34,7 +33,7 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  of such feature generation method as well as PROMISE and AST features. In terms of
  running time, Wang et al. only reported time for generating semantics features with deep belief network, which
  ranged from 8 seconds to 32 seconds. However, the time for training and tuning deep belief network is
- missing. Furthermore, to evaluate the effectiveness of deep belief network in terms of time, 
+ missing. Furthermore, to evaluate the effectiveness of deep belief network in terms of time cost, 
  it would be favorable to include all the time spent on feature extraction, including
  paring source code, token generation.
  
@@ -65,12 +64,32 @@ Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network(RNN)
  convolutional neural network(CNN) to  learn word-level and document-level features to
  predict semantically linkable knowledge units in Stack Overflow. 
  In terms of performance metrics, like precision, recall and F1-score,
- CNN method was evaluated much better than the baseline method SVM. 
- However, the time cost for training CNN is not ignorable as it required
- 14 hours to achieve the loss convergence on a 2.5GHz PC with 16 GB RAM.
+ CNN method was evaluated much better than 
+ the baseline method support vector machine(SVM). 
+ However, the time cost for training CNN is not ignorable as it took
+ 14 hours to train CNN model on a 2.5GHz PC with 16 GB RAM 
+ to achieve the relative low loss convergence.
  
+ In summary, all the above work authors are trying hard to promote deep learning in software
+ engineering community. They presented somewhat or even much better results compared with
+ the baseline methods. However, they either didn't present the computational and time cost, like \cite{white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep}, or simply listed
+ the cost as it is without further discussion\cite{wang2016automatically, gu2016deep, xu2016predicting}. Without comparing cost with the baseline methods like all above paper,
+ we actually don't have a concrete idea about how well deep learning can solve software engineering problems in terms of both benefits and costs. Especially when we don't have much knowledge about
+ whether such problems are suitable for deep learning. 
+ 
+As deep learning techniques cost huge amount of time and computational
+resources to train its model,
+one might ask question whether the improvements from deep learning is worth
+the costs. {\it Are there any simple techniques that achieve similar improvements
+with less resource costs?} and {\it what might be the baseline methods to compare with
+when deep learning is applied?}
+
+In this paper, we revisit the research problems 
+from Xu et al.\cite{xu2016predicting} work, and by applying parameter tuning 
+to SVM algorithms, we find that the results we've got, on average, are even better than their CNN results with quite less training and tuning time. Specifically, SVM with optimal tunings have won over deep learning in $\frac{8}{12}$ performance scores and for those $\frac{4}{12}$, tuned SVM  does not lose much. However, CNN took 14 hours to achieve
+those scores and parameter tuning only require 10 minutes, which is almost 80X faster.
+
 
 \subsection{Parameter Tuning in SE}
 
-
-
+Parameter(or Hyper-parameter) tuning is well explored in other community \cite{bergstra2012random}
