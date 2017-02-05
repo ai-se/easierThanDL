@@ -2,4 +2,122 @@
 \subsection{Overview of the case study}
 \subsection{learning Word2vec}
 \subsection{Tuning Algorithm}
+   
+How should researchers select which optimizers to apply to tuning data miners?
+Cohen~\cite{cohen95} advises comparing new 
+ methods against the simplest possible alternative. 
+Similarly, Holte~\cite{holte93} recommends using very simple  learners
+ as a
+kind of ``scout'' for a  preliminary analysis of a data
+set (to check if that data really requires a more
+complex analysis).
+Accordingly,
+to find our ``scout'',  we used engineering judgement to sort  candidate algorithms from simplest to  complex. For
+example, here is a list of optimizers used widely in research:
+{\em 
+simulated annealing}~\cite{fea02a,me07f};
+ various {\em genetic algorithms}~\cite{goldberg79} augmented by
+techniques such as {\em differential evolution}~\cite{storn1997differential}, 
+{\em tabu search} and {\em scatter search}~\cite{Glover1986563,Beausoleil2006426,Molina05sspmo:a,4455350};
+{\em particle swarm optimization}~\cite{pan08}; 
+numerous {\em decomposition} approaches that use
+    heuristics to decompose the total space into   small problems,   then apply a
+    {\em response surface methods}~\cite{krall15,Zuluaga:13}.
+Of these,  the simplest are simulated annealing (SA)  and 
+differential evolution (DE), each of which can be coded in less than a page of some high-level scripting language. Our reading of the current literature is that there are more  advocates for
+differential evolution than
+  SA. For example,  Vesterstrom and Thomsen~\cite{Vesterstrom04} found DE to be competitive with 
+   particle swarm optimization and other GAs. 
+   
+DEs have been applied before for   parameter tuning (e.g. see~\cite{omran2005differential, chiha2012tuning}) but this is the first time they have been applied to
+optimize defect prediction from static code attributes.  
+The pseudocode for differential evolution is shown in Algorithm~\ref{alg:DE}.
+In the following description, 
+    superscript numbers denote lines in that pseudocode.
+
+\begin{algorithm}[!t]
+
+\scriptsize
+\begin{algorithmic}[1]
+\Require $\mathit{np} = 10$, $f=0.75$, $cr=0.3$, $\mathit{life} = 5$, $\mathit{Goal} \in \{\mathit{pd},f,...\}$
+\Ensure $S_{best}$
+\vspace{2mm}
+\Function{DE}{$\mathit{np}$, $f$, $cr$, $\mathit{life}$, $\mathit{Goal}$}
+ \State $Population  \gets $ InitializePopulation($\mathit{np}$)   
+ \State $S_{best} \gets $GetBestSolution($Population $)
+ \While{$\mathit{life} > 0$}
+\State $NewGeneration \gets \emptyset$
+\For{$i=0 \to \mathit{np}-1$}
+\State $S_i \gets$ Extrapolate($Population [i], Population , cr, f$)
+\If {Score($S_i$) >Score($Population [i]$)}
+\State $NewGeneration$.append($S_i$)
+\Else
+\State $NewGeneration$.append($Population [i]$)
+\EndIf
+\EndFor
+\State $Population  \gets NewGeneration$
+\If{$\neg$ Improve($Population $)}
+\State $life -=1$
+\EndIf
+\State $S_{best} \gets$ GetBestSolution($Population $)
+ \EndWhile
+\State \Return $S_{best}$
+\EndFunction
+\Function{Score}{$Candidate$}
+   \State set tuned parameters according to $Candidate$
+   \State $model \gets$TrainLearner()
+   \State $result \gets$TestLearner($model$)   
+   \State \Return$\mathit{Goal}(result)$  
+\EndFunction
+\Function{Extrapolate}{$old, pop, cr, f$}
+  \State $a, b, c\gets threeOthers(pop,old)$  
+  \State $newf \gets \emptyset$
+  \For{$i=0 \to \mathit{np}-1$}
+       \If{$cr < random()$}
+         \State $newf$.append($old[i]$)
+                \Else
+                  \If{typeof($old[i]$) == bool}
+                    \State $newf$.append(not $old[i]$)
+         \Else
+          \State $newf$.append(trim($i$,($a[i] + f * (b[i] - c[i]$)))) 
+         \EndIf
+       \EndIf
+  \EndFor
+ \State \Return $newf$
+\EndFunction
+        \end{algorithmic} 
+\caption{Pseudocode for DE with Early Termination}
+\label{alg:DE}
+\end{algorithm}
+
+
+
+DE evolves a {\em NewGeneration} of candidates  from
+a current {\em Population}.  Our DE's lose one ``life''
+when the new population is no better than  current one (terminating when ``life'' is zero)$^{L4}$.
+Each candidate solution in the {\em Population}  
+is a pair of {\em (Tunings, Scores)}.  {\em Tunings} are selected from
+\tab{parameters} and {\em Scores} come from training a learner using those parameters
+and applying it     test data$^{L23-L27}$.
+
+The premise of DE  is that the best way to mutate the existing tunings
+is to {\em Extrapolate}$^{L28}$
+between current solutions.  Three solutions $a,b,c$ are selected at random.
+For each tuning parameter $i$, at some probability {\em cr}, we replace
+the old tuning $x_i$ with $y_i$. For booleans, we use $y_i= \neg x_i$ (see line 36). For numerics, $y_i = a_i+f \times (b_i - c_i)$   where $f$ is a parameter
+controlling  cross-over.  The {\em trim} function$^{L38}$ limits the new
+value to the legal range min..max of that parameter.
+ 
+The main loop of DE$^{L6}$ runs over the {\em Population}, replacing old items
+with new {\em Candidate}s (if  new candidate is better).
+This means that, as the loop progresses, the {\em Population} is full of increasingly
+more valuable solutions. This, in turn, also improves  the candidates, which are {\em Extrapolate}d
+from the {\em Population}.
+
+For the experiments of this paper, we collect performance
+values from a data mining, from which a {\em Goal} function extracts one 
+performance value$^{L26}$ (so we run this code many times, each time with
+a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objective} DE (and for notes on multi-objective DEs, see~\cite{Coello05,zhang07,5583335}).
+
+
 \subsection{Evaluation Measure}

@@ -86,10 +86,74 @@ when deep learning is applied?}
 
 In this paper, we revisit the research problems 
 from Xu et al.\cite{xu2016predicting} work, and by applying parameter tuning 
-to SVM algorithms, we find that the results we've got, on average, are even better than their CNN results with quite less training and tuning time. Specifically, SVM with optimal tunings have won over deep learning in $\frac{8}{12}$ performance scores and for those $\frac{4}{12}$, tuned SVM  does not lose much. However, CNN took 14 hours to achieve
+to SVM algorithms, we find that the results we've got, on average, are even 
+better than their CNN results with quite less training and tuning time.
+Specifically, SVM with optimal tunings have won over deep learning 
+in $\frac{8}{12}$ performance scores and for those $\frac{4}{12}$,
+tuned SVM  does not lose much. However, CNN took 14 hours to achieve
 those scores and parameter tuning only require 10 minutes, which is almost 80X faster.
 
-
 \subsection{Parameter Tuning in SE}
+Machine learning algorithms are designed to explore the instances
+to learn the bias. However, most of these algorithms are controlled by parameters
+, like the depth of the tree in CART, which would change the
+exploration behavior if set different tunings. This parameter(or Hyper-parameter)
+tuning problem is well explored in other community \cite{bergstra2012random,li2016hyperband}.
+In software engineering community, this issue is ignored for quite
+long time and recently, there's been a trend to starting investigation on such effect.
 
-Parameter(or Hyper-parameter) tuning is well explored in other community \cite{bergstra2012random}
+Fu et al.\cite{fu2016tuning} surveyed hundreds of highly 
+cited software engineering paper in area of defect prediction. 
+Their observation is that most software engineering  researchers
+didn't acknowledged the impact of tunings 
+(exceptions: \cite{lessmann2008benchmarking,tantithamthavorn2016automated}) and
+use the ``off-the-shelf''data miners. For example, 
+Elish et al.\cite{elish2008predicting} compared support vector machines
+to other data miners for the purposes of defect prediction.
+However, the Elish et al. paper makes no mention of any SVM tuning study.
+For those two exceptions\cite{lessmann2008benchmarking,tantithamthavorn2016automated}, 
+they simply apply grid search to explore the potential parameter space for optimial tunings.
+However, Bergstra et al.\cite{bergstra2012random} and 
+Fu et al.\cite{fu2016differential} argue that random search and 
+differential evolution(DE) algorithm are better than 
+grid search in terms of efficiency and performance.
+Fu et al showed that finding useful tunings for software defection is remarkably easy and fast using DE.
+
+Recently, Argrawa et al.\cite{agrawal2016wrong} investigated 
+impact of parameter tuning on Latent Dirichlet Allocation(LDA),
+which is a widely used technique in software engineering field
+to find related topics within unstructured text, 
+like topics analytics in stack overflow \cite{barua2014developers}
+and source code analysis \cite{binkley2014understanding}.
+According to Argrawa et al., LDA suffers from the instability issue.
+Parameters within LDA are one reason to cause such problem. However,
+quite few researchers(4 out of 57 papers) using LDA worried about
+that tuning might have a large impact on the results. By applying DE to find 
+optimal tunings,  Argrawa et al. find that the resultant LDA is able to generate more stable results
+for both supervised learning and unsupervised learning.
+They also confirm the statement made by Fu et al.\cite{fu2016tuning} that
+parameter tuning with DE is not extremely slow and DE is easy to implement.
+
+In this work, parameter tuning is applied to the baseline method for Deep Learning
+to better understand how deep learning perform in terms of efficiency and performance.
+Since (a)tuning with DE is easy to implement and fast to run; (b) it's shown to be able
+to improve learners' performance, it will not introduce much overhead to the baseline method.
+
+To our best knowledge, this is the first paper
+applying parameter tuning to the baseline method for Deep learning methods in 
+software engineering community. Our results show that no further software analytics
+paper with Deep Learning just use ``off-the-shelf'' data miners as the baseline
+method to compare with. Furthermore, since Deep Learning is such a resource consuming
+technique and software analytics tasks are not extremely complicated, the cost for 
+both baseline methods and Deep learning method should be supplied.
+
+
+
+
+
+
+
+
+
+
+
