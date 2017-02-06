@@ -1,6 +1,79 @@
 \section{Method}
-\subsection{Overview of the case study}
-\subsection{learning Word2vec}
+
+\subsection{Reserach problem}
+To investigate {\it how deep learning techniques perform on software analytics compared 
+with tuning baseline method}, we pick Xu et al.~\cite{xu2016predicting} work as a case study
+where convolutional neural network(CNN), a deep learning technique, was proposed to 
+solve a multi-class classification problem based on text data from Stack Overflow.
+
+In that work, Xu et al. predict whether two questions posted on Stack Overflow are semantically linkable. 
+Specifically,  a question along with its entire set of answers posted in Stack Overflow
+as a {\it knowledge unit}. If two knowledge units are semantically related, they're considered
+as {\it linkable} knowledge units. To predict relationships between two questions more precisely, 
+Xu et al. further divide linkable  units 
+into {\it duplicate}, {\it direct link}, {\it indirect link} and {\it isolated}  four different categories 
+based on its relatedness. The details are listed as follows~\cite{xu2016predicting}:
+
+\begin{itemize}
+\item Duplicate:  these two knowledge units are addressing the same question.
+\item Direct link: one knowledge unit can help to answer the question in the other knowledge unit.
+\item Indirect link: one knowledge provide similar information to solve the question in the other knowledge unit, but not a direct answer.
+\item Isolated: these two knowledge units discuss unrelated questions.
+\end{itemize}
+
+To show the benefits from the proposed CNN method, Xu et al. provided the following two methods as baseline:
+
+\begin{itemize}
+\item TF-IDF + SVM: a multi-class SVM classifier with  36 textual features generated  based on the 
+TF and IDF values of the words in a pair of knowledge units. 
+\item Word Embedding + SVM:  a multi-class SVM classifier with word embedding generate by word2vec model~\cite{mikolov2013distributed}.
+\end{itemize}
+
+In their experiment, they used RBF kernel for SVM and set $\gamma$ to $1/k$,
+where$k$ is $1/36$ for TF-IDF + SVM method and $1/200$ for Word Embedding + SVM method.
+apparently, $\gamma$ and {\it kernel} were set to constant values.  They didn't tune these two
+parameters for different data sets. Even though Xu et al. mentioned that grid search was applied to optimize the SVM parameters, 
+no further information about how other parameters within SVM  were set.
+
+
+Since parameter tunings have been shown to have an impact on 
+learner performance~\cite{fu2016tuning, fu2016differential, agrawal2016wrong}, 
+In this work, we investigate whether parameter tunings can improve the baseline method based on Xu et al. work.
+Specifically, to compare with the proposed method Word Embedding + CNN, we choose Word Embedding + SVM
+as our baseline, where both CNN and SVM methods are supplied with the same word embedding feature data. 
+Instead of setting SVM parameters to constant values, we apply DE as a parameter tuner to find optimal tunings
+for SVM. Then we compare the performance score of tuned SVM  with the CNN scores reported by Xu et al. 
+
+\subsection{learning Word Embedding}
+Learning word embeddings refers to finding vector representations
+of words such that the similarities between words can be captured by cosine similarity of corresponding 
+vector representations. It's been shown that the words with similar semantic and syntactic are found closed
+to each other in the embedding space~\cite{mikolov2013distributed}.
+
+Several methods have been proposed to generate word embeddings, 
+like word2vec~\cite{mikolov2013distributed}, GloVe ~\cite{pennington2014glove}
+and PCA on the word co-occurrence matrix~\cite{lebret2013word}. To replicate Xu et al. work,
+we used continuous skip-gram model(word2vec),  which is a unsupervised word representation learning method based on
+neural networks. The Skip-gram model learns vector representations of words
+ that are useful for predicting the surrounding words in a context window. 
+ Given a sentence of words $w_1$,$w_2$,...,$w_T$, the objective of Skip-gram model is to maximize the
+ the average log probability of the surrounding words:
+ \begin{equation*}
+ \frac{1}{T}\sum_{t=1}^{T} \sum_{-c\leq j \leq c, j \neq 0} log p(w_{t+j}|w_t)
+\end{equation*}
+where $c$ is the context window size and $w_{t+j}$ and $w_{t}$ represent surrounding words and center word, respectively.
+To improve the computation efficiency, Mikolove et al. \cite{mikolov2013distributed} proposed hierachical softmax and negative sampling
+techniques. More details can be found in ~\cite{mikolov2013distributed}.
+
+For each knowledge unit, we firstly clean the data by removing the unnecessary HTML tags and keep short code snippets in
+{\it code} tag as Xue et al. Then, for each word $w_i$ in the post processed knowledge unit(including title, question and answers),
+we query the trained word2vec model to get the corresponding word vector representation $v_i$. Then the whole knowledge unit
+will be converted to vector representation, $Uv = v_i \oplus v_2 \oplus...\oplus v_k $. This vector representation will be used
+as the input to SVM.
+
+
+
+
 \subsection{Tuning Algorithm}
 
 Tuning algorithm is an optimizer that will drive the learner to explore
