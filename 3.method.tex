@@ -2,21 +2,14 @@
 \subsection{Overview of the case study}
 \subsection{learning Word2vec}
 \subsection{Tuning Algorithm}
-   
-How should researchers select which optimizers to apply to tuning data miners?
-Cohen~\cite{cohen95} advises comparing new 
- methods against the simplest possible alternative. 
-Similarly, Holte~\cite{holte93} recommends using very simple  learners
- as a
-kind of ``scout'' for a  preliminary analysis of a data
-set (to check if that data really requires a more
-complex analysis).
-Accordingly,
-to find our ``scout'',  we used engineering judgement to sort  candidate algorithms from simplest to  complex. For
-example, here is a list of optimizers used widely in research:
+
+Tuning algorithm is an optimizer that will drive the learner to explore
+the optimal parameter in a given searching space. According to our
+literature review, there are several searching algorithms used in 
+SE community. For example,
 {\em 
-simulated annealing}~\cite{fea02a,me07f};
- various {\em genetic algorithms}~\cite{goldberg79} augmented by
+simulated annealing}~\cite{feather2002converging,menzies2007data};
+ various {\em genetic algorithms}~\cite{jones1996automatic} augmented by
 techniques such as {\em differential evolution}~\cite{storn1997differential}, 
 {\em tabu search} and {\em scatter search}~\cite{Glover1986563,Beausoleil2006426,Molina05sspmo:a,4455350};
 {\em particle swarm optimization}~\cite{pan08}; 
