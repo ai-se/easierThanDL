@@ -6,27 +6,29 @@
 Tuning algorithm is an optimizer that will drive the learner to explore
 the optimal parameter in a given searching space. According to our
 literature review, there are several searching algorithms used in 
-SE community. For example,
-{\em 
+SE community:{\em 
 simulated annealing}~\cite{feather2002converging,menzies2007data};
- various {\em genetic algorithms}~\cite{jones1996automatic} augmented by
-techniques such as {\em differential evolution}~\cite{storn1997differential}, 
-{\em tabu search} and {\em scatter search}~\cite{Glover1986563,Beausoleil2006426,Molina05sspmo:a,4455350};
-{\em particle swarm optimization}~\cite{pan08}; 
+ various {\em genetic algorithms}~\cite{jones1996automatic,harman2007current, arcuri2011parameter} augmented by
+techniques such as {\em differential evolution}
+~\cite{storn1997differential, fu2016tuning, fu2016differential,chaves2015differential,agrawal2016wrong}, 
+{\em tabu search} and {\em scatter search}~\cite{beausoleil2006moss,molina2007sspmo,corazza2013using};
+{\em particle swarm optimization}~\cite{windisch2007applying}; 
 numerous {\em decomposition} approaches that use
     heuristics to decompose the total space into   small problems,   then apply a
-    {\em response surface methods}~\cite{krall15,Zuluaga:13}.
-Of these,  the simplest are simulated annealing (SA)  and 
-differential evolution (DE), each of which can be coded in less than a page of some high-level scripting language. Our reading of the current literature is that there are more  advocates for
-differential evolution than
-  SA. For example,  Vesterstrom and Thomsen~\cite{Vesterstrom04} found DE to be competitive with 
-   particle swarm optimization and other GAs. 
-   
-DEs have been applied before for   parameter tuning (e.g. see~\cite{omran2005differential, chiha2012tuning}) but this is the first time they have been applied to
-optimize defect prediction from static code attributes.  
-The pseudocode for differential evolution is shown in Algorithm~\ref{alg:DE}.
-In the following description, 
-    superscript numbers denote lines in that pseudocode.
+    {\em response surface methods}~\cite{krall2015gale};
+     {\em NSGA II} ~\cite{zhang2007multi}and {\em NSGA III}~\cite{mkaouer2014high}.
+
+
+Of all the mentioned algorithms,  the simplest are simulated annealing (SA)  and 
+differential evolution (DE), each of which can be coded in less than a page of some high-level scripting language.
+ Our reading of the current literature is that there are more  advocates for
+differential evolution than SA. For example,  Vesterstrom and Thomsen~\cite{Vesterstrom04} found DE to be competitive with 
+ particle swarm optimization and other GAs.  DEs have already been applied before for 
+ parameter tuning (e.g. see~\cite{omran2005differential, chiha2012tuning, fu2016tuning, fu2016differential, agrawal2016wrong}) .
+Therefore, in this work, we adopt DE as our tuning algorithm and 
+the pseudocode for DE is shown in Algorithm~\ref{alg:DE}.
+To better explain how DE work, in the following description, 
+line number in the pseudocode is denoted as superscript numbers.
 
 \begin{algorithm}[!t]
 
@@ -90,7 +92,7 @@ a current {\em Population}.  Our DE's lose one ``life''
 when the new population is no better than  current one (terminating when ``life'' is zero)$^{L4}$.
 Each candidate solution in the {\em Population}  
 is a pair of {\em (Tunings, Scores)}.  {\em Tunings} are selected from
-\tab{parameters} and {\em Scores} come from training a learner using those parameters
+{parameters} and {\em Scores} come from training a learner using those parameters
 and applying it     test data$^{L23-L27}$.
 
 The premise of DE  is that the best way to mutate the existing tunings
@@ -108,9 +110,10 @@ more valuable solutions. This, in turn, also improves  the candidates, which are
 from the {\em Population}.
 
 For the experiments of this paper, we collect performance
-values from a data mining, from which a {\em Goal} function extracts one 
+values from SVM, from which a {\em Goal} function extracts one 
 performance value$^{L26}$ (so we run this code many times, each time with
-a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objective} DE (and for notes on multi-objective DEs, see~\cite{Coello05,zhang07,5583335}).
+a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objective} DE 
+(and for notes on multi-objective DEs, see~\cite{robivc2005demo,zhang2007moea,huang2010differential}).
 
 
 \subsection{Evaluation Measure}
