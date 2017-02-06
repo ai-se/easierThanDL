@@ -29,6 +29,7 @@ TF and IDF values of the words in a pair of knowledge units.
 \item Word Embedding + SVM:  a multi-class SVM classifier with word embedding generate by word2vec model~\cite{mikolov2013distributed}.
 \end{itemize}
 
+
 In their experiment, they used RBF kernel for SVM and set $\gamma$ to $1/k$,
 where$k$ is $1/36$ for TF-IDF + SVM method and $1/200$ for Word Embedding + SVM method.
 apparently, $\gamma$ and {\it kernel} were set to constant values.  They didn't tune these two
@@ -44,6 +45,10 @@ as our baseline, where both CNN and SVM methods are supplied with the same word 
 Instead of setting SVM parameters to constant values, we apply DE as a parameter tuner to find optimal tunings
 for SVM. Then we compare the performance score of tuned SVM  with the CNN scores reported by Xu et al. 
 
+\subsection{Learners}
+
+
+
 \subsection{learning Word Embedding}
 Learning word embeddings refers to finding vector representations
 of words such that the similarities between words can be captured by cosine similarity of corresponding 
@@ -51,24 +56,58 @@ vector representations. It's been shown that the words with similar semantic and
 to each other in the embedding space~\cite{mikolov2013distributed}.
 
 Several methods have been proposed to generate word embeddings, 
-like word2vec~\cite{mikolov2013distributed}, GloVe ~\cite{pennington2014glove}
+like skip-gram~\cite{mikolov2013distributed}, GloVe ~\cite{pennington2014glove}
 and PCA on the word co-occurrence matrix~\cite{lebret2013word}. To replicate Xu et al. work,
 we used continuous skip-gram model(word2vec),  which is a unsupervised word representation learning method based on
-neural networks. The Skip-gram model learns vector representations of words
- that are useful for predicting the surrounding words in a context window. 
- Given a sentence of words $w_1$,$w_2$,...,$w_T$, the objective of Skip-gram model is to maximize the
+neural networks. 
+
+The skip-gram model learns vector representations of words
+ by predicting the surrounding words in a context window. 
+ Given a sentence of words $W =w_1$,$w_2$,...,$w_n$, the objective of skip-gram model is to maximize the
  the average log probability of the surrounding words:
  \begin{equation*}
- \frac{1}{T}\sum_{t=1}^{T} \sum_{-c\leq j \leq c, j \neq 0} log p(w_{t+j}|w_t)
+ \frac{1}{n}\sum_{i=1}^{n} \sum_{-c\leq j \leq c, j \neq 0} log p(w_{i+j}|w_i)
 \end{equation*}
 where $c$ is the context window size and $w_{t+j}$ and $w_{t}$ represent surrounding words and center word, respectively.
-To improve the computation efficiency, Mikolove et al. \cite{mikolov2013distributed} proposed hierachical softmax and negative sampling
+The probability of $p(w_{i+j}|w_i)$ is computed according to the softmax function:
+
+\begin{equation*}
+p(w_O|w_I) = \frac{exp(v_{w_O}^Tv_{w_I})}{\sum_{w=1}^{|W|}exp(v_{w}^Tv_{w_I})}
+\end{equation*}
+where $v_{w_I}$ and $v_{w_O}$ are the vector representations of the input and output vectors of $w$, respectively. 
+$\sum_{w=1}^{|W|}exp(v_{w}^Tv_{w_I})$  normalizes the inner product results across all the words.
+To improve the computation efficiency, Mikolove et al. \cite{mikolov2013distributed} proposed
+hierachical softmax and negative sampling
 techniques. More details can be found in ~\cite{mikolov2013distributed}.
 
-For each knowledge unit, we firstly clean the data by removing the unnecessary HTML tags and keep short code snippets in
-{\it code} tag as Xue et al. Then, for each word $w_i$ in the post processed knowledge unit(including title, question and answers),
-we query the trained word2vec model to get the corresponding word vector representation $v_i$. Then the whole knowledge unit
-will be converted to vector representation, $Uv = v_i \oplus v_2 \oplus...\oplus v_k $. This vector representation will be used
+As noted, skip-gram itself has several parameters that will drive the algorithm 
+to learn the word embeddings,  like {\it window size} and {\it dimensionality of embedding space}. 
+Zucoon et al. \cite{zuccon2015integrating} found that embedding dimensionality
+and context window size have no consistent impact on retrieval model performance. However,
+Yang et al.~\cite{yang2016using} showed that large context window and dimension
+ sizes are preferable to improve the performance when using CNN to solve  classification tasks
+ for Twitter. Since this work is to compare performance of  tuning SVM  with CNNs, where
+ skip-gram model is used to generate word vector representations for both of thesemethods, 
+ tuning parameter of skip-gram model is beyond the scope of this paper and we will leave it to feature work.
+ 
+ 
+
+To train our word2vec model, $100,000$ knowledge units tagged with ``java'' from
+Stack Overflow {\it posts} table  (include titles, questions and answers)
+are randomly selected as a word corpus\footnote{Without further explanation, 
+all the experiment settings, including learner algorithms,
+training/testing data split, etc, strictly follow Xu et al.'s work. }. 
+After applying proper data processing techniques proposed by Xu et al., like
+ remove the unnecessary HTML tags and keep short code snippets in
+{\it code} tag, then fit the corpus into {\it gensim} word2vec module ~\cite{rehurek_lrec},
+which is a python wrapper over original word2vec package.
+
+When converting knowledge units into vector representations, 
+for each word $w_i$ in the post processed knowledge unit(including title, question and answers),
+we query the trained skip-gram model to get the corresponding word vector representation $v_i$.
+Then the whole knowledge unit with $s$ words
+will be converted to vector representation by element-wise addition, $Uv = v_i \oplus v_2 \oplus...\oplus v_s $. 
+This vector representation will be used
 as the input to SVM.
 
 
