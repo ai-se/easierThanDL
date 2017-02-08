@@ -1,4 +1,4 @@
-\section{Experiment Desgin}
+\section{Experiment Design}
 \subsection{Research Questions}
  To systematically investigate whether tuning can improve the 
  performance of baseline methods compared with deep learning method, we set
@@ -10,15 +10,29 @@
  \item RQ3: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of runtime?
  \ei
  
- 
- 
-
- 
- 
- 
+ RQ1 is to investigate whether our implementation of wordbedding +SVM method has
+ the similar performance with Xu et al.'s baseline, which makes sure that our following 
+ analysis can be generalized to Xu et al.'s conclusion. RQ2 and RQ3 lead us to
+ investigate whether tuning SVM comparable with Xu et al.'s deep learning from both 
+ performance and cost aspects.
  
  
 \subsection{Dataset}
+Our experimental data comes from Stack Overflow data dump of September 2016\footnote{https://archive.org/details/stackexchange},
+where {\it posts} table include all the posts and answers posted on Stack Overflow up to date.
+To insure that our results are closed to Xu et al.'s, we used the same training and testing
+data as provided by the author\footnote{https://github.com/XBWer/ASEDataset}.
+
+All the training/tuning/testing data used in this experiment are represented word embeddings.
+To train the word2vec model, we randomly select 100,000 knowledge
+ units(title, question body and all the answers) from {\it posts} table that are
+ related to ``java''. 
+ 
+
+
+
+
+
 \subsection{Evaluation Measures and Optimization Goals}
 Recall from Algorithm~1 that we call differential evolution once for each
  optimization goal. This section lists those optimization goals.
