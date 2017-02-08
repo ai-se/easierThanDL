@@ -1,9 +1,28 @@
 \documentclass[sigconf,review, anonymous]{acmart}
+\acmConference[ESEC/FSE 2017]{Submitted to 11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{4--8 September, 2017}{Paderborn, Germany}
 
 \usepackage{booktabs} % For formal tables
-\usepackage{algorithm}
-\usepackage{algorithmicx}
-\usepackage{algpseudocode}
+\usepackage{algorithm} % pseudo code
+\usepackage{algpseudocode}% pseudo code
+\usepackage{multirow}
+\usepackage{enumitem} % handle itemize, enumerate 
+
+
+%% timm tricks
+\newcommand{\bi}{\begin{itemize}[leftmargin=0.4cm]}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\tion}[1]{\S\ref{sect:#1}}
+\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
+\newcommand{\tab}[1]{Table~\ref{tab:#1}}
+\newcommand{\eq}[1]{Equation~\ref{eq:#1}}
+
+
+
+
+
+
 
 % Copyright
 %\setcopyright{none}

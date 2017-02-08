@@ -1,0 +1,55 @@
+\section{Experiment Desgin}
+\subsection{Research Questions}
+ To systematically investigate whether tuning can improve the 
+ performance of baseline methods compared with deep learning method, we set
+ the following three research questions:
+ 
+ \bi
+ \item RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?
+ \item RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?
+ \item RQ3: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of runtime?
+ \ei
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+\subsection{Dataset}
+\subsection{Evaluation Measures and Optimization Goals}
+Recall from Algorithm~1 that we call differential evolution once for each
+ optimization goal. This section lists those optimization goals.
+Let $\{A,B,C,D\}$ denote the
+true negatives, 
+false negatives, 
+false positives, and 
+true positives
+(respectively) found by a binary detector. 
+Certain standard measures can be computed from
+$A,B,C,D$, as shown below. Note that for $pf$, the {\em better} scores are {\em smaller}
+while
+for all other scores, the {\em better} scores are {\em larger}.
+
+{\scriptsize\[
+\begin{array}{ll}
+pd=recall=&D/(B+D)\\
+pf=&C/(A+C)\\ 
+prec=precision=&D/(D+C) \\
+F =&2*pd*prec/(pd + prec)
+\end{array}
+\]}
+
+The rest of this paper explores tuning for {\em prec} and {\em F}. As discussed
+in \tion{goals}, our point is not that these are best or most important optimization goals.
+Indeed, the list of ``most important'' goals is domain-specific (see \tion{goals})
+and we only explore these two to illustrate how conclusions can change dramatically
+when moving from one goal to another.
+
+
+
+
+\subsection{RQ1}
+\subsection{RQ2}

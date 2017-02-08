@@ -21,32 +21,78 @@ based on its relatedness. The details are listed as follows~\cite{xu2016predicti
 \item Isolated: these two knowledge units discuss unrelated questions.
 \end{itemize}
 
-To show the benefits from the proposed CNN method, Xu et al. provided the following two methods as baseline:
+In that paper, Xu et al. provided the following two methods as baselines:
 
 \begin{itemize}
 \item TF-IDF + SVM: a multi-class SVM classifier with  36 textual features generated  based on the 
 TF and IDF values of the words in a pair of knowledge units. 
 \item Word Embedding + SVM:  a multi-class SVM classifier with word embedding generate by word2vec model~\cite{mikolov2013distributed}.
 \end{itemize}
+Both of these two baseline methods are compared against the proposed method, word embedding + CNN. 
 
-
-In their experiment, they used RBF kernel for SVM and set $\gamma$ to $1/k$,
-where$k$ is $1/36$ for TF-IDF + SVM method and $1/200$ for Word Embedding + SVM method.
-apparently, $\gamma$ and {\it kernel} were set to constant values.  They didn't tune these two
-parameters for different data sets. Even though Xu et al. mentioned that grid search was applied to optimize the SVM parameters, 
-no further information about how other parameters within SVM  were set.
-
-
-Since parameter tunings have been shown to have an impact on 
-learner performance~\cite{fu2016tuning, fu2016differential, agrawal2016wrong}, 
-In this work, we investigate whether parameter tunings can improve the baseline method based on Xu et al. work.
-Specifically, to compare with the proposed method Word Embedding + CNN, we choose Word Embedding + SVM
-as our baseline, where both CNN and SVM methods are supplied with the same word embedding feature data. 
+Our concern is whether parameter tuning could help improve baseline method performance.
+In this work, to fairly compare deep learning method to baseline methods with the parameter tuning,
+we choose word embedding + SVM as our research subject since it uses the word embedding as the
+input data, which is the same as CNN method. 
 Instead of setting SVM parameters to constant values, we apply DE as a parameter tuner to find optimal tunings
 for SVM. Then we compare the performance score of tuned SVM  with the CNN scores reported by Xu et al. 
 
-\subsection{Learners}
+%%%%%%%%%%%%%%%% list of parameters%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand\arraystretch{1.2}
+\begin{table*}[t!]
+%\scriptsize
+ \small
+  \centering
+	\begin{tabular}{|c|c|c|c|l|}
+	\cline{1-5}
+	Parameters & Default &Xue et al.&Tuning Range& 
+\multicolumn{1}{c|}{Description} \\ \hline
+	C & 1.0 &unkown&[1, 50]& Penalty parameter C of the error term.\\ \cline{1-5} 
+	 kernel & `rbf' &`rbf'&[`liner',`poly',`rbf',`sigmoid']& Specify the kernel type to be used in the algorithms. \\ \cline{1-5} 
+	 gamma & {1/n\_features} &$1/200$& [0, 1]& Kernel coefficient for `rbf', `poly' and `sigmoid'. \\ \cline{1-5} 
+	 coef0 & 0 & unkown & [0, 1] &  Independent term in kernel function. It is only used in `poly' and `sigmoid'. \\ \cline{1-5}
+\hline
+	\end{tabular}
+    \caption {List of parameters tuned by this paper.}
+\label{tab:parameters}
+\end{table*}
 
+\subsection{Learners and their parameters}
+SVM has been proven to be a very successful method to solve
+text classification problem. It seeks to minimize misclassification
+errors by selecting a boundary or hyperplane that leaves
+the maximum margin between positive and negative classes, where the
+margin is defined as the sum of the distances of the
+hyperplane from the closest point of the two classes\cite{joachims1998text}.
+
+Like most machine learning algorithms, there're some parameters associated with
+SMV to control how it learns.  In Xu et al.'s experiment, they used RBF for SVM kernel
+and set $\gamma$ to $1/k$, where $k$ is $36$ for TF-IDF + SVM method
+and $200$ for Word Embedding + SVM method. For other parameters, 
+Xu et al. mentioned that grid search was applied to optimize the SVM parameters, 
+but no further information disclose. 
+
+In this work, we use the SVM module from Scikit-learn~\cite{scikit-learn}, a python package for machine learning,
+where the following parameters shown in Table. ~\ref{tab:parameters} are selected for tuning.
+Parameter {\it C} is to set the amount of regularization, which controls the tradeoff between
+the errors on training data and the model complexity.  A small value for {\it C} will generate 
+a simple model with more training errors, while a large value will lead to a complicated model with fewer
+errors. {\it Kernel} is to introduce different nonlinearities into the SVM model by applying kernel functions
+on the input data. {\it Gamma } defines how far the influence of a single training example reaches, 
+with low values meaning `far' and high values meaning `close'. {\it coef0} is an independent parameter used
+in sigmod and  polynomial kernel function.
+
+As to why we used the ``Tuning Range'' shown in {parameters}, and not some other ranges,
+we note that (1)~those ranges included the defaults and also Xu et al.'s values ; (2)~the results shown below
+show that by exploring those ranges,   we achieved large gains in the performance of our defect predictors.
+This is not to say that {\em larger} tuning ranges might not result in {\em greater} improvements.
+However, for the goals of this paper (to show that some tunings do matter), exploring
+just these ranges shown in \tab{parameters} will suffice.
+
+
+%In this work, we investigate whether parameter tunings can improve the baseline method based on Xu et al. work.
+%Specifically, to compare with the proposed method Word Embedding + CNN, we choose Word Embedding + SVM
+%as our baseline, where both CNN and SVM methods are supplied with the same word embedding feature data. 
 
 
 \subsection{learning Word Embedding}
@@ -108,7 +154,7 @@ we query the trained skip-gram model to get the corresponding word vector repres
 Then the whole knowledge unit with $s$ words
 will be converted to vector representation by element-wise addition, $Uv = v_i \oplus v_2 \oplus...\oplus v_s $. 
 This vector representation will be used
-as the input to SVM.
+as the input data to SVM.
 
 
 
@@ -228,4 +274,3 @@ a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objectiv
 (and for notes on multi-objective DEs, see~\cite{robivc2005demo,zhang2007moea,huang2010differential}).
 
 
-\subsection{Evaluation Measure}
