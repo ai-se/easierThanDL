@@ -23,7 +23,7 @@
     \label{fig:workflow}
 \end{figure}
 
-\subsection{Dataset}
+\subsection{Dataset and Experimental Settings}
 Our experimental data comes from Stack Overflow data dump of 
 September 2016\footnote{https://archive.org/details/stackexchange},
 where {\it posts} table includes all the questions and answers posted on Stack Overflow
@@ -80,8 +80,6 @@ multi-class linkable knowledge units prediction problem,
 consistent with Xu et al.\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
 as the evaluation metics.
 
-
-
 \begin{table}[h]
 \begin{tabu} to 0.9\textwidth{cc|c|c|c|c|l}
 \cline{3-6}
@@ -101,42 +99,42 @@ as the evaluation metics.
 \label{tab:confusion}
 \end{table}
 
-Given a multi-classification problem with true label $C_1$, 
+Given a multi-classification problem with true labels $C_1$, 
 $C_2$, $C_3$ and $C_4$, we can generate a confusion matrix like \tab{confusion}, 
 where the value of $c_{ii}$ represents the number of instances that are correctly classified
-by the learner for class $C_i$.
+by the learner for class $C_i$. 
+
+{\it Accuracy} of the learner is defined as the number of  correctly
+classified knowledge units over the total number of knowledge units, i.e.,
+
+
+{\[
+\begin{array}{ll}
+accuracy = \frac{\sum_i c_{ii}}{\sum_{i}\sum_{j}c_{ij}}
+\end{array}
+\]}
+Where ${\sum_{i}\sum_{j}c_{ij}}$ is the total number of knowledge units.
+For a given type of knowledge units, $C_j$, the {\it precision} is defined as probability of
+predicted knowledge units pairs over the actual number of knowledge unit pairs and
+ {\it recall} is the percentage of knowledge unit pairs correctly classified. Mathematically,
+  {\it precision}, {\it recall}and {\it F1-score} of 
+the learner can be denoted as follows:
+
+{\[
+\begin{array}{ll}
+prec_j &= precision_j = \frac{n_{jj}}{\sum_{i}n_{ij}}\\
+pd_j &= recall_j = \frac{n_{jj}}{\sum_{i}n_{ji}}\\ 
+F1_{j} &= 2*pd_j*prec_j/(pd_j + prec_j)
+\end{array}
+\]}
+Where ${\sum_{i}n_{ji}}$ is the actual number of knowledge units in class $C_j$
+and $\sum_{i}n_{ij}$ is the predicted number of knowledge units in class $C_j$.
 
 
 Recall from Algorithm~1 that we call differential evolution once for each
- optimization goal. This section lists those optimization goals.
-Let $\{A,B,C,D\}$ denote the
-true negatives, 
-false negatives, 
-false positives, and 
-true positives
-(respectively) found by a binary detector. 
-Certain standard measures can be computed from
-$A,B,C,D$, as shown below. Note that for $pf$, the {\em better} scores are {\em smaller}
-while
-for all other scores, the {\em better} scores are {\em larger}.
+optimization goal. Generally, this goal depends on which metric is most important for
+the business case. In this work, we use $F1$ as the score because it controls
+the tradeoff between precision and recall, which is also consistent with Xu et al.\cite{xu2016predicting}
+and is also widely used in software engineering
+community to evaluate classification results\cite{wang2016automatically,menzies2007data,fu2016tuning,kim2008classifying}.
 
-{\scriptsize\[
-\begin{array}{ll}
-pd=recall=&D/(B+D)\\
-pf=&C/(A+C)\\ 
-prec=precision=&D/(D+C) \\
-F =&2*pd*prec/(pd + prec)
-\end{array}
-\]}
-
-The rest of this paper explores tuning for {\em prec} and {\em F}. As discussed
-in \tion{goals}, our point is not that these are best or most important optimization goals.
-Indeed, the list of ``most important'' goals is domain-specific (see \tion{goals})
-and we only explore these two to illustrate how conclusions can change dramatically
-when moving from one goal to another.
-
-
-
-
-\subsection{RQ1}
-\subsection{RQ2}
