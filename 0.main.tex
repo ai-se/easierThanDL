@@ -8,6 +8,38 @@
 \usepackage{tabu}
 \usepackage{enumitem} % handle itemize, enumerate 
 
+%########## Result Box##########
+\usepackage{color,colortbl}
+\usepackage{xcolor}
+\definecolor{lightgray}{gray}{0.8}
+
+\makeatletter
+\let\th@plain\relax
+\makeatother
+
+\usepackage[framed]{ntheorem}
+\usepackage{framed}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+
+\definecolor{Gray}{rgb}{0.88,1,1}
+\definecolor{Gray}{gray}{0.85}
+\theoremclass{Lesson}
+\theoremstyle{break}
+\tikzstyle{thmbox} = [rectangle, rounded corners, draw=black,
+ fill=Gray,  drop shadow={fill=black, opacity=1}]
+\newcommand\thmbox[1]{%
+ \noindent\begin{tikzpicture}%
+ \node [thmbox] (box){%
+\begin{minipage}{.94\textwidth}%    
+     \vspace{-1mm}#1\vspace{-1mm}%
+   \end{minipage}%
+ };%
+ \end{tikzpicture}}
+ 
+\let\theoremframecommand\thmbox
+\newshadedtheorem{lesson}{Result}
+
 
 
 
@@ -20,10 +52,6 @@
 \newcommand{\fig}[1]{Figure~\ref{fig:#1}}
 \newcommand{\tab}[1]{Table~\ref{tab:#1}}
 \newcommand{\eq}[1]{Equation~\ref{eq:#1}}
-
-
-
-
 
 
 

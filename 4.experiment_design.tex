@@ -1,5 +1,5 @@
 \section{Experiment Design}
-\subsection{Research Questions}
+\subsection{Research Questions}\label{RQ}
  To systematically investigate whether tuning can improve the 
  performance of baseline methods compared with deep learning method, we set
  the following three research questions:
@@ -66,7 +66,7 @@ parameters offered by DE. Afterwards, the {\it new training} data is again fitte
 with the optimal parameters found by DE and finally  the performance of the tuned
 SVM will be evaluated on the  {\it testing data}.
 
- To reduce the potential variance caused
+To reduce the potential variance caused
 by how the original training data is divided, {\it 10-fold cross-validation} is performed, where
 each time one fold with $640$ knowledge units paris as the tuning data, and the remaining folds with $5760$
 knowledge units as  the new training data, then the output SVM model will be evaluated on the testing data. Therefore,
