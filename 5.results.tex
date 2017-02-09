@@ -8,44 +8,71 @@ comparison. We compare the performance of tuned SVM with the state-of-art CNN me
 our research questions proposed in Section~\ref{RQ}.
 
 %%%% baseline comparision %%%%%%
-\begin{table}[!htp]
-%\renewcommand{\baselinestretch}{0.35}
-%\scriptsize
-\centering
-  \caption{Comparison of our baseline method with Xu et al's }
-\resizebox{0.47\textwidth}{!}{
-  \begin{tabular} {@{}r|c c|c c|c c|c c@{}}
-   & \multicolumn{2}{c|}{Precision}  & \multicolumn{2}{c|}{Recall} &  \multicolumn{2}{c|}{F1-score} & \multicolumn{2}{c}{Accuracy}\\
-    \cline{2-9}
-    & Ours  &  \cite{xu2016predicting} & Ours  &  \cite{xu2016predicting}  &  Ours  &\cite{xu2016predicting} & Ours  &\cite{xu2016predicting}\\
-    \hline
-    Duplicate & 0.736  &0.611 & 0.550&0.725  &0.629&  0.663  &0.550&  -\\
-    Direct Link & 0.521 &0.560 & 0.502& 0.433  &0.511&  0.488& 0.402&  - \\
-    Indirect Link & 0.793  &0.787& 0.970&0.980  &0.873& 0.873  &0.970&  -\\
-    Isolated & 0.606  &0.676& 0.645 &0.538   &0.625&  0.600 & 0.645&  -\\
-    Overall & 0.664  &0.658&0.667&0.669   &0.660&  0.656 & 0.667&  0.669\\
-  \end{tabular}}
-\label{tab:baseline}
-\end{table}
+%\begin{table}[!htp]
+%%\renewcommand{\baselinestretch}{0.35}
+%%\scriptsize
+%\centering
+%  \caption{Comparison of our baseline method with Xu et al's }
+%\resizebox{0.47\textwidth}{!}{
+%  \begin{tabular} {@{}r|c c|c c|c c|c c@{}}
+%   & \multicolumn{2}{c|}{Precision}  & \multicolumn{2}{c|}{Recall} &  \multicolumn{2}{c|}{F1-score} & \multicolumn{2}{c}{Accuracy}\\
+%    \cline{2-9}
+%    & Ours  &  \cite{xu2016predicting} & Ours  &  \cite{xu2016predicting}  &  Ours  &\cite{xu2016predicting} & Ours  &\cite{xu2016predicting}\\
+%    \hline
+%    Duplicate & 0.736  &0.611 & 0.550&0.725  &0.629&  0.663  &0.550&  -\\
+%    Direct Link & 0.521 &0.560 & 0.502& 0.433  &0.511&  0.488& 0.402&  - \\
+%    Indirect Link & 0.793  &0.787& 0.970&0.980  &0.873& 0.873  &0.970&  -\\
+%    Isolated & 0.606  &0.676& 0.645 &0.538   &0.625&  0.600 & 0.645&  -\\
+%    Overall & 0.664  &0.658&0.667&0.669   &0.660&  0.656 & 0.667&  0.669\\
+%  \end{tabular}}
+%\label{tab:baseline}
+%\end{table}
 
 \textbf{RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?}
+
+\begin{table}[!htp]
+\centering
+\caption{Comparison of our baseline method with Xu et al's }
+\resizebox{0.48\textwidth}{!}{
+\begin{tabular} {@{}l l  c c  c c c@{}}
+\hline
+   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
+   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
+   \multirow{2}{*}{Precision}
+    & Our SVM &\textbf{0.736} &0.521 & \textbf{0.793} &0.606& \textbf{0.664} \\
+   & Xu's SVM &0.611 &0.560 &\textbf{0.787}&\textbf{0.676}&0.658 \\ \hline
+   \multirow{2}{*}{Recall} 
+   & Our SVM & 0.550& \textbf{0.502} & 0.970 & \textbf{0.645}  & 0.667 \\ 
+   & Xu's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
+   \multirow{2}{*}{F1-score}
+   & Our SVM & 0.629 &  \textbf{0.511} &0.873  &  \textbf{0.625}&\textbf{0.660} \\ 
+   & Xu's SVM & \textbf{0.663} &  0.488  & 0.873 &  0.600 &0.656 \\ \hline
+   \multirow{2}{*}{Accuracy} 
+   &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
+   & Xu's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
+ \end{tabular}}
+\label{tab:baseline}
+\end{table}
 
 To answer this question, we strictly follow Xu et al.'s procedure\cite{xu2016predicting}. We 
 use the SVM from scikit-learn with $\gamma = 1/200$ and $kernel= ``rbf''$. After that,
 the same training and testing knowledge unit pairs are applied.
 
- \tab{baseline} presents the precision, recall and F1-score for each class and 
- the overall values, respectively. As we can see, 
+ \tab{baseline} presents the performance comparison between our baseline with
+ Xu et al. in terms of accuracy, precision, recall and F1-score. As we can see, 
  when predicting these four different types of relatedness between knowledge unit pairs,
- our WordEmbedding+SVM method has  a very closed performance compared with Xu et al.'s
-, with the difference less than $0.1$.  Except for {\it Duplicate} type, where our method 
+ our WordEmbedding+SVM method has  very  similar performance scores  to Xu et al.'s
+, with the difference less than $0.1$.  Except for {\it Duplicate} type, where our baseline 
 has a higher {\it precision} (i.e., $0.736$ v.s. $0.611$) but a lower {\it recall} (i.e., $0.550$ v.s.$0.725$).
-However, our read of the averaged values across four classes is that both methods have
+However, our read of the averaged values of {\it accuracy},{\it precision},{\it recall}
+and {\it F1-score} across four classes is that both methods have
 a very small difference.
 
 This validation  is  very important to our work since, without the original tool released by Xu et al,
-we want to make sure that our reimplementation of their baseline method does not have much difference
-than theirs, which make the following investigation more sensible.
+we want to make sure that our reimplementation of their baseline method (WordEmbedding + SVM)does not have much difference
+than theirs, which make the following study more sensible.
 
 \begin{lesson}
 Overall, our reimplementation of WordEmbedding + SVM
@@ -54,3 +81,37 @@ has very closed performance in all the evaluated metrics
 Therefore, our reimplementation can be treated as the baseline method in the following
 experiment.
 \end{lesson}
+
+
+\begin{table}[!htp]
+\centering
+\caption{Comparison of Tuned SVM with Xu's CNN method. }
+\resizebox{0.48\textwidth}{!}{
+\begin{tabular} {@{}l l  c c  c c c@{}}
+\hline
+   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
+   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
+  \multirow{2}{*}{Precision} 
+ % & Our SVM &0.736 &0.521 & 0.793 &0.606& 0.664 \\
+%   & Xu's SVM&0.611 &0.560 &0.787&0.676&0.658 \\ 
+   & Xu's CNN&\textbf{0.898} & 0.758&0.840 &0.890 &0.847 \\
+   & Tuned SVM&0.885 & \textbf{0.851}&\textbf{0.944} &\textbf{0.903} &\textbf{0.896}\\ \hline
+   \multirow{2}{*}{Recall} 
+   %& Our SVM & 0.550& 0.502 & 0.970 & 0.645  & 0.667 \\ 
+   %& Xu's SVM& 0.725 &0.433    &0.980  & 0.538 &0.669  \\
+   & Xu's CNN& \textbf{0.898}&\textbf{0.903}    &0.773  & 0.793 &0.842  \\ 
+   & Tuned SVM& 0.860 &0.828    &\textbf{0.995}  & \textbf{0.905} &\textbf{0.897}  \\  \hline
+   \multirow{2}{*}{F1-score}
+   %&Our SVM & 0.629 &  0.511 &0.873  &  0.625&0.660 \\ 
+   %& Xu's SVM& 0.663 &  0.488  & 0.873 &  0.600 &0.656 \\ 
+   & Xu's CNN& \textbf{0.898} &  0.824  & 0.805 &  0.849 &0.841 \\
+   & Tuned SVM& 0.878 & \textbf{ 0.841}  &\textbf{ 0.969} &  \textbf{0.909} &\textbf{0.899} \\\hline
+%   \multirow{2}{*}{Accuracy} &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
+%   & Xu's SVM& - &  -  &- &  - &0.669 \\ \hline
+ \end{tabular}}
+\label{tab:RQ2}
+\end{table}
+
+\textbf{RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?}
