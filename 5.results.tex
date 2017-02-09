@@ -1,24 +1,4 @@
 
-%%%% baseline comparision %%%%%%
-\begin{table}[!htp]
-%\renewcommand{\baselinestretch}{0.5}
-%\scriptsize
-\centering
-  \begin{tabu} to 0.25\textwidth{r|c c|c c|c c}
-   & \multicolumn{2}{c|}{Precision}  & \multicolumn{2}{c|}{Recall} &  \multicolumn{2}{c}{F1-score} \\
-    \cline{2-7}
-    & Ours  &  \cite{xu2016predicting} & Ours  &  \cite{xu2016predicting}  &  Ours  &\cite{xu2016predicting} \\
-    \hline
-    Duplicate & 0.736  &0.611 & 0.550&0.725  &0.629&  0.663  \\
-    Direct Link & 0.521 &0.560 & 0.502& 0.433  &0.511&  0.488  \\
-    Indirect Link & 0.793  &0.787& 0.970&0.980  &0.873& 0.873  \\
-    Isolated & 0.606  &0.676& 0.645 &0.538   &0.625&  0.600  \\
-    Overall & 0.664  &0.658&0.667&0.669   &0.660&  0.656\\
-  \end{tabu}
-  \caption{Comparison of our reimplementation of WordEmbedding + SVM with Xu et al's
-   in terms of precision, recall, F1-score and averaged }
-\label{tab:baseline}
-\end{table}
 
 \section{Results}
 In this section, we present our experimental results. Since we use the same data set provide by Xu
@@ -27,6 +7,26 @@ Therefore, we used the results reported in the work by Xu et al.\cite{xu2016pred
 comparison. We compare the performance of tuned SVM with the state-of-art CNN method and answer
 our research questions proposed in Section~\ref{RQ}.
 
+%%%% baseline comparision %%%%%%
+\begin{table}[!htp]
+%\renewcommand{\baselinestretch}{0.35}
+%\scriptsize
+\centering
+  \caption{Comparison of our baseline method with Xu et al's }
+\resizebox{0.47\textwidth}{!}{
+  \begin{tabular} {@{}r|c c|c c|c c|c c@{}}
+   & \multicolumn{2}{c|}{Precision}  & \multicolumn{2}{c|}{Recall} &  \multicolumn{2}{c|}{F1-score} & \multicolumn{2}{c}{Accuracy}\\
+    \cline{2-9}
+    & Ours  &  \cite{xu2016predicting} & Ours  &  \cite{xu2016predicting}  &  Ours  &\cite{xu2016predicting} & Ours  &\cite{xu2016predicting}\\
+    \hline
+    Duplicate & 0.736  &0.611 & 0.550&0.725  &0.629&  0.663  &0.550&  -\\
+    Direct Link & 0.521 &0.560 & 0.502& 0.433  &0.511&  0.488& 0.402&  - \\
+    Indirect Link & 0.793  &0.787& 0.970&0.980  &0.873& 0.873  &0.970&  -\\
+    Isolated & 0.606  &0.676& 0.645 &0.538   &0.625&  0.600 & 0.645&  -\\
+    Overall & 0.664  &0.658&0.667&0.669   &0.660&  0.656 & 0.667&  0.669\\
+  \end{tabular}}
+\label{tab:baseline}
+\end{table}
 
 \textbf{RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?}
 

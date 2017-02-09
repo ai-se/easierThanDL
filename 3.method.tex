@@ -39,10 +39,11 @@ for SVM. Then we compare the performance score of tuned SVM  with the CNN scores
 
 %%%%%%%%%%%%%%%% list of parameters%%%%%%%%%%%%%%%%%%%%%
 %\renewcommand\arraystretch{1.2}
-\begin{table*}[t!]
+\begin{table*}[htp]
 %\scriptsize
- \small
-  \centering
+   \caption {List of Parameters Tuned by This Paper.}
+\centering
+\resizebox{\textwidth}{!}{
 	\begin{tabular}{|c|c|c|c|l|}
 	\cline{1-5}
 	Parameters & Default &Xue et al.&Tuning Range& 
@@ -52,8 +53,7 @@ for SVM. Then we compare the performance score of tuned SVM  with the CNN scores
 	 gamma & {1/n\_features} &$1/200$& [0, 1]& Kernel coefficient for `rbf', `poly' and `sigmoid'. \\ \cline{1-5} 
 	 coef0 & 0 & unkown & [0, 1] &  Independent term in kernel function. It is only used in `poly' and `sigmoid'. \\ \cline{1-5}
 \hline
-	\end{tabular}
-    \caption {List of parameters tuned by this paper.}
+	\end{tabular}}
 \label{tab:parameters}
 \end{table*}
 
@@ -189,7 +189,6 @@ To better explain how DE work, in the following description,
 line number in the pseudocode is denoted as superscript numbers.
 
 \begin{algorithm}[!t]
-
 \scriptsize
 \begin{algorithmic}[1]
 \Require $\mathit{np} = 10$, $f=0.75$, $cr=0.3$, $\mathit{life} = 5$, $\mathit{Goal} \in \{\mathit{pd},f,...\}$
@@ -242,8 +241,6 @@ line number in the pseudocode is denoted as superscript numbers.
 \caption{Pseudocode for DE with Early Termination}
 \label{alg:DE}
 \end{algorithm}
-
-
 
 DE evolves a {\em NewGeneration} of candidates  from
 a current {\em Population}.  Our DE's lose one ``life''
