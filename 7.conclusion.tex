@@ -1,1 +1,45 @@
 \section{Conclusion}
+
+In this paper, we perform an comparative study to investigate
+how tuning can improve the baseline method compared with
+the state-of-art deep learning method, CNN, for predicting
+knowledge units relatedness on Stack Overflow. Our experimental
+results show that:
+
+\bi
+\item Tuning improves the performance of baseline methods. 
+At least for WordEmbedding+SVM(baseline in \cite{xu2016predicting}) method, if not better,
+it performs as well as the proposed CNN method in \cite{xu2016predicting}.
+\item The baseline method with parameter tuning runs much faster than complicated deep learning.
+In this study, tuning SVM runs $80X$ faster than CNN method.
+\ei
+
+
+Our findings have important implications for the software engineering community.
+Although deep learning methods have widely and successfully applied in other community
+to address problems, like pattern recognition, machine translation and recommendation
+systems, it's still unclear which type of SE task is best fit for deep learning. There're lots
+of possibilities in SE field to explore the application of deep learning. However, as pointed out
+at the beginning of this paper, deep learning is so resource-consuming technique
+and SE analytics task is usually light-weight,  {\it the  tradeoff between performance and cost should never
+be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
+improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
+ or even better, performance to deep learning while $80X$ faster.
+Therefore, it should not happen any more that simply apply deep learning on SE tasks
+without reporting and analyzing the resource consumption as well as the tradeoff.  
+
+Based on the results of this study, we recommend that before applying 
+deep learning method on SE tasks, consider simple techniques to improve the baseline method.
+Simple methods do matter. For example, tuning parameters dramatically improve the 
+performance of SVM method.  Also, Grid search should
+never be used as {\it de facto} tuning method according to \cite{fu2016differential,bergstra2012random}. 
+Xu et al failed to find the best tunings by using grid search for
+the baseline method might confirm this point.
+
+As to the future work, we will explore more simple techniques to solve SE tasks and also
+investigate how deep learning techniques could be applied effectively in software engineering
+community. 
+
+
+
+
