@@ -1,1 +1,31 @@
 \section{Threads to Validity}
+For any empirical study, there might be some potential threats that
+affect the conclusion. We identify the following threats to validity:
+
+Threats to \textbf{internal validity} refers to consistency of the results 
+obtained from the result. In our study,  to study how
+tuning can improve the performance of baseline methods and how well
+it perform compared with deep learning method, we select
+Xu et al's  WordEmbedding+SVM baseline method as a case study. Since the original implementation of 
+WordEmbedding+SVM (baseline 2 method in \cite{xu2016predicting}) is not 
+publicly available, we have to reimplement our version of WordEmbedding+SVM as
+the baseline method in this study. As shown in RQ1, our implementation has
+quite similar results to Xu et al.'s on the same datasets. The variance might 
+result from the word2vec that is trained from 100,000 randomly selected data.
+Hence, we believe that our implementation reflect the original
+ baseline method in \cite{xu2016predicting}.
+ 
+ Threats to \textbf{external validity} represent if the results are of relevance for
+ other cases, or the ability to generalize the observations in a study. In this study,
+ we compare our tuning baseline method with deep learning method in terms of
+ precision, recall, F1-score and accuracy. The experimental results are quite consistent
+ for this knowledge units relatedness prediction tasks, i.e.,  muti-classification problem, in text mining. 
+ Nonetheless, we do not claim that our findings can be generalized to all software analytics tasks. 
+ However, those other software analytics tasks often apply deep learning
+ methods~\cite{choetkiertikul2016deep, wang2016automatically} and compare with
+ the same regular learners explored in this paper, so it's quite possible that
+  the conclusions of this paper apply to other software engineering tasks.
+ 
+ 
+
+

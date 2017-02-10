@@ -11,7 +11,7 @@
    \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
    \multirow{2}{*}{Precision}
     & Our SVM &\textbf{0.736} &0.521 & \textbf{0.793} &0.606& \textbf{0.664} \\
-   & Xu's SVM &0.611 &0.560 &\textbf{0.787}&\textbf{0.676}&0.658 \\ \hline
+   & Xu's SVM &0.611 &\textbf{0.560} &0.787&\textbf{0.676}&0.658 \\ \hline
    \multirow{2}{*}{Recall} 
    & Our SVM & 0.550& \textbf{0.502} & 0.970 & \textbf{0.645}  & 0.667 \\ 
    & Xu's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
@@ -161,7 +161,7 @@ method has a slightly better performance only on {\it duplicate} class for {\it 
 \begin{tabular} {@{}l  l l l l @{}}
 \hline
 Methods&OS&CPU&RAM&Runtime \\ \hline
-Tuning SVM & Mac10.12 & Intel Core i5 2.7 GHz & 8GB & 10 minutes \\
+Tuning SVM & MacOS10.12 & Intel Core i5 2.7 GHz & 8GB & 10 minutes \\
 CNN& Windows7 &Intel Core i7 2.5 GHz & 16GB &14 hours\\
 \hline
 \end{tabular}
@@ -176,8 +176,14 @@ to get a relative low loss convergence. However, running  SVM with parameter tun
 by DE on a similar settings shown in \tab{runtime} takes 10 minutes to finish 
 the whole experiment including parameter tuning, training model and prediction,
 which is $80X$ faster than  Xu's deep learning method.
-
+\wei{Note that the runtime shown in \tab{runtime} does not take account of training word2vec model.
+ The reason that we didn't consider it is that both tuning SVM method and CNN method require word embedding as input.}
  
+ \begin{lesson}
+Compared to CNN method, tuning SVM is about $80X$ faster in terms of model building.
+Therefore, deep learning method does not have any advantage over tuning method in terms
+of resource cost, especially when the model has to be updated periodically. 
+ \end{lesson}
  
  
  
