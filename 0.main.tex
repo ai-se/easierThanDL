@@ -41,8 +41,10 @@
  };%
  \end{tikzpicture}}
  
-\let\theoremframecommand\thmbox
-\newshadedtheorem{lesson}{Result}
+
+\newcommand{\wei}[1]{\textcolor{red}{Wei: #1}} 
+\newcommand{\Menzies}[1]{\textcolor{red}{Dr.Menzies: #1}} 
+ 
 
 
 
@@ -56,6 +58,9 @@
 \newcommand{\fig}[1]{Figure~\ref{fig:#1}}
 \newcommand{\tab}[1]{Table~\ref{tab:#1}}
 \newcommand{\eq}[1]{Equation~\ref{eq:#1}}
+
+\let\theoremframecommand\thmbox
+\newshadedtheorem{lesson}{Result}
 
 
 

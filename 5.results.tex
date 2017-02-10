@@ -1,4 +1,29 @@
 
+\begin{table}[!htp]
+\centering
+\caption{Comparison of our baseline method with Xu et al's }
+\resizebox{0.48\textwidth}{!}{
+\begin{tabular} {@{}l l  c c  c c c@{}}
+\hline
+   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
+   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
+   \multirow{2}{*}{Precision}
+    & Our SVM &\textbf{0.736} &0.521 & \textbf{0.793} &0.606& \textbf{0.664} \\
+   & Xu's SVM &0.611 &0.560 &\textbf{0.787}&\textbf{0.676}&0.658 \\ \hline
+   \multirow{2}{*}{Recall} 
+   & Our SVM & 0.550& \textbf{0.502} & 0.970 & \textbf{0.645}  & 0.667 \\ 
+   & Xu's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
+   \multirow{2}{*}{F1-score}
+   & Our SVM & 0.629 &  \textbf{0.511} &0.873  &  \textbf{0.625}&\textbf{0.660} \\ 
+   & Xu's SVM & \textbf{0.663} &  0.488  & 0.873 &  0.600 &0.656 \\ \hline
+   \multirow{2}{*}{Accuracy} 
+   &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
+   & Xu's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
+ \end{tabular}}
+\label{tab:baseline}
+\end{table}
 
 \section{Results}
 In this section, we present our experimental results. Since we use the same data set provide by Xu
@@ -30,31 +55,7 @@ our research questions proposed in Section~\ref{RQ}.
 
 \textbf{RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?}
 
-\begin{table}[!htp]
-\centering
-\caption{Comparison of our baseline method with Xu et al's }
-\resizebox{0.48\textwidth}{!}{
-\begin{tabular} {@{}l l  c c  c c c@{}}
-\hline
-   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
-   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
-   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
-   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
-   \multirow{2}{*}{Precision}
-    & Our SVM &\textbf{0.736} &0.521 & \textbf{0.793} &0.606& \textbf{0.664} \\
-   & Xu's SVM &0.611 &0.560 &\textbf{0.787}&\textbf{0.676}&0.658 \\ \hline
-   \multirow{2}{*}{Recall} 
-   & Our SVM & 0.550& \textbf{0.502} & 0.970 & \textbf{0.645}  & 0.667 \\ 
-   & Xu's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
-   \multirow{2}{*}{F1-score}
-   & Our SVM & 0.629 &  \textbf{0.511} &0.873  &  \textbf{0.625}&\textbf{0.660} \\ 
-   & Xu's SVM & \textbf{0.663} &  0.488  & 0.873 &  0.600 &0.656 \\ \hline
-   \multirow{2}{*}{Accuracy} 
-   &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
-   & Xu's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
- \end{tabular}}
-\label{tab:baseline}
-\end{table}
+
 
 To answer this question, we strictly follow Xu et al.'s procedure\cite{xu2016predicting}. We 
 use the SVM from scikit-learn with $\gamma = 1/200$ and $kernel= ``rbf''$. After that,
@@ -93,25 +94,95 @@ experiment.
    \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
    \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
    \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
-  \multirow{2}{*}{Precision} 
+  \multirow{3}{*}{Precision} 
  % & Our SVM &0.736 &0.521 & 0.793 &0.606& 0.664 \\
-%   & Xu's SVM&0.611 &0.560 &0.787&0.676&0.658 \\ 
+   & Xu's SVM&0.611 &0.560 &0.787&0.676&0.658 \\ 
    & Xu's CNN&\textbf{0.898} & 0.758&0.840 &0.890 &0.847 \\
    & Tuned SVM&0.885 & \textbf{0.851}&\textbf{0.944} &\textbf{0.903} &\textbf{0.896}\\ \hline
-   \multirow{2}{*}{Recall} 
+   \multirow{3}{*}{Recall} 
    %& Our SVM & 0.550& 0.502 & 0.970 & 0.645  & 0.667 \\ 
-   %& Xu's SVM& 0.725 &0.433    &0.980  & 0.538 &0.669  \\
+   & Xu's SVM& 0.725 &0.433    &0.980  & 0.538 &0.669  \\
    & Xu's CNN& \textbf{0.898}&\textbf{0.903}    &0.773  & 0.793 &0.842  \\ 
    & Tuned SVM& 0.860 &0.828    &\textbf{0.995}  & \textbf{0.905} &\textbf{0.897}  \\  \hline
-   \multirow{2}{*}{F1-score}
+   \multirow{3}{*}{F1-score}
    %&Our SVM & 0.629 &  0.511 &0.873  &  0.625&0.660 \\ 
-   %& Xu's SVM& 0.663 &  0.488  & 0.873 &  0.600 &0.656 \\ 
+   & Xu's SVM& 0.663 &  0.488  & 0.873 &  0.600 &0.656 \\ 
    & Xu's CNN& \textbf{0.898} &  0.824  & 0.805 &  0.849 &0.841 \\
    & Tuned SVM& 0.878 & \textbf{ 0.841}  &\textbf{ 0.969} &  \textbf{0.909} &\textbf{0.899} \\\hline
 %   \multirow{2}{*}{Accuracy} &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
-%   & Xu's SVM& - &  -  &- &  - &0.669 \\ \hline
+ %  & Xu's SVM& - &  -  &- &  - &0.669 \\ \hline
  \end{tabular}}
 \label{tab:RQ2}
 \end{table}
 
 \textbf{RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?}
+
+To answer this question, we run the experiment designed as~\fig{workflow}, where DE is applied to 
+find the optimal parameters for SVM based on the training and tuning data. Then the optimal tunings
+applied on the SVM model and evaluate the built learner on testing data.
+
+\tab{RQ2} says that the answer to RQ2 is yes and for some cases, tuning SVM is much better than
+CNN method. In \tab{RQ2},  Xu et al's baseline, Xu et al's CNN method and Tuned SVM are
+evaluated by all metics, where the highest score for each type of KU pair
+relatedness is marked in bold.  Without tuning, Xu et al's CNN method outperform
+the baseline SVM for all classes across all metics. However, after tuning SVM, the deep learning
+method has a slightly better performance only on {\it duplicate} class for {\it precsion},{\it recall} and {\it F1-score} and 
+ a higher {\it recall} on {\it indirect link} class. Other than that, it does not have any advantage in terms of evaluation
+ metrics.
+ 
+ Based on the comparison in \tab{RQ2}, we can see that: (1) parameter tuning improve baseline method;
+ (2) With the optimal tunings, the traditional machine learning method, SVM, if not better, is at least comparable 
+ with deep learning method, CNN, in terms of evaluation metrics.  \wei{Note that we are not saying tuning SVM is significantly
+ better than deep learning method since it can't be concluded from this experiment without further statistical analysis.}
+ Due the lack of distributions of CNN evaluation metrics, comparing a single value with our 10 repeats run results doesn't
+ make sense. Therefore, this question will be investigated in the future work.
+ 
+ 
+ \begin{lesson}
+ Tuning help improve the performance of the  SVM baseline method for knowledge units relatedness prediction.
+ After tuning, SVM has higher performance scores than CNN method on 3 classes of relatedness.
+ The deep learning method, CNN, if not worse, is just as good as tuning baseline method.
+ \end{lesson}
+ 
+
+\textbf{ RQ3: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of runtime?}
+ 
+ To compare the runtime of two learning methods, it obviously should be conducted under the
+ same hardware settings. Since we adopt the CNN evaluation metrics from ~\cite{xu2016predicting},
+ we can't run on our tuning SVM experiment under the exactly same system settings. However, our experiment
+ is run under an system which is inferior to the one used in \cite{xu2016predicting}. Therefore, such comparison
+ still can provide some insights. 
+ 
+ 
+ \begin{table}[!htp]
+\centering
+\caption{Comparison of Runtime and System   }
+\resizebox{0.48\textwidth}{!}{
+\begin{tabular} {@{}l  l l l l @{}}
+\hline
+Methods&OS&CPU&RAM&Runtime \\ \hline
+Tuning SVM & Mac10.12 & Intel Core i5 2.7 GHz & 8GB & 10 minutes \\
+CNN& Windows7 &Intel Core i7 2.5 GHz & 16GB &14 hours\\
+\hline
+\end{tabular}
+}
+\label{tab:runtime}
+\end{table}
+ 
+Deep learning method is  powerful to explore the data feature in depth.
+However, the main disadvantage of it is that requires a lot of computational resources.
+ According to Xu et al, the CNN method takes 14 hours to train the model
+to get a relative low loss convergence. However, running  SVM with parameter tuning
+by DE on a similar settings shown in \tab{runtime} takes 10 minutes to finish 
+the whole experiment including parameter tuning, training model and prediction,
+which is $80X$ faster than  Xu's deep learning method.
+
+ 
+ 
+ 
+ 
+
+
+
+
+
