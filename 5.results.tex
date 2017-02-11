@@ -10,16 +10,16 @@
    \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
    \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
    \multirow{2}{*}{Precision}
-    & Our SVM &\textbf{0.736} &0.521 & \textbf{0.793} &0.606& \textbf{0.664} \\
-   & Xu's SVM &0.611 &\textbf{0.560} &0.787&\textbf{0.676}&0.658 \\ \hline
+    & Our SVM &\textbf{0.724} &0.514 & 0.779 &0.601& 0.655 \\
+   & Xu's SVM &0.611 &\textbf{0.560} &\textbf{0.787}&\textbf{0.676}&\textbf{0.659} \\ \hline
    \multirow{2}{*}{Recall} 
-   & Our SVM & 0.550& \textbf{0.502} & 0.970 & \textbf{0.645}  & 0.667 \\ 
+   & Our SVM & 0.525& \textbf{0.492} & 0.970 & \textbf{0.645}  & 0.658 \\ 
    & Xu's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
    \multirow{2}{*}{F1-score}
-   & Our SVM & 0.629 &  \textbf{0.511} &0.873  &  \textbf{0.625}&\textbf{0.660} \\ 
-   & Xu's SVM & \textbf{0.663} &  0.488  & 0.873 &  0.600 &0.656 \\ \hline
+   & Our SVM & 0.609 &  \textbf{0.503} &0.864  &  \textbf{0.622}&0.650 \\ 
+   & Xu's SVM & \textbf{0.663} &  0.488  & \textbf{0.873} &  0.600 &\textbf{0.656} \\ \hline
    \multirow{2}{*}{Accuracy} 
-   &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
+   &  Our SVM&0.525  &  0.493 & 0.970 & 0.645 &0.658 \\
    & Xu's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
  \end{tabular}}
 \label{tab:baseline}
@@ -58,16 +58,17 @@ our research questions proposed in Section~\ref{RQ}.
 
 
 To answer this question, we strictly follow Xu et al.'s procedure\cite{xu2016predicting}. We 
-use the SVM from scikit-learn with $\gamma = 1/200$ and $kernel= ``rbf''$. After that,
+use the SVM from scikit-learn with $\gamma = \frac{1}{200}$ and $kernel= ``rbf''$. After that,
 the same training and testing knowledge unit pairs are applied.
 
  \tab{baseline} presents the performance comparison between our baseline with
  Xu et al. in terms of accuracy, precision, recall and F1-score. As we can see, 
  when predicting these four different types of relatedness between knowledge unit pairs,
- our WordEmbedding+SVM method has  very  similar performance scores  to Xu et al.'s
-, with the difference less than $0.1$.  Except for {\it Duplicate} type, where our baseline 
-has a higher {\it precision} (i.e., $0.736$ v.s. $0.611$) but a lower {\it recall} (i.e., $0.550$ v.s.$0.725$).
-However, our read of the averaged values of {\it accuracy},{\it precision},{\it recall}
+ our WordEmbedding+SVM method has  very  similar performance scores to the baseline method
+ reported by Xu et al in ~\cite{xu2016predicting}, with the difference less than $0.1$.  
+ Except for {\it Duplicate} type, where our baseline 
+has a higher {\it precision} (i.e., $0.724$ v.s. $0.611$) but a lower {\it recall} (i.e., $0.525$ v.s.$0.725$).
+However, our read of the averaged values of {\it accuracy}, {\it precision}, {\it recall}
 and {\it F1-score} across four classes is that both methods have
 a very small difference.
 
@@ -125,9 +126,11 @@ applied on the SVM model and evaluate the built learner on testing data.
 CNN method. In \tab{RQ2},  Xu et al's baseline, Xu et al's CNN method and Tuned SVM are
 evaluated by all metics, where the highest score for each type of KU pair
 relatedness is marked in bold.  Without tuning, Xu et al's CNN method outperform
-the baseline SVM for all classes across all metics. However, after tuning SVM, the deep learning
-method has a slightly better performance only on {\it duplicate} class for {\it precsion},{\it recall} and {\it F1-score} and 
- a higher {\it recall} on {\it indirect link} class. Other than that, it does not have any advantage in terms of evaluation
+the baseline SVM in $\frac{10}{12}$ evaluation metrics across all 4 classes. 
+The largest improvement is $0.47$ for {\it recall} on {it Direct Link} class. However, after tuning SVM, the deep learning
+method has a slightly better performance only on {\it Duplicate} class for {\it precsion},{\it recall} and {\it F1-score} and 
+ a higher {\it recall} on {\it Direct link} class. The largest advantage is $0.075$ for {\it recall} on {\it Direct Link} class.
+ Other than that, it does not have any advantage in terms of evaluation
  metrics.
  
  Based on the comparison in \tab{RQ2}, we can see that: (1) parameter tuning improve baseline method;
