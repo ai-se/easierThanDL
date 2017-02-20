@@ -187,60 +187,118 @@ Therefore, in this work, we adopt DE as our tuning algorithm and
 the pseudocode for DE is shown in Algorithm~\ref{alg:DE}.
 To better explain how DE work, in the following description, 
 line number in the pseudocode is denoted as superscript numbers.
+\wei{need to replace the pesudocode to the simpler one!}
 
-\begin{algorithm}[!t]
+\begin{algorithm}[!htp]
+
 \scriptsize
 \begin{algorithmic}[1]
 \Require $\mathit{np} = 10$, $f=0.75$, $cr=0.3$, $\mathit{life} = 5$, $\mathit{Goal} \in \{\mathit{pd},f,...\}$
-\Ensure $S_{best}$
+\Ensure $\mathit{S_{best}}$
 \vspace{2mm}
 \Function{DE}{$\mathit{np}$, $f$, $cr$, $\mathit{life}$, $\mathit{Goal}$}
- \State $Population  \gets $ InitializePopulation($\mathit{np}$)   
- \State $S_{best} \gets $GetBestSolution($Population $)
+ \State $\mathit{Population}  \gets $ InitializePopulation($\mathit{np}$)   
+ \State $\mathit{S_{best}} \gets $GetBestSolution($\mathit{Population}$)
  \While{$\mathit{life} > 0$}
-\State $NewGeneration \gets \emptyset$
-\For{$i=0 \to \mathit{np}-1$}
-\State $S_i \gets$ Extrapolate($Population [i], Population , cr, f$)
-\If {Score($S_i$) >Score($Population [i]$)}
-\State $NewGeneration$.append($S_i$)
-\Else
-\State $NewGeneration$.append($Population [i]$)
-\EndIf
-\EndFor
-\State $Population  \gets NewGeneration$
-\If{$\neg$ Improve($Population $)}
-\State $life -=1$
-\EndIf
-\State $S_{best} \gets$ GetBestSolution($Population $)
+    \State $NewGeneration \gets \emptyset$
+    \For{$i=0 \to \mathit{np}-1$}
+        \State $\mathit{S_i} \gets$ Extrapolate($\mathit{Population [i], Population , cr, f}$)
+        \If {Score($S_i$) $>$Score($\mathit{Population [i]}$)}
+            \State $\mathit{NewGeneration}$.append($\mathit{S_i}$)
+        \Else
+        \State $\mathit{NewGeneration}$.append($\mathit{Population [i]}$)
+        \EndIf
+    \EndFor
+    \State $\mathit{Population  \gets NewGeneration}$
+    \If{$\neg$ Improve($\mathit{Population} $)}
+        \State $\mathit{life -=1}$
+    \EndIf
+    \State $\mathit{S_{best} }\gets$ GetBestSolution($\mathit{Population} $)
  \EndWhile
-\State \Return $S_{best}$
+\State \Return $\mathit{S_{best}}$
 \EndFunction
-\Function{Score}{$Candidate$}
-   \State set tuned parameters according to $Candidate$
-   \State $model \gets$TrainLearner()
-   \State $result \gets$TestLearner($model$)   
-   \State \Return$\mathit{Goal}(result)$  
+\Function{Score}{$\mathit{Candidate}$}
+  \State set tuned parameters according to $\mathit{Candidate}$
+  \State $\mathit{model} \gets$TrainLearner()
+  \State $\mathit{result} \gets$TestLearner($\mathit{model}$)   
+  \State \Return$\mathit{Goal}(\mathit{result})$  
 \EndFunction
-\Function{Extrapolate}{$old, pop, cr, f$}
-  \State $a, b, c\gets threeOthers(pop,old)$  
-  \State $newf \gets \emptyset$
+\Function{Extrapolate}{$\mathit{old, pop, cr, f}$}
+  \State $\mathit{a, b, c}\gets threeOthers(\mathit{pop,old})$  
+  \State $\mathit{newf }\gets \emptyset$
   \For{$i=0 \to \mathit{np}-1$}
-       \If{$cr < random()$}
-         \State $newf$.append($old[i]$)
-                \Else
-                  \If{typeof($old[i]$) == bool}
-                    \State $newf$.append(not $old[i]$)
-         \Else
-          \State $newf$.append(trim($i$,($a[i] + f * (b[i] - c[i]$)))) 
+        \If{$\mathit{cr < random()}$}
+            \State $\mathit{newf}$.append($\mathit{old[i]}$)
+        \Else
+            \If{typeof($\mathit{old[i]}$) == bool}
+                \State $\mathit{newf}$.append(not $\mathit{old[i]}$)
+            \Else
+                \State $\mathit{newf}$.append(trim($i$, ($\mathit{a[i]+f*(b[i]-c[i]}$)))) 
          \EndIf
-       \EndIf
+      \EndIf
   \EndFor
- \State \Return $newf$
+ \State \Return $\mathit{newf}$
 \EndFunction
-        \end{algorithmic} 
+\end{algorithmic} 
 \caption{Pseudocode for DE with Early Termination}
 \label{alg:DE}
 \end{algorithm}
+
+
+
+%   \begin{figure}[!t]\small
+%      \begin{tabular}{|p{.95\linewidth}|}\hline
+%       1. Given a model with $n$ decisions,
+%       OPTIMIZE calls SAMPLE $N=10*n$ times.
+%       Each call generates one member of the population {\em pop$_{i\in N}$}.
+
+%       2. OPTIMIZE scores each {\em pop}$_i$ according to various objective
+%       scores $o$. In the case of our goal models, the objectives are $o_1$ the sum of the cost
+%      of its decisions, $o_2$ the number of ignore edges, and the number of $o_3$ satisfied goals
+%      and $o_4$  softgoals.
+
+%      3. OPTIMIZE tries to each replace {\em pop}$_i$ with a mutant $q$
+%      built by extrapolating between three other members of population $a,b,c$.
+%      At probability $p_1$, for each decision $a_k \in a$, then
+%      $m_k= a_k \vee (p_1 < \mathit{rand}() \wedge( b_k \vee c_k))$.
+
+%      4. Each mutant $m$ is assessed by calling  $\text{SAMPLE}(\textit{model,prior=m})$;
+%      i.e. by seeing what can be achieved within a goal after first assuming
+%      that $\textit{prior}=m$.
+
+%      5.  To test if the mutant $m$ is preferred to {\em pop}$_i$, OPTIMIZE uses
+%       Zitler's continuous domination {\em cdom}
+%       predicate~\cite{Zitzler2004}. This predicate compares two sets of objectives
+%       from sets $x$ and $y$. In that comparison,
+%       $x$ is better than another $y$ if $x$  ``losses'' least.
+%       In the following, $``n''$ is the number of objectives and $w_j \in \{-1, 1\}$
+% shows if we seek to maximize $o_j$.
+% \[
+% \begin{array}{rcl}
+% x \succ y & =& \textit{loss}(y,x) > \textit{loss}(x,y)\\
+% \textit{loss}(x,y)& = &\sum_j^n -e^{\Delta(j,x,y,n)}/n\\
+% \Delta(j,x,y,n) & = & w_j(o_{j,x}  - o_{j,y})/n
+% \end{array}
+% \]
+
+% 5. OPTIMIZE repeatedly loops over the population, trying to replace  items with mutants,
+% until new better mutants stop being found.
+
+% 6. Return the population.
+% \\\hline
+% \end{tabular}
+%      \caption{Procedure OPTIMIZE: strives to find ``good'' priors which,
+%       when passes to SAMPLE, maximize the number of edges used
+%       while also minimizing cost, and
+%   maximizing satisfied hard goals and soft goals.
+%   OPTIMIZE is based on Storn's differential evolution optimizer~\protect\cite{storn1997differential}.
+%   OPTIMIZE is called by the RANK procedure of \fig{rank}.
+%   For the reader unfamiliar with the mutation technique of step 3 and the {\em cdom}
+%   scoring of step~5, we note that these
+%   are standard practice in the search-based
+%   SE community~\cite{Fu2016,krall2015gale}.
+% }\label{fig:optimize}
+% \end{figure}
 
 DE evolves a {\em NewGeneration} of candidates  from
 a current {\em Population}.  Our DE's lose one ``life''
