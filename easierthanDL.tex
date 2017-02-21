@@ -12,6 +12,20 @@
 \captionsetup{belowskip=2pt,aboveskip=2pt} % space between caption and content
 
 
+
+%##############Another result box
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{lipsum}
+\usetikzlibrary{shadows}
+\usepackage{mathtools}
+\usepackage{graphics}
+\newmdenv[
+tikzsetting= {fill=white},
+linewidth=1pt,
+roundcorner=2pt, 
+shadow=false
+]{myshadowbox}
+
 %########## Result Box##########
 \usepackage{color,colortbl}
 \usepackage{xcolor}
@@ -90,7 +104,7 @@
 
 
 \begin{document}
-\title{Tuning for Baseline Methods: a Deep Learning Case Study}
+\title{Revisit Baseline Methods: a Deep Learning Case Study}
 % \titlenote{Produces the permission block, and
 %   copyright information}
 % \subtitle{Extended Abstract}
@@ -177,7 +191,7 @@ TBD!
 \section{Introduction}
 \section{Background and Related Work}
 
-
+\subsection{Deep Learning in General}
 
 \subsection{Deep Learning in SE}
 With the vast amounts of computational power and data, 
@@ -270,8 +284,6 @@ Specifically, SVM with optimal tunings have won over deep learning
 in $\frac{8}{12}$ performance scores and for those $\frac{4}{12}$,
 tuned SVM  does not lose much. However, CNN took 14 hours to achieve
 those scores and parameter tuning only require 10 minutes, which is almost 80X faster.
-
-
 
 
 \subsection{Parameter Tuning in SE}
@@ -427,7 +439,7 @@ just these ranges shown in \tab{parameters} will suffice.
 %as our baseline, where both CNN and SVM methods are supplied with the same word embedding feature data. 
 
 
-\subsection{learning Word Embedding}
+\subsection{Learning Word Embedding}
 Learning word embeddings refers to finding vector representations
 of words such that the similarities between words can be captured by cosine similarity of corresponding 
 vector representations. It's been shown that the words with similar semantic and syntactic are found closed
@@ -682,7 +694,7 @@ a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objectiv
  \begin{figure*}
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=0.8\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=\textwidth,height=3.3in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
     \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
     \label{fig:workflow}
 \end{figure*}
@@ -831,6 +843,14 @@ community to evaluate classification results\cite{wang2016automatically,menzies2
 \label{tab:baseline}
 \end{table}
 
+ \begin{figure}[!htp]
+    \centering
+%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=0.49\textwidth]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Our SVM with Xu's SVM in ~\cite{xu2016predicting} in terms of Precision, Recall and F1-score.}
+    \label{fig:workflow}
+\end{figure}
+
 \section{Results}
 In this section, we present our experimental results. Since we use the same data set provide by Xu
 et al.\cite{xu2016predicting} and conducted our experiment in the same procedure and metics. 
@@ -882,13 +902,14 @@ This validation  is  very important to our work since, without the original tool
 we want to make sure that our reimplementation of their baseline method (WordEmbedding + SVM)does not have much difference
 than theirs, which make the following study more sensible.
 
-\begin{lesson}
+\vskip 1ex
+ \begin{myshadowbox}
 Overall, our reimplementation of WordEmbedding + SVM
 has very closed performance in all the evaluated metrics 
  compared to the baseline method reported in \cite{xu2016predicting}.
 Therefore, our reimplementation can be treated as the baseline method in the following
 experiment.
-\end{lesson}
+ \end{myshadowbox}
 
 
 \begin{table}[!htp]
@@ -922,6 +943,21 @@ experiment.
 \label{tab:RQ2}
 \end{table}
 
+ \begin{figure}[!htp]
+    \centering
+%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=0.49\textwidth]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Tuned SVM and CNN method in terms of Precision, Recall and F1-score.}
+    \label{fig:TunedSVM-CNN}
+\end{figure}
+
+ \begin{figure}[!htp]
+    \centering
+%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=0.49\textwidth]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Tuned SVM and Xu's SVM in terms of Precision, Recall and F1-score.}
+    \label{fig:TunedSVM-SVM}
+\end{figure}
 \textbf{RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?}
 
 To answer this question, we run the experiment designed as~\fig{workflow}, where DE is applied to 
@@ -947,11 +983,12 @@ method has a slightly better performance only on {\it Duplicate} class for {\it 
  make sense. Therefore, this question will be investigated in the future work.
  
  
- \begin{lesson}
+\vskip 1ex
+ \begin{myshadowbox}
  Tuning help improve the performance of the  SVM baseline method for knowledge units relatedness prediction.
  After tuning, SVM has higher performance scores than CNN method on 3 classes of relatedness.
  The deep learning method, CNN, if not worse, is just as good as tuning baseline method.
- \end{lesson}
+ \end{myshadowbox}
  
 
 \textbf{ RQ3: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of runtime?}
@@ -988,11 +1025,12 @@ which is $80X$ faster than  Xu's deep learning method.
 \wei{Note that the runtime shown in \tab{runtime} does not take account of training word2vec model.
  The reason that we didn't consider it is that both tuning SVM method and CNN method require word embedding as input.}
  
- \begin{lesson}
+\vskip 1ex
+ \begin{myshadowbox}
 Compared to CNN method, tuning SVM is about $80X$ faster in terms of model building.
 Therefore, deep learning method does not have any advantage over tuning method in terms
 of resource cost, especially when the model has to be updated periodically. 
- \end{lesson}
+ \end{myshadowbox}
  
  
  
