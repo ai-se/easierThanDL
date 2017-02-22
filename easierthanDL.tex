@@ -189,9 +189,105 @@ TBD!
 
 
 \section{Introduction}
+
+
+Much has been achieved in software analytics. Two decades ago, it was not known if software project data contained useful patterns that can be extracted via data miners. 20 years later, researchers and industrial practitioners now routinely make extensive use of software analytics to discover (e.g.) how long it will take to integrate the new code~\cite{czerwonka2011crane}, where bugs are most likely~\cite{ostrand2004bugs}, who should fix the bug~\cite{anvik2006should}, or how long it will take to develop this code~\cite{kocaguneli2012value,kocaguneli2012exploiting,molokken2003review}. In fact, it is now routine for practitioners to treat every planned feature as an ``experiment'' ~\cite{savor2016continuous}. In this approach, key performance metrics are carefully monitored and analyzed to judge each proposed feature. Large organizations like Microsoft routinely practice data-driven policy development where organizational policies are learned from an extensive analysis of large data sets collected from developers~\cite{begel2014analyze,theisen2015approximating}.
+
+
+Fisher et al.~\cite{fisher2012interactions} characterizes software analytics as a work flow that distills large quantities of low-value data down to smaller sets of higher value data. Due to the complexities and computational cost of SE analytics, ``the luxuries of interactivity, direct manipulation, and fast system response are gone''~\cite{fisher2012interactions}. They characterize modern cloud-based analytics as a throwback to the 1960s-batch processing mainframes where jobs are submitted and then analysts wait, wait, wait for results with ``little insight into what is really going on behind the scenes, how long it will take, or how much it is going to cost''~\cite{fisher2012interactions}. Fisher et al. document the issues seen by 16 industrial data scientists, one of whom remarks ``Fast iteration is key, but incompatible with the say jobs are submitted and processed in the cloud. It is frustrating to wait for hours, only to realize you need a slight tweak to your feature set''.
+
+Methods for improving the quality of modern software analytics have made the issue even more serious. There has been continuous development of new feature selection~\cite{hall2003benchmarking} and feature discovering~\cite{jiang2013personalized} techniques for software analytics, with the most recent ones focused on deep learning methods. These are all exciting innovations with the potential to dramatically improve the quality of our software analytics tools. Yet these are all CPU/GPU-intensive methods. For instance:
+\bi
+\item Learning control settings for learners can take days to weeks to years of CPU time~\cite{fu2016differential,tantithamthavorn2016automated,wang2013searching}.
+\item Lam et al. needed weeks of CPU time to combine deep learning and text mining to localize buggy
+files from bug reports~\cite{lam2015combining}.
+\item Gu et al. spent $240$ hours of GPU time  to train a deep learning based method to generate API usage sequences for given natural language query~\cite{gu2016deep}. 
+\ei 
+Note that the above problem is not solvable by waiting for aster CPUs/GPUs. We 
+can no longer rely on Moore's Law ~\cite{moore1998cramming}to double our computational power every 18 months. Power consumption and heat dissipation issues effect block further exponential increases to CPU clock frequencies~\cite{kumar2003single}. Cloud computing environments are extensively monetized so the total financial cost of tuning can be prohibitive, particularly for very expensive tasks; For example, it would take the 15 years of CPU to learn the tuning parameters of software clone detectors proposed in ~\cite{wang2013searching}. Also, all that CPU time is wasted time if there is a faster and more effective way.
+
+In this work,  we focus on whether using simple and faster methods can achieve
+the results that are currently achievable by the state-of-art deep learning method.
+Specifically, we revisit a prior study on semantically linkable
+knowledge units prediction by Xu et al.\cite{xu2016predicting}, where
+the proposed deep learning method, convolutional neural network(CNN), was reported
+to perform better than the baseline method, SVM.  According to Fu et al.~\cite{fu2016tuning}, parameter tuning is simple but effective method to improve the quality of software analytics. Therefore, in this study, we apply parameter
+tuning techniques on the baseline method, SVM. To systematically compare
+our proposed method with deep learning method in ~\cite{xu2016predicting}, we set the following research questions:
+
+ \bi
+ \item {\it \textbf{RQ1}: Can we reproduce Xu et al.'s baseline results (WordEmbedding+SVM)?}
+
+ 
+ \item {\it \textbf{RQ2}: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?}
+ 
+ \item {\it \textbf{RQ3}: Is tuning SVM running faster than Xu et al.'s deep learning method in terms of runtime?}
+ \ei
+
+To answer RQ1, we strictly follow Xu's description and implement Xu et al's
+baseline method, WordEmbedding+SVM. When compare our implementation with Xu's,
+we evaluate it on the same training and testing data set as in~\cite{xu2016predicting}. Experimental results show that our reimplementation of the baseline method has very closed performance in all the evaluated metrics compared to the baseline method reported in \cite{xu2016predicting}. To answer RQ2,
+we apply differential evolutionary algorithm as the tuner on the baseline method,
+WordEmbedding+SVM, and evaluate the new SVM model with optimal tunings on the the same testing data set as CNN. In terms of {\it precision},{\it recall} and {\it F1-score}, we observe that the tuned SVM method outperform CNN in most evaluation scores. To answer RQ3, we record the start and end time of our tuning SVM method.
+The runtime shows that tuning SVM is $80X$ faster than CNN.
+
+
+The rest of this paper is organized as follows. Section 2 describes the background and related work on defect prediction.
+Section 3 explains the effort-ware JIT defect prediction methods investigated in this study, while Section 4 describes the
+experimental settings of our study, including research questions that motivate our study, data sets and experimental design.
+Section 5 presents the results. Section 6 discusses the threats to the validity of our study. Section 7 concludes the paper.
+
+
 \section{Background and Related Work}
 
-\subsection{Deep Learning}
+% \subsection{Why not just use more of the Cloud?}
+% SWAY reduces the number of evaluations required to optimize a model (and hence the CPU cost of this kind of analysis by one to two orders of magnitude). Given the ready availability of cloud-based CPU, we are sometimes asked
+% {\em what are the benefits of merely making something run 100 times faster
+% when we can just buy more CPU on the cloud?}
+% In reply, we say that CPUs are not an unlimited resource that should be
+% applied unquestionably to computationally expensive problems.
+% \bi
+% \item
+% We can no longer rely on Moore's
+% Law~\cite{658762} to double our computational power
+% very 18 months.
+% Power consumption and heat
+% dissipation issues effectively block further
+% exponential increases to CPU clock
+% frequencies~\cite{kuman03}.
+% \item
+% Even if we could build
+% those faster CPUs, we would still need to power them.
+% CPU power requirements (and the
+% pollution associated with generating that
+% power~\cite{thib14}) is now a significant issue.
+% Data centers consume 1.5\% of globally electrical
+% output and this value is predicted to grow
+% dramatically in the very near
+% future~\cite{koomey08} (data centers in the
+% USA used 91 billion kilowatt-hours of electrical
+% energy in 2013, and they will be using 139 billion
+% kilowatt-hours by 2020 (a 53\%
+% increase)~\cite{thib14}).
+% \item
+% Even if (a)~we could
+% build faster CPUs and even if (b)~we had the energy to
+% power them and even if (c)~we could dispose of the
+% pollution associated with generating that energy,
+% then all that CPU+energy+pollution offset would be a service
+% that must be paid for. Fisher et al.~\cite{Fisher:2012}
+% comment that cloud
+% computation is a heavily monetized environment that charges for all
+% their services (storage, uploads, downloads, and CPU time).
+% While each small part of that service is cheap, the total annual
+% cost to an organization can be exorbitant.
+% Google reports that a 1\%
+% reduction in CPU requirements saves them millions of dollars in power costs~\cite{penix16}.
+% \ei
+% Hence we say that tools like SWAY, that use less CPU, as interesting because they
+% let us achieve the same goals with fewer resources.
+
+\subsection{What is Deep Learning}
 
 \subsection{Deep Learning in SE}
 With the vast amounts of computational power and data, 
@@ -528,149 +624,125 @@ differential evolution than SA. For example,  Vesterstrom and Thomsen~\cite{Vest
  particle swarm optimization and other GAs.  DEs have already been applied before for 
  parameter tuning (e.g. see~\cite{omran2005differential, chiha2012tuning, fu2016tuning, fu2016differential, agrawal2016wrong}) .
 Therefore, in this work, we adopt DE as our tuning algorithm and 
-the pseudocode for DE is shown in Algorithm~\ref{alg:DE}.
-To better explain how DE work, in the following description, 
-line number in the pseudocode is denoted as superscript numbers.
-\wei{need to replace the pesudocode to the simpler one!}
+the main steps in DE is described in \fig{optimize}.
 
-\begin{algorithm}[!htp]
+% \begin{algorithm}[!htp]
 
-\scriptsize
-\begin{algorithmic}[1]
-\Require $\mathit{np} = 10$, $f=0.75$, $cr=0.3$, $\mathit{life} = 5$, $\mathit{Goal} \in \{\mathit{pd},f,...\}$
-\Ensure $\mathit{S_{best}}$
-\vspace{2mm}
-\Function{DE}{$\mathit{np}$, $f$, $cr$, $\mathit{life}$, $\mathit{Goal}$}
- \State $\mathit{Population}  \gets $ InitializePopulation($\mathit{np}$)   
- \State $\mathit{S_{best}} \gets $GetBestSolution($\mathit{Population}$)
- \While{$\mathit{life} > 0$}
-    \State $NewGeneration \gets \emptyset$
-    \For{$i=0 \to \mathit{np}-1$}
-        \State $\mathit{S_i} \gets$ Extrapolate($\mathit{Population [i], Population , cr, f}$)
-        \If {Score($S_i$) $>$Score($\mathit{Population [i]}$)}
-            \State $\mathit{NewGeneration}$.append($\mathit{S_i}$)
-        \Else
-        \State $\mathit{NewGeneration}$.append($\mathit{Population [i]}$)
-        \EndIf
-    \EndFor
-    \State $\mathit{Population  \gets NewGeneration}$
-    \If{$\neg$ Improve($\mathit{Population} $)}
-        \State $\mathit{life -=1}$
-    \EndIf
-    \State $\mathit{S_{best} }\gets$ GetBestSolution($\mathit{Population} $)
- \EndWhile
-\State \Return $\mathit{S_{best}}$
-\EndFunction
-\Function{Score}{$\mathit{Candidate}$}
-  \State set tuned parameters according to $\mathit{Candidate}$
-  \State $\mathit{model} \gets$TrainLearner()
-  \State $\mathit{result} \gets$TestLearner($\mathit{model}$)   
-  \State \Return$\mathit{Goal}(\mathit{result})$  
-\EndFunction
-\Function{Extrapolate}{$\mathit{old, pop, cr, f}$}
-  \State $\mathit{a, b, c}\gets threeOthers(\mathit{pop,old})$  
-  \State $\mathit{newf }\gets \emptyset$
-  \For{$i=0 \to \mathit{np}-1$}
-        \If{$\mathit{cr < random()}$}
-            \State $\mathit{newf}$.append($\mathit{old[i]}$)
-        \Else
-            \If{typeof($\mathit{old[i]}$) == bool}
-                \State $\mathit{newf}$.append(not $\mathit{old[i]}$)
-            \Else
-                \State $\mathit{newf}$.append(trim($i$, ($\mathit{a[i]+f*(b[i]-c[i]}$)))) 
-         \EndIf
-      \EndIf
-  \EndFor
- \State \Return $\mathit{newf}$
-\EndFunction
-\end{algorithmic} 
-\caption{Pseudocode for DE with Early Termination}
-\label{alg:DE}
-\end{algorithm}
+% \scriptsize
+% \begin{algorithmic}[1]
+% \Require $\mathit{np} = 10$, $f=0.75$, $cr=0.3$, $\mathit{life} = 5$, $\mathit{Goal} \in \{\mathit{pd},f,...\}$
+% \Ensure $\mathit{S_{best}}$
+% \vspace{2mm}
+% \Function{DE}{$\mathit{np}$, $f$, $cr$, $\mathit{life}$, $\mathit{Goal}$}
+%  \State $\mathit{Population}  \gets $ InitializePopulation($\mathit{np}$)   
+%  \State $\mathit{S_{best}} \gets $GetBestSolution($\mathit{Population}$)
+%  \While{$\mathit{life} > 0$}
+%     \State $NewGeneration \gets \emptyset$
+%     \For{$i=0 \to \mathit{np}-1$}
+%         \State $\mathit{S_i} \gets$ Extrapolate($\mathit{Population [i], Population , cr, f}$)
+%         \If {Score($S_i$) $>$Score($\mathit{Population [i]}$)}
+%             \State $\mathit{NewGeneration}$.append($\mathit{S_i}$)
+%         \Else
+%         \State $\mathit{NewGeneration}$.append($\mathit{Population [i]}$)
+%         \EndIf
+%     \EndFor
+%     \State $\mathit{Population  \gets NewGeneration}$
+%     \If{$\neg$ Improve($\mathit{Population} $)}
+%         \State $\mathit{life -=1}$
+%     \EndIf
+%     \State $\mathit{S_{best} }\gets$ GetBestSolution($\mathit{Population} $)
+%  \EndWhile
+% \State \Return $\mathit{S_{best}}$
+% \EndFunction
+% \Function{Score}{$\mathit{Candidate}$}
+%   \State set tuned parameters according to $\mathit{Candidate}$
+%   \State $\mathit{model} \gets$TrainLearner()
+%   \State $\mathit{result} \gets$TestLearner($\mathit{model}$)   
+%   \State \Return$\mathit{Goal}(\mathit{result})$  
+% \EndFunction
+% \Function{Extrapolate}{$\mathit{old, pop, cr, f}$}
+%   \State $\mathit{a, b, c}\gets threeOthers(\mathit{pop,old})$  
+%   \State $\mathit{newf }\gets \emptyset$
+%   \For{$i=0 \to \mathit{np}-1$}
+%         \If{$\mathit{cr < random()}$}
+%             \State $\mathit{newf}$.append($\mathit{old[i]}$)
+%         \Else
+%             \If{typeof($\mathit{old[i]}$) == bool}
+%                 \State $\mathit{newf}$.append(not $\mathit{old[i]}$)
+%             \Else
+%                 \State $\mathit{newf}$.append(trim($i$, ($\mathit{a[i]+f*(b[i]-c[i]}$)))) 
+%          \EndIf
+%       \EndIf
+%   \EndFor
+%  \State \Return $\mathit{newf}$
+% \EndFunction
+% \end{algorithmic} 
+% \caption{Pseudocode for DE with Early Termination}
+% \label{alg:DE}
+% \end{algorithm}
 
 
 
-%   \begin{figure}[!t]\small
-%      \begin{tabular}{|p{.95\linewidth}|}\hline
-%       1. Given a model with $n$ decisions,
-%       OPTIMIZE calls SAMPLE $N=10*n$ times.
-%       Each call generates one member of the population {\em pop$_{i\in N}$}.
+  \begin{figure}[!t]\small
+     \begin{tabular}{|p{.95\linewidth}|}\hline
+      1. Given a model(e.g., SVM) with $n$ decisions(e.g., $n=4$),
+      TUNER calls SAMPLE $N=10*n$ times.
+      Each call generates one member of the population {\em pop$_{i\in N}$}.
 
-%       2. OPTIMIZE scores each {\em pop}$_i$ according to various objective
-%       scores $o$. In the case of our goal models, the objectives are $o_1$ the sum of the cost
-%      of its decisions, $o_2$ the number of ignore edges, and the number of $o_3$ satisfied goals
-%      and $o_4$  softgoals.
+      2. TUNER scores each {\em pop}$_i$ according to various objective
+      scores $o$. In the case of our tuning SVM, the objective $o$ is to maximize
+      {\it F1-score}
 
-%      3. OPTIMIZE tries to each replace {\em pop}$_i$ with a mutant $q$
-%      built by extrapolating between three other members of population $a,b,c$.
-%      At probability $p_1$, for each decision $a_k \in a$, then
-%      $m_k= a_k \vee (p_1 < \mathit{rand}() \wedge( b_k \vee c_k))$.
+     3. TUNER tries to each replace {\em pop}$_i$ with a mutant $m$
+     built by extrapolating between three other members of population $a,b,c$.
+     At probability $p_1$, for each decision $a_k \in a$, then
+     $m_k= a_k \vee (p_1 < \mathit{rand}() \wedge( b_k \vee c_k))$.
 
-%      4. Each mutant $m$ is assessed by calling  $\text{SAMPLE}(\textit{model,prior=m})$;
-%      i.e. by seeing what can be achieved within a goal after first assuming
-%      that $\textit{prior}=m$.
+     4. Each mutant $m$ is assessed by calling  $\text{EVALUATE}(\textit{model, prior=m})$;
+     i.e. by seeing what can be achieved within a goal after first assuming
+     that $\textit{prior}=m$.
 
-%      5.  To test if the mutant $m$ is preferred to {\em pop}$_i$, OPTIMIZE uses
-%       Zitler's continuous domination {\em cdom}
-%       predicate~\cite{Zitzler2004}. This predicate compares two sets of objectives
-%       from sets $x$ and $y$. In that comparison,
-%       $x$ is better than another $y$ if $x$  ``losses'' least.
-%       In the following, $``n''$ is the number of objectives and $w_j \in \{-1, 1\}$
-% shows if we seek to maximize $o_j$.
-% \[
-% \begin{array}{rcl}
-% x \succ y & =& \textit{loss}(y,x) > \textit{loss}(x,y)\\
-% \textit{loss}(x,y)& = &\sum_j^n -e^{\Delta(j,x,y,n)}/n\\
-% \Delta(j,x,y,n) & = & w_j(o_{j,x}  - o_{j,y})/n
-% \end{array}
-% \]
+     5. To test if the mutant $m$ is preferred to {\em pop}$_i$, TUNER simply
+      compare SCORE($m$) with SCORE({\em pop}$_i$). In case of our tuning SVM,
+      the one with higher score will be kept.
 
-% 5. OPTIMIZE repeatedly loops over the population, trying to replace  items with mutants,
-% until new better mutants stop being found.
+    6. TUNER repeatedly loops over the population, trying to replace  items with mutants, until new better mutants stop being found.
 
-% 6. Return the population.
-% \\\hline
-% \end{tabular}
-%      \caption{Procedure OPTIMIZE: strives to find ``good'' priors which,
-%       when passes to SAMPLE, maximize the number of edges used
-%       while also minimizing cost, and
-%   maximizing satisfied hard goals and soft goals.
-%   OPTIMIZE is based on Storn's differential evolution optimizer~\protect\cite{storn1997differential}.
-%   OPTIMIZE is called by the RANK procedure of \fig{rank}.
-%   For the reader unfamiliar with the mutation technique of step 3 and the {\em cdom}
-%   scoring of step~5, we note that these
-%   are standard practice in the search-based
-%   SE community~\cite{Fu2016,krall2015gale}.
-% }\label{fig:optimize}
-% \end{figure}
+    7. Return the best one in the population as the optimal tunings.
+    \\\hline
+    \end{tabular}
+    \caption{Procedure TUNER: strives to find ``good'' tunings which maximizes
+     the objective score of the model on training and tuning data. TUNER is based on Storn's differential evolution optimizer~\cite{storn1997differential}.}
+    \label{fig:optimize}
+\end{figure}
 
-DE evolves a {\em NewGeneration} of candidates  from
-a current {\em Population}.  Our DE's lose one ``life''
-when the new population is no better than  current one (terminating when ``life'' is zero)$^{L4}$.
-Each candidate solution in the {\em Population}  
-is a pair of {\em (Tunings, Scores)}.  {\em Tunings} are selected from
-{parameters} and {\em Scores} come from training a learner using those parameters
-and applying it     test data$^{L23-L27}$.
+% DE evolves a {\em NewGeneration} of candidates  from
+% a current {\em Population}.  Our DE's lose one ``life''
+% when the new population is no better than  current one (terminating when ``life'' is zero)$^{L4}$.
+% Each candidate solution in the {\em Population}  
+% is a pair of {\em (Tunings, Scores)}.  {\em Tunings} are selected from
+% {parameters} and {\em Scores} come from training a learner using those parameters
+% and applying it     test data$^{L23-L27}$.
 
-The premise of DE  is that the best way to mutate the existing tunings
-is to {\em Extrapolate}$^{L28}$
-between current solutions.  Three solutions $a,b,c$ are selected at random.
-For each tuning parameter $i$, at some probability {\em cr}, we replace
-the old tuning $x_i$ with $y_i$. For booleans, we use $y_i= \neg x_i$ (see line 36). For numerics, $y_i = a_i+f \times (b_i - c_i)$   where $f$ is a parameter
-controlling  cross-over.  The {\em trim} function$^{L38}$ limits the new
-value to the legal range min..max of that parameter.
+% The premise of DE  is that the best way to mutate the existing tunings
+% is to {\em Extrapolate}$^{L28}$
+% between current solutions.  Three solutions $a,b,c$ are selected at random.
+% For each tuning parameter $i$, at some probability {\em cr}, we replace
+% the old tuning $x_i$ with $y_i$. For booleans, we use $y_i= \neg x_i$ (see line 36). For numerics, $y_i = a_i+f \times (b_i - c_i)$   where $f$ is a parameter
+% controlling  cross-over.  The {\em trim} function$^{L38}$ limits the new
+% value to the legal range min..max of that parameter.
  
-The main loop of DE$^{L6}$ runs over the {\em Population}, replacing old items
-with new {\em Candidate}s (if  new candidate is better).
-This means that, as the loop progresses, the {\em Population} is full of increasingly
-more valuable solutions. This, in turn, also improves  the candidates, which are {\em Extrapolate}d
-from the {\em Population}.
+% The main loop of DE$^{L6}$ runs over the {\em Population}, replacing old items
+% with new {\em Candidate}s (if  new candidate is better).
+% This means that, as the loop progresses, the {\em Population} is full of increasingly
+% more valuable solutions. This, in turn, also improves  the candidates, which are {\em Extrapolate}d
+% from the {\em Population}.
 
-For the experiments of this paper, we collect performance
-values from SVM, from which a {\em Goal} function extracts one 
-performance value$^{L26}$ (so we run this code many times, each time with
-a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objective} DE 
-(and for notes on multi-objective DEs, see~\cite{robivc2005demo,zhang2007moea,huang2010differential}).
+% For the experiments of this paper, we collect performance
+% values from SVM, from which a {\em Goal} function extracts one 
+% performance value$^{L26}$ (so we run this code many times, each time with
+% a different {\em Goal}$^{L1}$).  Technically, this makes a  {\em single objective} DE 
+% (and for notes on multi-objective DEs, see~\cite{robivc2005demo,zhang2007moea,huang2010differential}).
 
 
 \section{Experiment Design}
@@ -1053,35 +1125,72 @@ Therefore, deep learning method does not have any advantage over tuning method i
 of resource cost, especially when the model has to be updated periodically. 
  \end{myshadowbox}
  
+\section{Discussion}
  
+\subsection{Implication}
+
+According to the above results, we find that parameter tuning on SVM can dramatically
+improve the performance of baseline method compared with CNN.
+While tuning does not produce the best results on all evaluation measures, 
+we advocate its use since it is very simple and very fast(e.g., $80X$ faster in this case).
+Based on this study, we have the following implications for the software engineering community.
+
+{\it Understand the task}. The more we understand something, the better we can match tools to tasks. Tools that are poorly matched to task are usually complex and/or slow to execute. Parameter tuning seems a better match for the tasks explored here since it is neither complex nor slow. Although deep learning methods have widely and successfully applied in other community to address problems, like pattern recognition, machine translation and recommendation
+systems, definitely it is not the best match for this task explored in this study. However, this study
+does not intend to stop researchers from applying deep learning techniques into software analytics. Instead, we believe are lots of possibilities in SE field where deep learning could have a great impact and we suggest apply deep learning in more
+effective and efficient way.
+
+{\it Do not ignore resource cost any more.} According to Calero and Pattini~\cite{calero2015green}, they find that many current organizational redesigns are motivated (at least in part) by arguments based on sustainability (i.e. using fewer resources to achieve results) and managers used sustainability-based redesigns to explore cost-cutting opportunities. As fundamental research, resource cost should also never be ignored any more.
+For a given task, the simpler and faster ways with low resource cost
+to achieve results should be given more preference than that 
+are currently achievable by slower and more complex methods. As pointed out
+at the beginning of this paper, deep learning is so resource-consuming technique
+ therefore, {\it the  trade-off between performance and cost should never
+be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
+improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
+ or even better, performance to deep learning while $80X$ faster.
+Therefore, it should not happen any more that simply apply deep learning on SE tasks
+without reporting and analyzing the resource consumption as well as the trade-off.  
  
-\section{Threads to Validity}
+
+
+ 
+\subsection{Threads to Validity}
 For any empirical study, there might be some potential threats that
 affect the conclusion. We identify the following threats to validity:
 
 Threats to \textbf{internal validity} refers to consistency of the results 
-obtained from the result. In our study,  to study how
+obtained from the result. In our study,  to investigate how
 tuning can improve the performance of baseline methods and how well
 it perform compared with deep learning method, we select
 Xu et al's  WordEmbedding+SVM baseline method as a case study. Since the original implementation of 
 WordEmbedding+SVM (baseline 2 method in \cite{xu2016predicting}) is not 
 publicly available, we have to reimplement our version of WordEmbedding+SVM as
 the baseline method in this study. As shown in RQ1, our implementation has
-quite similar results to Xu et al.'s on the same datasets. The variance might 
+quite similar results to Xu et al.'s on the same data sets. The variance might 
 result from the word2vec that is trained from 100,000 randomly selected data.
 Hence, we believe that our implementation reflect the original
- baseline method in \cite{xu2016predicting}.
+ baseline method in \cite{xu2016predicting}. In RQ3, when comparing the runtime of tuning
+ SVM and CNN, we run SVM with parameter tuning experiment on a different environment
+ from Xu et al.'s environment. However, we rerun our experiment on another
+ inferior experimental environment, which is a Mackbook Air computer 
+ with 1.4 GHz Intel Core i5 CPU and 8G RAM. In this experiment, we obtain
+ the similar performance scores as in RQ2 and the runtime is $16$ minutes,
+ which is till $50X$ faster than Xu et al's CNN method.
+ 
+
+ 
  
  Threats to \textbf{external validity} represent if the results are of relevance for
  other cases, or the ability to generalize the observations in a study. In this study,
- we compare our tuning baseline method with deep learning method in terms of
+ we compare our tuning baseline method with deep learning method, CNN, in terms of
  precision, recall, F1-score and accuracy. The experimental results are quite consistent
  for this knowledge units relatedness prediction tasks, i.e.,  muti-classification problem, in text mining. 
  Nonetheless, we do not claim that our findings can be generalized to all software analytics tasks. 
  However, those other software analytics tasks often apply deep learning
  methods~\cite{choetkiertikul2016deep, wang2016automatically} and compare with
  the same regular learners explored in this paper, so it is quite possible that
-  the conclusions of this paper apply to other software engineering tasks.
+ the conclusions of this paper apply to other software engineering tasks.
  
  
 
@@ -1103,18 +1212,18 @@ In this study, tuning SVM runs $80X$ faster than CNN method.
 \ei
 
 
-Our findings have important implications for the software engineering community.
-Although deep learning methods have widely and successfully applied in other community
-to address problems, like pattern recognition, machine translation and recommendation
-systems, it is still unclear which type of SE task is best fit for deep learning. There are lots
-of possibilities in SE field to explore the application of deep learning. However, as pointed out
-at the beginning of this paper, deep learning is so resource-consuming technique
-and SE analytics task is usually light-weight,  {\it the  tradeoff between performance and cost should never
-be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
-improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
- or even better, performance to deep learning while $80X$ faster.
-Therefore, it should not happen any more that simply apply deep learning on SE tasks
-without reporting and analyzing the resource consumption as well as the tradeoff.  
+% Our findings have important implications for the software engineering community.
+% Although deep learning methods have widely and successfully applied in other community
+% to address problems, like pattern recognition, machine translation and recommendation
+% systems, it is still unclear which type of SE task is best fit for deep learning. There are lots
+% of possibilities in SE field to explore the application of deep learning. However, as pointed out
+% at the beginning of this paper, deep learning is so resource-consuming technique
+% and SE analytics task is usually light-weight,  {\it the  tradeoff between performance and cost should never
+% be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
+% improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
+%  or even better, performance to deep learning while $80X$ faster.
+% Therefore, it should not happen any more that simply apply deep learning on SE tasks
+% without reporting and analyzing the resource consumption as well as the tradeoff.  
 
 Based on the results of this study, we recommend that before applying 
 deep learning method on SE tasks, consider simple techniques to improve the baseline method.
