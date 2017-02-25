@@ -18,6 +18,7 @@
 \usepackage{lipsum}
 \usetikzlibrary{shadows}
 \usepackage{mathtools}
+\usepackage{balance}
 \usepackage{graphics}
 \newmdenv[
 tikzsetting= {fill=white},
@@ -104,8 +105,8 @@ shadow=false
 
 
 \begin{document}
-\title{Think ``Simple Methods'' First: a Case
-Study with Deep Learning}
+\title{Always Baseline Against Simpler Methods:\\
+a Case Study with Deep Learning}
 % \titlenote{Produces the permission block, and
 %   copyright information}
 % \subtitle{Extended Abstract}
@@ -134,50 +135,32 @@ Study with Deep Learning}
 }
 \email{tim.menzies@gmail.com}
  
-
+% \pagestyle{plain}
 \begin{abstract}
-Recently,  
-deep learning was  applied
-to the task of discovering
-what questions  of the StackOverflow programmer discussion
-forum can be linked together. While an insightful and interesting
-result, we need to ask if the  
-added benefits of deep learning 
-justifies their very high computational cost.
-This is an important consideration
-since  deep learning methods
-are
-becoming more frequently
-used in software engineering. These methods
-need hours (to  weeks) to train the model.
+Much software research makes extensive use of automatic data miners.
+For example, recently    deep learning
+was used to  find which
+questions  in a Stack Overflow programmer discussion
+forum can be linked together. 
+
+We show that a very simple optimizer called DE (differential evolution)
+can achieve  similar (and sometimes better) results 
+in 10 minutes. This DE method runs very fast:
+80 times faster than the 14
+hours required for deep learning .
+
+We offer these results as a cautionary tale to the software analytics community.
+While deep learner is an exciting new technique, the benefits of this
+method need to be carefully assessed w.r.t. its computational cost. 
+More generally,
+if researchers deploy some new and expensive process, that work should be baselined against some simpler and faster alternatives
+This is particularly important for deep learning since these learners need 
+ hours (to  weeks) to train the model.
 Such long CPU times limit the ability
 of (a)~one researcher to test
 the stability of their conclusion
 via repeated runs with different random seeds;
 or (b)~other researchers to repeat, improve, or even refute that original work.
-
-This paper repeats and optimizes that prior
-study of StackOverflow. Results from  a  deep learner  
-are compared to those achieved via a very hyperparameter
-optimization method (differential evolution)
-that tunes a support vector machine.
-Our faster 
-methods terminate in 10 minutes, which is 80 times faster
-than the deep learner's runtimes of 14 hours.
-Further, when we compare the results
-achieved by the two methods,  the  results from the faster method and  very competitive.
-
-
-While   deep learning  was not most useful
-here, it might still be useful in other domains.
-Hence, our conclusion is not
-to deprecate deep learning.
-Rather, it is
-to recommend that if researchers
-deploy some new and expensive
-process, that work should be 
-baselined against some simpler and faster
-alternative.
 \end{abstract}
 
 %
@@ -232,56 +215,56 @@ alternative.
 \section{Introduction}
 
 
-This paper extends a prior result by
- Xu et al.\cite{xu2016predicting} from  ASE'16.  That paper described
+This paper extends a prior result from ASE'16 by
+ Xu et al.\cite{xu2016predicting} (hereafter, XU).  That paper described
  a method to
  explore large programmer discussion forums, then 
  uncover related, but separate, entries.
- This is an important problem since modern SE
- is evolving so fast that these discussion forums
+ This is an important problem. Modern SE
+ is evolving so fast that these  forums
  contain more relevant and recent comments on 
  current technology than any textbook or research article.
  
- In their work, Xu et al. predicted whether two questions posted on Stack Overflow are semantically linkable. 
+ In their work, XU predicted whether two questions posted on Stack Overflow are semantically linkable. 
 Specifically,  a question along with its entire set of answers posted in Stack Overflow
 as a {\it knowledge unit}. If two knowledge units are semantically related, they're considered
 as {\it linkable} knowledge units. 
  
 This paper debates what methods should be recommended
-to those wishing to repeat the analysis of   Xu et al.
+to those wishing to repeat the analysis of   XU.
 In their paper, they used a convolution neural
 network (a kind of deep leaner~\cite{lecun2015deep}). Such 
 CNNs are highly computationally expensive,
-often requiring network composed of 10 to 20 layers, hundreds of millions of weights and billions of connections between units. Even with
+often requiring network composed of 10 to 20 layers, hundreds of millions of weights and billions of connections between units~\cite{lecun2015deep}. Even with
 advanced hardware and algorithm parallelization, training such model still requires hours to weeks.
 For example:
 \bi
 \item
-Xu et al. report that their analysis
-required 80 hours of CPU.
+XU report that their analysis
+required 14 hours of CPU.
 \item
 Le~\cite{le2013building} used  a cluster with 1,000 machines (16,000 cores) for three days to train a deep learner.
 \ei
 In this work,  we focus on whether using simple and faster methods can achieve
 the results that are currently achievable by the state-of-art deep learning method.
-Specifically, we repeat the Xu et al.
+Specifically, we repeat the XU
 study using  DE  (differential evolution~\cite{storn1997differential})
-which is a hyperparamter optimization
+which is a hyper-paramter optimization
 method.
 Our study asks:
 
 
-{\it \textbf{RQ1}: Can we reproduce Xu et al.'s baseline results (WordEmbedding+SVM)?}
-Using such a baseline, we can compare our methods to those of Xu et al.
+{\it \textbf{RQ1}: Can we reproduce XU's baseline results (WordEmbedding+SVM)?}
+Using such a baseline, we can compare our methods to those of XU.
  
  {\it \textbf{RQ2}: Can   DE   tune a standard learner such that
- it out-performs
-  Xu et al.'s deep learning method?}
+ it outperforms
+  XU's deep learning method?}
  Here,
-we apply differential evolutionary  to tune 
+we apply differential evolution  to tune 
 WordEmbedding+SVM. In terms of {\it precision},{\it recall} and {\it F1-score}, we observe that this tuned SVM method outperforms CNN in most evaluation scores.
 
-{\it \textbf{RQ3}: Is tuning SVM with DEs faster than Xu et al.'s deep learning method?}
+{\it \textbf{RQ3}: Is tuning SVM with DEs faster than XU's deep learning method?}
 Our   DE method
  is  $80$ times faster than CNN. 
  
@@ -289,29 +272,31 @@ We offer these results as a cautionary tale to the software analytics community.
 While deep learner is an exciting new technique, the benefits of this
 method need to be carefully assessed w.r.t. its computational cost. 
 More generally,
-if a researchers deploy some new and expensive process (like deep learning), that work should be baselined against some simpler and faster alternatives
+if researchers deploy some new and expensive process (like deep learning), that work should be baselined against some simpler and faster alternatives
  
 
-The rest of this paper is organized as follows. Section 2 describes the background and related work on deep learning and parameter tuning in SE. Section 3 explains the case study problem and proposed tuning method investigated in this study, while Section 4 describes the
+The rest of this paper is organized as follows. Section~\ref{background} describes the background and related work on deep learning and parameter tuning in SE. Section~\ref{method} explains the case study problem and proposed tuning method investigated in this study, while Section~\ref{experiment} describes the
 experimental settings of our study, including research questions, data sets, evaluation measures and experimental design.
-Section 5 presents the results. Section 6 discusses implications from the results and the threats to the validity of our study. Section 7 concludes the paper and discuss the future work.
+Section~\ref{results} presents the results. Section~\ref{discussion} discusses implications from the results and the threats to the validity of our study. Section~\ref{conclusion} concludes the paper and discuss the future work.
 \subsection{Reproduction Package}
 To enable other researchers to repeat, improve, or
 refute our results, all our scripts and data are 
 freely available on-line in both
 Github\footnote{URL blinded for 
-peer review.} and in archival format\footnote{blinded for peer review}, tagged with a unique DOI.
+peer review.} and in archival format\footnote{Blinded for peer review}, tagged with a unique DOI.
 
 
 
-\section{Background and Related Work}
+\section{Background and Related Work}\label{background}
 
 \subsection{Why Explore Faster Software Analytics?}
-Much has been achieved in software analytics. Two decades ago, it was not known if software project data contained useful patterns that can be extracted via data miners. 20 years later, researchers and industrial practitioners now routinely make extensive use of software analytics to discover (e.g.) how long it will take to integrate the new code~\cite{czerwonka2011crane}, where bugs are most likely~\cite{ostrand2004bugs}, who should fix the bug~\cite{anvik2006should}, or how long it will take to develop this code~\cite{kocaguneli2012value,kocaguneli2012exploiting,molokken2003review}. In fact, it is now routine for practitioners to treat every planned feature as an ``experiment'' ~\cite{savor2016continuous}. In this approach, key performance metrics are carefully monitored and analyzed to judge each proposed feature. Large organizations like Microsoft routinely practice data-driven policy development where organizational policies are learned from an extensive analysis of large data sets collected from developers~\cite{begel2014analyze,theisen2015approximating}.
+Researchers and industrial practitioners now routinely make extensive use of software analytics to discover (e.g.) how long it will take to integrate the new code~\cite{czerwonka2011crane}, where bugs are most likely~\cite{ostrand2004bugs}, who should fix the bug~\cite{anvik2006should}, or how long it will take to develop this code~\cite{kocaguneli2012value,kocaguneli2012exploiting,molokken2003review}.  Large organizations like Microsoft routinely practice data-driven policy development where organizational policies are learned from an extensive analysis of large data sets collected from developers~\cite{begel2014analyze,theisen2015approximating}.
 
 But the more complex the  method,
 the harder it is to apply the analysis.
-Fisher et al.~\cite{fisher2012interactions} characterizes software analytics as a work flow that distills large quantities of low-value data down to smaller sets of higher value data. Due to the complexities and computational cost of SE analytics, ``the luxuries of interactivity, direct manipulation, and fast system response are gone''~\cite{fisher2012interactions}. They characterize modern cloud-based analytics as a throwback to the 1960s-batch processing mainframes where jobs are submitted and then analysts wait, wait, wait for results with ``little insight into what is really going on behind the scenes, how long it will take, or how much it is going to cost''~\cite{fisher2012interactions}. Fisher et al. document the issues seen by 16 industrial data scientists, one of whom remarks ``Fast iteration is key, but incompatible with the say jobs are submitted and processed in the cloud. It is frustrating to wait for hours, only to realize you need a slight tweak to your feature set''.
+Fisher et al.~\cite{fisher2012interactions} characterizes software analytics as a work flow that distills large quantities of low-value data down to smaller sets of higher value data. Due to the complexities and computational cost of SE analytics, ``the luxuries of interactivity, direct manipulation, and fast system response are gone''~\cite{fisher2012interactions}. They characterize modern cloud-based analytics as a throwback to the 1960s-batch processing mainframes where jobs are submitted and then analysts wait, wait, wait for results with ``little insight into what is really going on behind the scenes, how long it will take, or how much it is going to cost''~\cite{fisher2012interactions}. Fisher et al. document the issues seen by 16 industrial data scientists, one of whom remarks \begin{quote}
+``Fast iteration is key, but incompatible with the say jobs are submitted and processed in the cloud. It is frustrating to wait for hours, only to realize you need a slight tweak to your feature set''.
+\end{quote}
 
 Methods for improving the quality of modern software analytics have made the issue even more serious. There has been continuous development of new feature selection~\cite{hall2003benchmarking} and feature discovering~\cite{jiang2013personalized} techniques for software analytics, with the most recent ones focused on deep learning methods. These are all exciting innovations with the potential to dramatically improve the quality of our software analytics tools. Yet these are all CPU/GPU-intensive methods. For instance:
 \bi
@@ -321,7 +306,7 @@ files from bug reports~\cite{lam2015combining}.
 \item Gu et al. spent $240$ hours of GPU time  to train a deep learning based method to generate API usage sequences for given natural language query~\cite{gu2016deep}. 
 \ei 
 Note that the above problem is not solvable by waiting for faster CPUs/GPUs. We 
-can no longer rely on Moore's Law ~\cite{moore1998cramming}to double our computational power every 18 months. Power consumption and heat dissipation issues effect block further exponential increases to CPU clock frequencies~\cite{kumar2003single}. Cloud computing environments are extensively monetized so the total financial cost of training models can be prohibitive, particularly for very expensive tasks; For example, it would take 15 years of CPU time to learn the tuning parameters of software clone detectors proposed in ~\cite{wang2013searching}. Much of that CPU time is wasted time if there is a faster and more effective way.
+can no longer rely on Moore's Law ~\cite{moore1998cramming}to double our computational power every 18 months. Power consumption and heat dissipation issues effect block further exponential increases to CPU clock frequencies~\cite{kumar2003single}. Cloud computing environments are extensively monetized so the total financial cost of training models can be prohibitive, particularly for very expensive tasks; For example, it would take 15 years of CPU time to learn the tuning parameters of software clone detectors proposed in ~\cite{wang2013searching}. Much of that CPU time is wasted time if there is a faster  way.
 
 Based on the above, we assert that 
 avoiding slow methods for software analytics is an 
@@ -375,41 +360,47 @@ open and urgent issue.
 
 \subsection{What is Deep Learning?}
 
+This paper explores faster ways to achieve results from
+software analytics based on deep learning.
 Deep learning is a branch of machine learning built on multiple layers of neural networks that attempt to model high level abstractions in data. According to LeCun et al.~\cite{lecun2015deep}, deep learning methods are representation-learning methods with multiple levels of representation,
 obtained by composing simple but non-linear modules that each
 transform the representation at one level (starting with the raw input)
 into a representation at a higher, slightly more abstract level. Compared to the conventional
-machine learning algorithms, deep learning methods are very good at discovering high-dimensional data
+machine learning algorithms, deep learning methods are very good at exploring high-dimensional data
 and have been applied into many fields~\cite{schmidhuber2015deep,arel2010deep}.
 
-With the vast amounts of computational power and data, 
+By utilizing extensive computational power, 
 deep learning has been proven to be a very powerful method 
 by researchers in many fields\cite{lecun2015deep}, like computer vision and natural language processing\cite{krizhevsky2012imagenet,mikolov2013distributed,sutskever2014sequence}. In 2012, 
 Convolution neural networks method won the ImageNet competition ~\cite{krizhevsky2012imagenet},
 which achieves half of the error rates of the best competing
 approaches. After that, CNN becomes the dominant approach for almost all recognition
 and detection tasks in computer vision community. CNNs are desgined to process the data in the form of mupltple arrays, e.g., image data. According to LeCun et al.~\cite{lecun2015deep},
-recent CNN methods are usually a huge network composed of 10 to 20 layers, hundreds of millions of weights and billions of connections between units. With advanced hardware and algorithm parallelization, training such model still need a few hours~\cite{lecun2015deep}. For the tasks that deal with sequential data, like text and speech, recurrent neural networks(RNNs) are working well in this situation. 
-RNNs are found to be good at predicting next character and word given the context. For example, Graves et al.~\cite{graves2013speech} proposed to use long short-term memory(LSTM) RNNs to perform speech recognition, 
-which achieves $17.7\%$ on the benchmark testing data. Sutskever et al.~\cite{sutskever2014sequence} used two multiplelayered LSTM RNNs to translate sentences in English to French.
+recent CNN methods are usually a huge network composed of 10 to 20 layers, hundreds of millions of weights and billions of connections between units. With advanced hardware and algorithm parallelization, training such model still need a few hours~\cite{lecun2015deep}. 
+% For the tasks that deal with sequential data, like text and speech, recurrent neural networks(RNNs) are working well in this situation. 
+% RNNs are found to be good at predicting next character and word given the context. For example, Graves et al.~\cite{graves2013speech} proposed to use long short-term memory(LSTM) RNNs to perform speech recognition, 
+% which achieves $17.7\%$ on the benchmark testing data. Sutskever et al.~\cite{sutskever2014sequence} used two multiplelayered LSTM RNNs to translate sentences in English to French.
 
 
 
 
 \subsection{Deep Learning in SE}
 
-Recently, deep learning also has attracted  attentions from researchers and practitioners in software
+We study deep learning since, recently, it  has attracted 
+much attentions from researchers and practitioners in software
  community\cite{wang2016automatically, gu2016deep, xu2016predicting,white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep,yuan2014droid}.
  These researchers applied  deep learning techniques to solve various problems,
  including defect prediction, bug localization, clone code detection, API recommendation, 
  effort estimation and linkable knowledge prediction.
  
-By carefully reading, these work can be divided into the following two categories:
+We find that this work   can be divided into   two categories:
  
 \bi
-\item treat deep learning as a feature extractor, and then apply other regular machine learning to do further job~\cite{lam2015combining,wang2016automatically,choetkiertikul2016deep}.
-\item apply deep learning directly to solve the problems~\cite{gu2016deep,xu2016predicting,white2016deep,white2015toward,yuan2014droid}.
+\item Treat deep learning as a feature extractor, and then apply other regular machine learning to do further job~\cite{lam2015combining,wang2016automatically,choetkiertikul2016deep}.
+\item Solve problems directly with  deep learning~\cite{gu2016deep,xu2016predicting,white2016deep,white2015toward,yuan2014droid}.
 \ei
+\noindent
+\subsubsection{Deep Learning as  Pre-Processor:}
 
 Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural network
  in combination with rVSM to automatically locate the potential buggy files for a given
@@ -418,12 +409,12 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  higher top-1 accuracy than baseline methods, respectively. The training time for deep neural
  network was reported from 70 to 122 minutes on a computer with 32 cores CPU,
  126 GB RAM machine. However,
- no such time information reported about baseline methods.
+ no such time information was reported about baseline methods.
  
  Wang et al.~\cite{wang2016automatically} applied deep belief network to automatically
  learn semantic features from token vectors extracted from the studied program. After
  that, Naive Bayes and Logistic Regression methods are used to evaluate the effectiveness
- of such feature generation method as well as PROMISE and AST features. In terms of
+ of   feature generation. In terms of
  running time, Wang et al. only reported time for generating semantics features with deep belief network, which
  ranged from 8 seconds to 32 seconds. However, the time for training and tuning deep belief network is
  missing. Furthermore, to evaluate the effectiveness of deep belief network in terms of time cost, 
@@ -437,6 +428,9 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  significant improvement over the baseline method bag-of-word. No further information regarding
  runtime was reported for both methods.
  
+ 
+\noindent\subsubsection{Deep Learning as  a Problem Solver:}
+
  White et al.~\cite{white2015toward, white2016deep} applied
  recurrent neural networks, one type of  deep learning techniques, 
  to address code clone detection and code suggestion. As they reported,
@@ -450,18 +444,18 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
 Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network(RNN)
  based method, D{\scriptsize EEP}API, to generate API usage sequences for a given natural language query. 
  Compared with the baseline method {\it SWIM}~\cite{raghothaman2016swim} and 
- {\it Lucene + UP-Miner}~\cite{wang2013mining},  D{\scriptsize EEP}API has improved the performance a lot.
- However, one can not ignore the fact that such model was trained with a Nivdia K20 GPU for about 240 hours.
+ {\it Lucene + UP-Miner}~\cite{wang2013mining},  D{\scriptsize EEP}API   improved the performance significantly.
+ However, that improvement came at a cost: that  model was trained with a Nivdia K20 GPU for  240 hours.
  
- Xu et al.~\cite{xu2016predicting} utilized neural language model and  
+ XU~\cite{xu2016predicting} utilized neural language model and  
  convolution neural network(CNN) to  learn word-level and document-level features to
  predict semantically linkable knowledge units in Stack Overflow. 
  In terms of performance metrics, like precision, recall and F1-score,
  CNN method was evaluated much better than 
  the baseline method support vector machine(SVM). 
- However, the time cost for training CNN is not ignorable as it took
- 14 hours to train CNN model on a 2.5GHz PC with 16 GB RAM 
- to achieve the relative low loss convergence.
+ However, once again, that performance improvement came at a cost:
+ their deep learner required  
+ 14 hours to train CNN model on a 2.5GHz PC with 16 GB RAM.
  
  Yuan et al.~\cite{yuan2014droid} proposed a deep belief network based method for
  malware detection on Android apps. By training and testing
@@ -471,32 +465,43 @@ Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network(RNN)
  However, they did not report any runtime comparison between deep learning method and 
  other classic machine learning methods.
  
- In summary,  deep learning is used extensively in software
- engineering community. They presented somewhat or even much better results compared with
- the baseline methods. However, they either did not present the computational and time cost, like \cite{white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep,yuan2014droid}, or simply listed
- the cost as it is without further discussion\cite{wang2016automatically, gu2016deep, xu2016predicting}. Without comparing cost with the baseline methods like all above paper,
- we actually do not have a concrete idea about how well deep learning can solve software engineering problems in terms of both benefits and costs. Especially when we do not have much knowledge about
- whether such problems are suitable for deep learning. 
  
-As deep learning techniques cost huge amount of time and computational
+ \subsubsection{Issues with Deep Learning:}
+ In summary,  deep learning is used extensively in software
+ engineering community.  A common pattern
+ in that research is to:
+ \bi
+ \item
+ Report DL's benefits, but not   its CPU cost\cite{white2016deep,white2015toward,lam2015combining,choetkiertikul2016deep,yuan2014droid};
+ \item
+ Or simply show
+ the cost, without comment\cite{wang2016automatically, gu2016deep, xu2016predicting}.
+ \ei
+Since  deep learning techniques cost large amount of time and computational
 resources to train its model,
 one might ask question whether the improvements from deep learning is worth
 the costs. {\it Are there any simple techniques that achieve similar improvements
 with less resource costs?} To investigate how simple methods could improve baseline
-methods, we select Xu et al.\cite{xu2016predicting} study as a case study. The reason
+methods, we select XU\cite{xu2016predicting} study as a case study. The reason
 is as follows:
 \bi 
-\item Most deep learning methods are too complicated to reimplement just based on the description
-in the paper and details about how the parameters were set are ususally missing ~\cite{white2016deep,white2015toward,lam2015combining,wang2016automatically,choetkiertikul2016deep,gu2016deep}, where a tinny difference may lead to a huge difference in the results.
-\item Some studies did not report their runtime and experimental environment, which makes it harder for us
+\item Many deep learning methods are impractically slow
+to run enough times to obtain statistically significant results.
+\item
+Further, it is not
+yet common practice for DL researchers
+to share their implementations and data~\cite{white2016deep,white2015toward,lam2015combining,wang2016automatically,choetkiertikul2016deep,gu2016deep}, where a tinny difference may lead to a huge difference in the results.
+\item Some studies do not report their runtime and experimental environment, which makes it harder for us
 to systematically compare our results with theirs~\cite{choetkiertikul2016deep,yuan2014droid,white2015toward, white2016deep}.
-\item Xu's baseline method is simple to implement and the training and testing data is public available, which means there is a high chance that we could reproduce Xu's baseline results. 
-\ei 
+\ei
+This paper explore the  XU work since it
+is simple to implement and the training and testing data is public available.
+
 
 
 
 % In this paper, we revisit the research problems 
-% from Xu et al.\cite{xu2016predicting} work, and by applying parameter tuning 
+% from XU\cite{xu2016predicting} work, and by applying parameter tuning 
 % to SVM algorithms, we find that the results we've got, on average, are even 
 % better than their CNN results with quite less training and tuning time.
 % Specifically, SVM with optimal tunings have won over deep learning 
@@ -513,7 +518,7 @@ discusses related work on parameter tuning.
 
 Machine learning algorithms are designed to explore the instances
 to learn the bias. However, most of these algorithms are controlled by parameters
-such:
+such as:
 \bi
 \item
 The maximum allowed depth
@@ -573,7 +578,7 @@ Yet, in their survey of LDA use in SE, they found that very few
 researchers (4 out of 57 papers) explored the benefits of tuning
 
 One troubling trend is that, in the few SE papers that perform tuning,
-they do using methods heavily deprecated in the machine learning community.
+they do so using methods heavily deprecated in the machine learning community.
 For example, two SE papers that use tuning~\cite{lessmann2008benchmarking,tantithamthavorn2016automated}, 
 apply a simple grid search to explore the potential parameter space for optimal tunings.
 (such grid searchers run one for-loop for each parameter being optimized). 
@@ -606,20 +611,16 @@ classifier performance.
 
 
 
-\section{Method}
-
+\section{Method}\label{method}
+In the following, 
+we show that if Word Embedding + SVM is tuned with DE, 
+performs better than the deep learner preferred by XU.
+Also, that tuning and learning method is 80 times faster. 
 \subsection{Research Problem}\label{problem}
-This paper investigates {\it how deep learning techniques perform on software analytics compares
-with tuning baseline method}.
-For this task, we use  Xu et al.~\cite{xu2016predicting}  as a case study
-where convolution neural network(CNN), a deep learning technique, is used
-solve a multi-class classification problem based on text data from Stack Overflow.
 
-
-
-
-To predict relationships between two questions in StackOverflow,  precisely, 
-Xu et al.  divided linkable  units 
+This section is an overview of the the task and methods 
+used by XU. Their task was to  predict relationships between two questions in StackOverflow,  precisely, 
+XU  divided linkable  units 
 into {\it duplicate}, {\it direct link}, {\it indirect link} and {\it isolated}  four different categories 
 based on its relatedness. The details are listed as follows~\cite{xu2016predicting}:
 
@@ -631,7 +632,7 @@ based on its relatedness. The details are listed as follows~\cite{xu2016predicti
 \item Indirect link: one knowledge provide similar information to solve the question in the other knowledge unit, but not a direct answer.
 \item Isolated: these two knowledge units discuss unrelated questions.
 \ei 
-In that paper, Xu et al. provided the following two methods as baselines:
+In that paper, XU provided the following two methods as baselines:
 
 \bi
 \item TF-IDF + SVM: a multi-class SVM classifier with  36 textual features generated  based on the 
@@ -639,26 +640,24 @@ TF and IDF values of the words in a pair of knowledge units.
 \item Word Embedding + SVM:  a multi-class SVM classifier with word embedding generate by word2vec model~\cite{mikolov2013distributed}.
 \ei
 Both of these two baseline methods are compared against the proposed method, word embedding + CNN. 
+Note that XU did not tune their baseline methods.
 
-Note that Xu et al. did not tune their baseline methods. In the following, 
-we show that if Word Embedding + SVM is tuned with DE, then this baseline
-methods performs better than the deep learner preferred by Xu et al.
-Also, that tuning and learning is 80 times faster than using the deep learner. 
 
 
 \subsection{Learners and Their Parameters}
 SVM (support vector machines) have been proven to be a very successful method to solve
 text classification problem. An SVM  seeks to minimize misclassification
 errors by selecting a boundary or hyperplane that leaves
-the maximum margin between positive and negative classes, where the
+the maximum margin between positive and negative classes
+(where the
 margin is defined as the sum of the distances of the
-hyperplane from the closest point of the two classes\cite{joachims1998text}.
+hyperplane from the closest point of the two classes\cite{joachims1998text}).
 
 Like most machine learning algorithms, there are some parameters associated with
-SMV to control how it learns.  In Xu et al.'s experiment, they used a radial-bias function  (RBF) for their SVM kernel
+SMV to control how it learns.  In XU's experiment, they used a radial-bias function  (RBF) for their SVM kernel
 and set $\gamma$ to $1/k$, where $k$ is $36$ for TF-IDF + SVM method
 and $200$ for Word Embedding + SVM method. For other parameters, 
-Xu et al. mentioned that grid search was applied to optimize the SVM parameters, 
+XU mentioned that grid search was applied to optimize the SVM parameters, 
 but no further information was disclosed. 
 
 For our work, we used the SVM module from Scikit-learn~\cite{scikit-learn}, a Python package for machine learning,
@@ -672,14 +671,14 @@ with low values meaning `far' and high values meaning `close'. {\it coef0} is an
 in sigmod and  polynomial kernel function.
 
 As to why we used the ``Tuning Range'' shown in {parameters}, and not some other ranges,
-we note that (1)~those ranges included the defaults and also Xu et al.'s values ; (2)~the results shown below
+we note that (a)~those ranges included the defaults and also XU's values ; (b)~the results shown below
 show that by exploring those ranges,  we achieved large gains in the performance of our baseline method.
 This is not to say that {\em larger} tuning ranges might not result in {\em greater} improvements.
 However, for the goals of this paper (to show that tuning baseline method do matter), exploring
 just these ranges shown in \tab{parameters} will suffice.
 
 
-%In this work, we investigate whether parameter tunings can improve the baseline method based on Xu et al. work.
+%In this work, we investigate whether parameter tunings can improve the baseline method based on XU work.
 %Specifically, to compare with the proposed method Word Embedding + CNN, we choose Word Embedding + SVM
 %as our baseline, where both CNN and SVM methods are supplied with the same word embedding feature data. 
 
@@ -692,7 +691,7 @@ to each other in the embedding space~\cite{mikolov2013distributed}.
 
 Several methods have been proposed to generate word embeddings, 
 like skip-gram~\cite{mikolov2013distributed}, GloVe ~\cite{pennington2014glove}
-and PCA on the word co-occurrence matrix~\cite{lebret2013word}. To replicate Xu et al. work,
+and PCA on the word co-occurrence matrix~\cite{lebret2013word}. To replicate XU work,
 we used continuous skip-gram model(word2vec),  which is a unsupervised word representation learning method based on
 neural networks. 
 
@@ -715,8 +714,9 @@ To improve the computation efficiency, Mikolove et al. \cite{mikolov2013distribu
 hierachical softmax and negative sampling
 techniques. More details can be found in ~\cite{mikolov2013distributed}.
 
-As noted, skip-gram itself has several parameters that will drive the algorithm 
-to learn the word embeddings,  like {\it window size} and {\it dimensionality of embedding space}. 
+Skip-gram's parameters control how that algorithm
+  learns   word embeddings. Those parameters include
+  {\it window size} and {\it dimensionality of embedding space}. 
 Zucoon et al. \cite{zuccon2015integrating} found that embedding dimensionality
 and context window size have no consistent impact on retrieval model performance. However,
 Yang et al.~\cite{yang2016using} showed that large context window and dimension
@@ -732,8 +732,8 @@ To train our word2vec model, $100,000$ knowledge units tagged with ``java'' from
 Stack Overflow {\it posts} table  (include titles, questions and answers)
 are randomly selected as a word corpus\footnote{Without further explanation, 
 all the experiment settings, including learner algorithms,
-training/testing data split, etc, strictly follow Xu et al.'s work. }. 
-After applying proper data processing techniques proposed by Xu et al., like
+training/testing data split, etc, strictly follow XU's work. }. 
+After applying proper data processing techniques proposed by XU, like
  remove the unnecessary HTML tags and keep short code snippets in
 {\it code} tag, then fit the corpus into {\it gensim} word2vec module ~\cite{rehurek2010software},
 which is a python wrapper over original word2vec package.
@@ -833,7 +833,7 @@ the main steps in DE is described in \fig{optimize}.
 
 
 
-  \begin{figure}[!t]\small
+  \begin{figure}[!h]\small
      \begin{tabular}{|p{.95\linewidth}|}\hline
       1. Given a model(e.g., SVM) with $n$ decisions(e.g., $n=4$),
       TUNER calls SAMPLE $N=10*n$ times.
@@ -844,7 +844,8 @@ the main steps in DE is described in \fig{optimize}.
       {\it F1-score}
 
      3. TUNER tries to each replace {\em pop}$_i$ with a mutant $m$
-     built by extrapolating between three other members of population $a,b,c$.
+     built using Storn's differential evolution method~\cite{storn1997differential}.
+     DE extrapolates between three other members of population $a,b,c$.
      At probability $p_1$, for each decision $a_k \in a$, then
      $m_k= a_k \vee (p_1 < \mathit{rand}() \wedge( b_k \vee c_k))$.
 
@@ -903,22 +904,22 @@ the main steps in DE is described in \fig{optimize}.
     \label{fig:workflow}
 \end{figure*}
 
-\section{Experiment Design}
+\section{Experiment Design}\label{experiment}
 \subsection{Research Questions}\label{RQ}
  To systematically investigate whether tuning can improve the 
  performance of baseline methods compared with deep learning method, we set
  the following three research questions:
  
  \bi
- \item RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?
- \item RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?
- \item RQ3: Is tuning SVM running faster than Xu et al.'s deep learning method in terms of runtime?
+ \item RQ1: Can we reproduce XU's baseline results (wordembedding+SVM)?
+ \item RQ2: Is tuning SVM comparable with XU's deep learning method in terms of performance scores?
+ \item RQ3: Is tuning SVM running faster than XU's deep learning method in terms of runtime?
  \ei
  
  RQ1 is to investigate whether our implementation of wordbedding +SVM method has
- the similar performance with Xu et al.'s baseline, which makes sure that our following 
- analysis can be generalized to Xu et al.'s conclusion. RQ2 and RQ3 lead us to
- investigate whether tuning SVM comparable with Xu et al.'s deep learning from both 
+ the similar performance with XU's baseline, which makes sure that our following 
+ analysis can be generalized to XU's conclusion. RQ2 and RQ3 lead us to
+ investigate whether tuning SVM comparable with XU's deep learning from both 
  performance and cost aspects.
  
 
@@ -947,9 +948,9 @@ knowledge pairs as in~\cite{xu2016predicting}\footnote{https://github.com/XBWer/
 where 6,400 pairs of  knowledge units for training and 1,600 pairs for testing. And each type 
 of linked knowledge units accounts for $1/4$ in both training and testing data. The reasons are:
 \bi
-\item It is to insure that  performance of our baseline method are as closed to Xu et al.'s as possible.
+\item It is to insure that  performance of our baseline method are as closed to XU's as possible.
 \item Since deep learning method is way complicate compared with SVM and a little difference in implementations
-might lead to different results, to fairly compare with Xu et al's result, we simply use the  performance scores
+might lead to different results, to fairly compare with Xu et al's result, we can use the  performance scores
 of CNN method from~\cite{xu2016predicting} without any implementation bias introduced.
 \ei
 
@@ -977,7 +978,7 @@ all the performance scores reported below are averaged values over 10 runs.
 \subsection{Evaluation Metrics}
 When evaluating the performance of tuning SVM on the
 multi-class linkable knowledge units prediction problem,
-consistent with Xu et al.\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
+consistent with XU\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
 as the evaluation metics.
 
 \begin{table}[htp]
@@ -1036,12 +1037,12 @@ and $\sum_{i}n_{ij}$ is the predicted number of knowledge units in class $C_j$.
 Recall from Algorithm~1 that we call differential evolution once for each
 optimization goal. Generally, this goal depends on which metric is most important for
 the business case. In this work, we use $F1$ as the score because it controls
-the tradeoff between precision and recall, which is also consistent with Xu et al.\cite{xu2016predicting}
+the tradeoff between precision and recall, which is also consistent with XU\cite{xu2016predicting}
 and is also widely used in software engineering
 community to evaluate classification results\cite{wang2016automatically,menzies2007data,fu2016tuning,kim2008classifying}.
 
 
-\section{Results}
+\section{Results}\label{results}
 In this section, we present our experimental results. To answer research questions raised in
 Section~\ref{RQ}, we conducted two experiments:
 \bi
@@ -1051,7 +1052,7 @@ Compare   wordembedding+SVM using Xu's code and our code;
 Compare our tuning SVM method with Xu's CNN.
 \ei
 Since we used the same training and testing data set provide by Xu
-et al.\cite{xu2016predicting} and conducted our experiment in the same procedure and metrics, we simply used the results reported in the work by Xu et al.\cite{xu2016predicting} for performance comparison. 
+et al.\cite{xu2016predicting} and conducted our experiment in the same procedure and metrics, we simply used the results reported in the work by XU\cite{xu2016predicting} for performance comparison. 
 
 
 
@@ -1083,18 +1084,18 @@ et al.\cite{xu2016predicting} and conducted our experiment in the same procedure
 %\label{tab:baseline}
 %\end{table}
 
-\textbf{RQ1: Can we reproduce Xu et al.'s baseline results (wordembedding+SVM)?}
+\textbf{RQ1: Can we reproduce XU's baseline results (wordembedding+SVM)?}
 
 
 This first question   is    important to our work since, without the original tool released by Xu et al,
 we need to insure that  our reimplementation of their baseline method (WordEmbedding + SVM) has a similar performance to their work.
-Accordingly, we carefully follow Xu et al.'s procedure\cite{xu2016predicting}. We 
+Accordingly, we carefully follow XU's procedure\cite{xu2016predicting}. We 
 use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $kernel= $``rbf''. After that, the same training and testing knowledge unit pairs are applied.
 
 
 \begin{table}[!htp]
 \centering
-\caption{Comparison of Our Baseline Method with Xu et al.'s}
+\caption{Comparison of Our Baseline Method with XU's}
 \resizebox{0.48\textwidth}{!}{
 \begin{tabular} {@{}l l  c c  c c c@{}}
 \hline
@@ -1131,7 +1132,7 @@ use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $kern
 
 
  \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our baseline method with
- Xu et al.'s in terms of accuracy, precision, recall and F1-score. As we can see, 
+ XU's in terms of accuracy, precision, recall and F1-score. As we can see, 
  when predicting these four different types of relatedness between knowledge unit pairs,
  our WordEmbedding+SVM method has  very  similar performance scores to the baseline method
  reported by Xu et al in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
@@ -1153,7 +1154,7 @@ has very closed performance in all the evaluated metrics
  \end{myshadowbox}
 The significance of this conclusion is that, moving forward,
 we can  use the performance of our  reimplementation as  a valid surrogate for
-the work of Xu et al.
+the work of XU.
 
 \begin{table}[!htp]
 \centering
@@ -1185,11 +1186,10 @@ the work of Xu et al.
  \end{tabular}}
 \label{tab:RQ2}
 \end{table}
+ 
+\textbf{RQ2: Is tuning SVM comparable with XU's deep learning method in terms of performance scores?}
 
-\newpage
-\textbf{RQ2: Is tuning SVM comparable with Xu et al.'s deep learning method in terms of performance scores?}
-
-To answer this question, we run the experiment designed as~\fig{workflow}, where DE is applied to 
+To answer this question, we run the worklfow of \fig{workflow}, where DE is applied to 
 find the optimal parameters for SVM based on the training and tuning data. Then the optimal tunings
 applied on the SVM model and evaluate the built learner on testing data. Note that, in this study,
 since we mainly focus on {\it precision}, {\it recall} and {\it F1-score} measures and {\it F1-score} is the
@@ -1206,13 +1206,13 @@ for all metrics. The highest score for   KU pair
 \item
 Without tuning, Xu et al's CNN method outperforms
 the baseline SVM in $\frac{10}{12}$ evaluation metrics across all 4 classes. 
-The largest performance improvement is $0.47$ for {\it recall} on {\it Direct Link} class. Note that this result is consistent with Xu et al.'s conclusion
+The largest performance improvement is $0.47$ for {\it recall} on {\it Direct Link} class. Note that this result is consistent with XU's conclusion
 that their CNN method is superior to standard SVM.
 \item
 After tuning SVM, the deep learning method has no such advantage.
 \ei
 \fig{TunedSVM-CNN} 
- shows the score delta between tuned SVM and CNN method. Any bar above indicates that tuned SVM has a better performance score than CNN.
+ shows the score delta between tuned SVM and CNN method. Any bar above zero indicates that tuned SVM has a better performance score than CNN.
 In this figure:
 \bi
 \item
@@ -1220,9 +1220,10 @@ CNN has a slightly better performance on {\it Duplicate} class for {\it precisio
 \item
 Even when CNN performs better that our DE-based method,
 the largest differences is less than $0.1$.
-\ei
-Across \fig{TunedSVM-CNN},
+\item
+Across all of \fig{TunedSVM-CNN},
 in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores than CNN, with the largest deleta of $0.222$.
+\ei
 %and that's
 %$28\%$ improvements over CNN on predicting {\it Indirect Link} for the {\it recall} %measure.
 
@@ -1279,7 +1280,7 @@ the deep learning method, CNN, does not have any performance advantage over our 
  \end{myshadowbox}
  
 
-\textbf{ RQ3: Is tuning SVM running faster than Xu et al.'s deep learning method in terms of runtime?}
+\textbf{ RQ3: Is tuning SVM running faster than XU's deep learning method in terms of runtime?}
 
  
 When comparing the runtime of two learning methods, it obviously should be conducted under the
@@ -1326,41 +1327,51 @@ CNN's extra runtimes are a particular concern since (a) they are very long;
 and (b)~these would be incurred anytime a researchers wants to update the CNN model
 with new data or wanted to validate the XU result. 
  
-\section{Discussion}
+\section{Discussion}\label{discussion}
  
 \subsection{Implication}
 
-According to the above results, we find that parameter tuning on SVM can dramatically
-improve the performance of baseline method compared with CNN.
-While tuning does not produce the best results on all evaluation measures, 
-we advocate its use since it is very simple and very fast(e.g., $80X$ faster in this case).
-Based on this study, we have the following implications for the software engineering community.
+Beyond the specifics of this case study, what general principles
+can we take from the above work?
 
-{\it Understand the task}. The more we understand something, the better we can match tools to tasks. Tools that are poorly matched to task are usually complex and/or slow to execute. Parameter tuning seems a better match for the tasks explored here since it is neither complex nor slow. Although deep learning methods have widely and successfully applied in other community to address problems, like pattern recognition, machine translation and recommendation
-systems, definitely it is not the best match for this task explored in this study. However, this study
-does not intend to stop researchers from applying deep learning techniques into software analytics. Instead, we believe are lots of possibilities in SE field where deep learning could have a great impact and we suggest apply deep learning in more
-effective and efficient way.
+\subsubsection{Understand the task:}
+One reason to try different tools for the same task is to better
+understand the task.
+The more we understand a task, the better we can match tools to that task. Tools that are poorly matched to task are usually complex and/or slow to execute.  In the case study of this paper, we would say that
 
-{\it Do not ignore resource cost any more.} According to Calero and Pattini~\cite{calero2015green}, they find that many current organizational redesigns are motivated (at least in part) by arguments based on sustainability (i.e. using fewer resources to achieve results) and managers used sustainability-based redesigns to explore cost-cutting opportunities. As fundamental research, resource cost should also never be ignored any more.
-For a given task, the simpler and faster ways with low resource cost
-to achieve results should be given more preference than that 
-are currently achievable by slower and more complex methods. As pointed out
-at the beginning of this paper, deep learning is so resource-consuming technique
- therefore, {\it the  trade-off between performance and cost should never
-be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
-improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
- or even better, performance to deep learning while $80X$ faster.
-Therefore, it should not happen any more that simply apply deep learning on SE tasks
-without reporting and analyzing the resource consumption as well as the trade-off.  
+\bi
+\item
+Deep learning is                   a poor match to the task of linking questions in Stack Overflow
+since it is so slow;
+\item
+Differential evolution is a much better match since it is so fast.
+\ei
+That said, 
+it  is important to stress that the point of this study
+is not to deprecate deep learning.  
+There are many scenarios were we
+ believe  deep learning would be a natural
+ choice (e.g. when analyzing complex speech or visual data). 
+ 
+
+
+
+\subsubsection{Treat resource constraints as design challenges:}
+As a general engineering principle,
+we think it insightful to consider the resource cost
+of a tool before applying that tool.
+It turns out that this is a design pattern used in contemporary industry.
+According to Calero and Pattini~\cite{calero2015green},  many current commercial  redesigns are motivated (at least in part) by arguments based on sustainability (i.e. using fewer resources to achieve results).
+In fact, they say that managers used sustainability-based redesigns to 
+motivate extensive cost-cutting opportunities. 
+
  
 
 
  
 \subsection{Threads to Validity}
-For any empirical study, there might be some potential threats that
-affect the conclusion. We identify the following threats to validity:
 
-Threats to \textbf{internal validity} refers to consistency of the results 
+Threats to \textbf{internal validity} concern the consistency of the results 
 obtained from the result. In our study,  to investigate how
 tuning can improve the performance of baseline methods and how well
 it perform compared with deep learning method, we select
@@ -1368,16 +1379,16 @@ Xu et al's  WordEmbedding+SVM baseline method as a case study. Since the origina
 WordEmbedding+SVM (baseline 2 method in \cite{xu2016predicting}) is not 
 publicly available, we have to reimplement our version of WordEmbedding+SVM as
 the baseline method in this study. As shown in RQ1, our implementation has
-quite similar results to Xu et al.'s on the same data sets. The variance might 
-result from the word2vec that is trained from 100,000 randomly selected data.
-Hence, we believe that our implementation reflect the original
- baseline method in \cite{xu2016predicting}. In RQ3, when comparing the runtime of tuning
- SVM and CNN, we run SVM with parameter tuning experiment on a different environment
- from Xu et al.'s environment. However, we rerun our experiment on another
- inferior experimental environment, which is a Mackbook Air computer 
- with 1.4 GHz Intel Core i5 CPU and 8G RAM. In this experiment, we obtain
- the similar performance scores as in RQ2 and the runtime is $16$ minutes,
- which is till $50X$ faster than Xu et al's CNN method.
+quite similar results to XU's on the same data sets. Hence, we believe that our implementation reflect the original
+ baseline method in \cite{xu2016predicting}. 
+ 
+%  In RQ3, when comparing the runtime of tuning
+%  SVM and CNN, we run SVM with parameter tuning experiment on a different environment
+%  from XU's environment. However, we rerun our experiment on another
+%  inferior experimental environment, which is a Mackbook Air computer 
+%  with 1.4 GHz Intel Core i5 CPU and 8G RAM. In this experiment, we obtain
+%  the similar performance scores as in RQ2 and the runtime is $16$ minutes,
+%  which is till $50X$ faster than Xu et al's CNN method.
  
 
  
@@ -1386,21 +1397,22 @@ Hence, we believe that our implementation reflect the original
  other cases, or the ability to generalize the observations in a study. In this study,
  we compare our tuning baseline method with deep learning method, CNN, in terms of
  precision, recall, F1-score and accuracy. The experimental results are quite consistent
- for this knowledge units relatedness prediction tasks, i.e.,  muti-classification problem, in text mining. 
+ for this knowledge units relatedness prediction tasks, i.e.,  multi-classification problem, in text mining. 
  Nonetheless, we do not claim that our findings can be generalized to all software analytics tasks. 
  However, those other software analytics tasks often apply deep learning
- methods~\cite{choetkiertikul2016deep, wang2016automatically} and compare with
- the same regular learners explored in this paper, so it is quite possible that
- the conclusions of this paper apply to other software engineering tasks.
+ methods~\cite{choetkiertikul2016deep, wang2016automatically} 
+ and so it is quite possible that
+ the methods  of this paper (DE) would
+ be widely applicable, elsewhere.
  
  
 
 
-\section{Conclusion}
+\section{Conclusion}\label{conclusion}
 
 In this paper, we perform an comparative study to investigate
 how tuning can improve the baseline method compared with
-the state-of-art deep learning method, CNN, for predicting
+the state-of-art deep learning method  for predicting
 knowledge units relatedness on Stack Overflow. Our experimental
 results show that:
 
@@ -1427,12 +1439,14 @@ In this study, tuning SVM runs $80X$ faster than CNN method.
 % without reporting and analyzing the resource consumption as well as the tradeoff.  
 
 Based on the results of this study, we recommend that before applying 
-deep learning method on SE tasks, consider simple techniques to improve the baseline method.
-Simple methods do matter. For example, tuning parameters dramatically improve the 
-performance of SVM method.  Also, Grid search should
-never be used as {\it de facto} tuning method according to \cite{fu2016differential,bergstra2012random}. 
-Xu et al failed to find the best tunings by using grid search for
-the baseline method might confirm this point.
+deep learning method on SE tasks, implement
+  simpler techniques which could be used,
+  at the very least, for comparisons against a baseline.
+   
+% Also, Grid search should
+% never be used as {\it de facto} tuning method according to \cite{fu2016differential,bergstra2012random}. 
+% Xu et al failed to find the best tunings by using grid search for
+% the baseline method might confirm this point.
 
 As to the future work, we will explore more simple techniques to solve SE tasks and also
 investigate how deep learning techniques could be applied effectively in software engineering
@@ -1443,5 +1457,6 @@ field.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{0.main} 
+\balance
 
 \end{document}
