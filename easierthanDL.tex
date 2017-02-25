@@ -146,7 +146,7 @@ forum can be linked together.
 We show that a very simple optimizer called DE (differential evolution)
 can achieve  similar (and sometimes better) results 
 in 10 minutes. This DE method runs very fast:
-80 times faster than the 14
+84 times faster than the 14
 hours required for deep learning .
 
 We offer these results as a cautionary tale to the software analytics community.
@@ -227,8 +227,8 @@ This paper extends a prior result from ASE'16 by
  
  In their work, XU predicted whether two questions posted on Stack Overflow are semantically linkable. 
 Specifically,  a question along with its entire set of answers posted in Stack Overflow
-as a {\it knowledge unit}. If two knowledge units are semantically related, they're considered
-as {\it linkable} knowledge units. 
+as a{\it knowledge unit}. If two knowledge units are semantically related, they're considered
+as{linkable} knowledge units. 
  
 This paper debates what methods should be recommended
 to those wishing to repeat the analysis of   XU.
@@ -262,11 +262,11 @@ Using such a baseline, we can compare our methods to those of XU.
   XU's deep learning method?}
  Here,
 we apply differential evolution  to tune 
-WordEmbedding+SVM. In terms of {\it precision},{\it recall} and {\it F1-score}, we observe that this tuned SVM method outperforms CNN in most evaluation scores.
+WordEmbedding+SVM. In terms of{precision},{\it recall} and{F1-score}, we observe that this tuned SVM method outperforms CNN in most evaluation scores.
 
 {\it \textbf{RQ3}: Is tuning SVM with DEs faster than XU's deep learning method?}
 Our   DE method
- is  $80$ times faster than CNN. 
+ is  $84$ times faster than CNN. 
  
 We offer these results as a cautionary tale to the software analytics community.
 While deep learner is an exciting new technique, the benefits of this
@@ -443,8 +443,8 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
 
 Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network(RNN)
  based method, D{\scriptsize EEP}API, to generate API usage sequences for a given natural language query. 
- Compared with the baseline method {\it SWIM}~\cite{raghothaman2016swim} and 
- {\it Lucene + UP-Miner}~\cite{wang2013mining},  D{\scriptsize EEP}API   improved the performance significantly.
+ Compared with the baseline method { SWIM}~\cite{raghothaman2016swim} and 
+ { Lucene + UP-Miner}~\cite{wang2013mining},  D{\scriptsize EEP}API   improved the performance significantly.
  However, that improvement came at a cost: that  model was trained with a Nivdia K20 GPU for  240 hours.
  
  XU~\cite{xu2016predicting} utilized neural language model and  
@@ -615,7 +615,7 @@ classifier performance.
 In the following, 
 we show that if Word Embedding + SVM is tuned with DE, 
 performs better than the deep learner preferred by XU.
-Also, that tuning and learning method is 80 times faster. 
+Also, that tuning and learning method is 84 times faster. 
 \subsection{Research Problem}\label{problem}
 
 This section is an overview of the the task and methods 
@@ -841,7 +841,7 @@ the main steps in DE is described in \fig{optimize}.
 
       2. TUNER scores each {\em pop}$_i$ according to various objective
       scores $o$. In the case of our tuning SVM, the objective $o$ is to maximize
-      {\it F1-score}
+     {F1-score}
 
      3. TUNER tries to each replace {\em pop}$_i$ with a mutant $m$
      built using Storn's differential evolution method~\cite{storn1997differential}.
@@ -961,11 +961,11 @@ For training word2vec model, we randomly select 100,000 knowledge
  each word in wrod2vec model.
  
 As seen in \fig{workflow}, instead of using all the 6,400 knowledge units as training data, 
-we split the original training data into {\it new training data} and {\it tuning data}, which are
+we split the original training data into { new training data} and{tuning data}, which are
 used during parameter tuning procedure for training SVM and evaluating candidate
-parameters offered by DE. Afterwards, the {\it new training} data is again fitted into the SVM
+parameters offered by DE. Afterwards, the{new training} data is again fitted into the SVM
 with the optimal parameters found by DE and finally  the performance of the tuned
-SVM will be evaluated on the  {\it testing data}.
+SVM will be evaluated on the {testing data}.
 
 To reduce the potential variance caused
 by how the original training data is divided, {\it 10-fold cross-validation} is performed, where
@@ -979,7 +979,7 @@ all the performance scores reported below are averaged values over 10 runs.
 When evaluating the performance of tuning SVM on the
 multi-class linkable knowledge units prediction problem,
 consistent with XU\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
-as the evaluation metics.
+as the evaluation metrics.
 
 \begin{table}[htp]
 \caption {Confusion Matrix.}
@@ -1017,10 +1017,10 @@ accuracy = \frac{\sum_i c_{ii}}{\sum_{i}\sum_{j}c_{ij}}
 \end{array}
 \]}
 where ${\sum_{i}\sum_{j}c_{ij}}$ is the total number of knowledge units.
-For a given type of knowledge units, $C_j$, the {\it precision} is defined as probability of
+For a given type of knowledge units, $C_j$, the  precision is defined as probability of
 predicted knowledge units pairs over the actual number of knowledge unit pairs and
- {\it recall} is the percentage of knowledge unit pairs correctly classified. Mathematically,
-  {\it precision}, {\it recall}and {\it F1-score} of 
+ recall is the percentage of knowledge unit pairs correctly classified. Mathematically,
+  precision, recall and  F1-score of 
 the learner can be denoted as follows:
 
 {\[
@@ -1037,7 +1037,7 @@ and $\sum_{i}n_{ij}$ is the predicted number of knowledge units in class $C_j$.
 Recall from Algorithm~1 that we call differential evolution once for each
 optimization goal. Generally, this goal depends on which metric is most important for
 the business case. In this work, we use $F1$ as the score because it controls
-the tradeoff between precision and recall, which is also consistent with XU\cite{xu2016predicting}
+the trade-off between precision and recall, which is also consistent with XU\cite{xu2016predicting}
 and is also widely used in software engineering
 community to evaluate classification results\cite{wang2016automatically,menzies2007data,fu2016tuning,kim2008classifying}.
 
@@ -1136,8 +1136,8 @@ use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $kern
  when predicting these four different types of relatedness between knowledge unit pairs,
  our WordEmbedding+SVM method has  very  similar performance scores to the baseline method
  reported by Xu et al in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
- Except for {\it Duplicate} type, where our baseline 
-has a higher {\it precision} (i.e., $0.724$ v.s. $0.611$) but a lower {\it recall} (i.e., $0.525$ v.s.$0.725$). 
+ Except for { Duplicate} type, where our baseline 
+has a higher precision (i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
 
 \fig{OurSVM-Xu'sSVM} presents the same results in a graphical format.
 Any bar above zero means that our implementation has a better performance score than Xu's on predicting that specific knowledge unit relatedness class. As we can see, most 
@@ -1192,8 +1192,8 @@ the work of XU.
 To answer this question, we run the worklfow of \fig{workflow}, where DE is applied to 
 find the optimal parameters for SVM based on the training and tuning data. Then the optimal tunings
 applied on the SVM model and evaluate the built learner on testing data. Note that, in this study,
-since we mainly focus on {\it precision}, {\it recall} and {\it F1-score} measures and {\it F1-score} is the
-harmonic mean of {\it precision} and {\it recall}, we use {\it F1-score} as the tuning goal for DE.
+since we mainly focus on{precision},{recall} and{F1-score} measures and{F1-score} is the
+harmonic mean of{precision} and{recall}, we use{F1-score} as the tuning goal for DE.
 In other words, when tuning parameters,  DE expects to find a pair of candidate parameters that maximize
 {\it F1-score}. 
 %For CNN method, we simply adopt the Xu et al's results in ~\cite{xu2016predicting} because(1)deep learning method is not as easy as implementing SVM method, where a little difference in the structure might lead to significant result;(2) we are evaluating the learners with the same measures and use the same training and testing data.
@@ -1206,7 +1206,7 @@ for all metrics. The highest score for   KU pair
 \item
 Without tuning, Xu et al's CNN method outperforms
 the baseline SVM in $\frac{10}{12}$ evaluation metrics across all 4 classes. 
-The largest performance improvement is $0.47$ for {\it recall} on {\it Direct Link} class. Note that this result is consistent with XU's conclusion
+The largest performance improvement is $0.47$ for{recall} on{Direct Link} class. Note that this result is consistent with XU's conclusion
 that their CNN method is superior to standard SVM.
 \item
 After tuning SVM, the deep learning method has no such advantage.
@@ -1216,7 +1216,7 @@ After tuning SVM, the deep learning method has no such advantage.
 In this figure:
 \bi
 \item
-CNN has a slightly better performance on {\it Duplicate} class for {\it precision},{\it recall} and {\it F1-score} and a higher {\it recall} on {\it Direct link} class. 
+CNN has a slightly better performance on{Duplicate} class for{precision},{\it recall} and{F1-score} and a higher{recall} on{Direct link} class. 
 \item
 Even when CNN performs better that our DE-based method,
 the largest differences is less than $0.1$.
@@ -1225,7 +1225,7 @@ Across all of \fig{TunedSVM-CNN},
 in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores than CNN, with the largest deleta of $0.222$.
 \ei
 %and that's
-%$28\%$ improvements over CNN on predicting {\it Indirect Link} for the {\it recall} %measure.
+%$28\%$ improvements over CNN on predicting{Indirect Link} for the{recall} %measure.
 
  \begin{figure}[!t]
     \centering
@@ -1247,12 +1247,12 @@ in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores tha
  Tuning never   degrade SVM's performance (since there are no negative values
  in that chart).
  \item
- Tuning dramatically improves scores on predicting some classes of KU relatedness. For example, the {\it recall} of predicting {\it Direct\_link} is increased from $0.433$ to $0.903$, which is $108\%$ improvement over Xu's untuned SVM (To be fair for Xu et al, it is still $84\%$ improvement over our untuned SVM). At the same time, the corresponding {\it precision} and {\it F1} scores of predicting {\it Direct\_Link} are increased from $0.560$ to $0.851$ and $0.488$ to $0.841$,  which are $52\%$ and $72\%$ improvement over Xu's original report, respectively.
+ Tuning dramatically improves scores on predicting some classes of KU relatedness. For example, the{recall} of predicting{Direct\_link} is increased from $0.433$ to $0.903$, which is $108\%$ improvement over Xu's untuned SVM (To be fair for Xu et al, it is still $84\%$ improvement over our untuned SVM). At the same time, the corresponding{precision} and{F1} scores of predicting{Direct\_Link} are increased from $0.560$ to $0.851$ and $0.488$ to $0.841$,  which are $52\%$ and $72\%$ improvement over Xu's original report, respectively.
  \item
-A similar pattern can also be observed in {\it Isolated} class. 
+A similar pattern can also be observed in{Isolated} class. 
 \item
 Overall, tuning helps improve the performance
-of SVM by $0.238$, $0.228$ and $0.227$ in terms of {\it precision}, {\it recall} and {\it F1-score}
+of SVM by $0.238$, $0.228$ and $0.227$ in terms of{precision},{recall} and{F1-score}
 for all four KU relatedness classes.
 \ei
 Based on the performance scores in \tab{RQ2} and score delta in \fig{TunedSVM-CNN} and \fig{TunedSVM-SVM},
@@ -1312,13 +1312,13 @@ into a low loss convergence($< e^{-3}$)~\cite{xu2016predicting}.
 Our work, on the other hand
 only takes takes  $10$ minutes to run SVM with parameter tuning
 by DE on a similar environment.
-That is, the simple parameter tuning method on SVM is $80X$ faster than  Xu's deep learning method.
+That is, the simple parameter tuning method on SVM is $84X$ faster than  Xu's deep learning method.
 % \wei{Note that the runtime shown in \tab{env} does not take account of training word2vec model.
 %  The reason that we did not consider it is that both tuning SVM method and CNN method require word embedding as input.}
  
 \vskip 1ex
  \begin{myshadowbox}
-Compared to CNN method, tuning SVM is about $80X$ faster in terms of model building.
+Compared to CNN method, tuning SVM is about $84X$ faster in terms of model building.
 
  \end{myshadowbox}
 The significance of this finding is that, in this case study,
@@ -1421,7 +1421,7 @@ results show that:
 At least for WordEmbedding+SVM(baseline in \cite{xu2016predicting}) method, if not better,
 it performs as well as the proposed CNN method in \cite{xu2016predicting}.
 \item The baseline method with parameter tuning runs much faster than complicated deep learning.
-In this study, tuning SVM runs $80X$ faster than CNN method.
+In this study, tuning SVM runs $84X$ faster than CNN method.
 \ei
 
 
@@ -1431,10 +1431,10 @@ In this study, tuning SVM runs $80X$ faster than CNN method.
 % systems, it is still unclear which type of SE task is best fit for deep learning. There are lots
 % of possibilities in SE field to explore the application of deep learning. However, as pointed out
 % at the beginning of this paper, deep learning is so resource-consuming technique
-% and SE analytics task is usually light-weight,  {\it the  tradeoff between performance and cost should never
+% and SE analytics task is usually light-weight, {the  tradeoff between performance and cost should never
 % be ignored when applying deep learning}. The effort spent on deep learning might not be worthy the performance
 % improved by deep learning. As shown in our experimental results, our tuning SVM gets the similar,
-%  or even better, performance to deep learning while $80X$ faster.
+%  or even better, performance to deep learning while $84X$ faster.
 % Therefore, it should not happen any more that simply apply deep learning on SE tasks
 % without reporting and analyzing the resource consumption as well as the tradeoff.  
 
@@ -1444,7 +1444,7 @@ deep learning method on SE tasks, implement
   at the very least, for comparisons against a baseline.
    
 % Also, Grid search should
-% never be used as {\it de facto} tuning method according to \cite{fu2016differential,bergstra2012random}. 
+% never be used as{de facto} tuning method according to \cite{fu2016differential,bergstra2012random}. 
 % Xu et al failed to find the best tunings by using grid search for
 % the baseline method might confirm this point.
 
