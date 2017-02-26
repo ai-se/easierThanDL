@@ -135,7 +135,7 @@ a Case Study with Deep Learning}
 }
 \email{tim.menzies@gmail.com}
  
-% \pagestyle{plain}
+\pagestyle{plain}
 \begin{abstract}
 Much software research makes extensive use of automatic data miners.
 For example, recently    deep learning
@@ -150,10 +150,10 @@ in 10 minutes. This DE method runs very fast:
 hours required for deep learning .
 
 We offer these results as a cautionary tale to the software analytics community.
-While deep learner is an exciting new technique, the benefits of this
+While deep learning is an exciting new technique, the benefits of this
 method need to be carefully assessed w.r.t. its computational cost. 
 More generally,
-if researchers deploy some new and expensive process, that work should be baselined against some simpler and faster alternatives
+if researchers deploy some new and expensive process, that work should be baselined against some simpler and faster alternatives.
 This is particularly important for deep learning since these learners need 
  hours (to  weeks) to train the model.
 Such long CPU times limit the ability
@@ -228,7 +228,7 @@ This paper extends a prior result from ASE'16 by
  In their work, XU predicted whether two questions posted on Stack Overflow are semantically linkable. 
 Specifically,  a question along with its entire set of answers posted in Stack Overflow
 as a{\it knowledge unit}. If two knowledge units are semantically related, they're considered
-as{linkable} knowledge units. 
+as {\it linkable} knowledge units. 
  
 This paper debates what methods should be recommended
 to those wishing to repeat the analysis of   XU.
@@ -236,7 +236,7 @@ In their paper, they used a convolution neural
 network (a kind of deep leaner~\cite{lecun2015deep}). Such 
 CNNs are highly computationally expensive,
 often requiring network composed of 10 to 20 layers, hundreds of millions of weights and billions of connections between units~\cite{lecun2015deep}. Even with
-advanced hardware and algorithm parallelization, training such model still requires hours to weeks.
+advanced hardware and algorithm parallelization, training deep learning models still requires hours to weeks.
 For example:
 \bi
 \item
@@ -248,8 +248,8 @@ Le~\cite{le2013building} used  a cluster with 1,000 machines (16,000 cores) for 
 In this work,  we focus on whether using simple and faster methods can achieve
 the results that are currently achievable by the state-of-art deep learning method.
 Specifically, we repeat the XU
-study using  DE  (differential evolution~\cite{storn1997differential})
-which is a hyper-paramter optimization
+study using  DE  (differential evolution~\cite{storn1997differential}),
+which is a hyper-parameter optimization
 method.
 Our study asks:
 
@@ -262,9 +262,9 @@ Using such a baseline, we can compare our methods to those of XU.
   XU's deep learning method?}
  Here,
 we apply differential evolution  to tune 
-WordEmbedding+SVM. In terms of{precision},{\it recall} and{F1-score}, we observe that this tuned SVM method outperforms CNN in most evaluation scores.
+WordEmbedding+SVM. In terms of{precision},{ recall} and{F1-score}, we observe that this tuned SVM method outperforms CNN in most evaluation scores.
 
-{\it \textbf{RQ3}: Is tuning SVM with DEs faster than XU's deep learning method?}
+{\it \textbf{RQ3}: Is tuning SVM with DE faster than XU's deep learning method?}
 Our   DE method
  is  $84$ times faster than CNN. 
  
@@ -275,7 +275,7 @@ More generally,
 if researchers deploy some new and expensive process (like deep learning), that work should be baselined against some simpler and faster alternatives
  
 
-The rest of this paper is organized as follows. Section~\ref{background} describes the background and related work on deep learning and parameter tuning in SE. Section~\ref{method} explains the case study problem and proposed tuning method investigated in this study, while Section~\ref{experiment} describes the
+The rest of this paper is organized as follows. Section~\ref{background} describes the background and related work on deep learning and parameter tuning in SE. Section~\ref{method} explains the case study problem and proposed tuning method investigated in this study, then Section~\ref{experiment} describes the
 experimental settings of our study, including research questions, data sets, evaluation measures and experimental design.
 Section~\ref{results} presents the results. Section~\ref{discussion} discusses implications from the results and the threats to the validity of our study. Section~\ref{conclusion} concludes the paper and discuss the future work.
 \subsection{Reproduction Package}
@@ -899,7 +899,7 @@ the main steps in DE is described in \fig{optimize}.
  \begin{figure*}
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=\textwidth,height=3.3in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=\textwidth,height=3.6in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
     \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
     \label{fig:workflow}
 \end{figure*}
