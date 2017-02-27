@@ -105,8 +105,11 @@ shadow=false
 
 
 \begin{document} 
-\title{ Deep Learning is  too Slow?:\\
-A Case Study on Stack Overflow Knowledge Linking}
+% \title{ Swifter than Deep Learning:\\
+% A Case Study on Stack Overflow Knowledge Linking}
+% \title{Swifter Software Analytics: A Case Study on  Deep Learning.}
+\title{Easy over Hard: A Case Study on Deep Learning}
+% \title{Easy over Hard:\\ A Case Study on Deep Learning for Stack Overflow Knowledge Linking}
 % \titlenote{Produces the permission block, and
 %   copyright information}
 % \subtitle{Extended Abstract}
@@ -224,7 +227,7 @@ This paper extends a prior result from ASE'16 by
  This is an important problem. Modern SE
  is evolving so fast that these  forums
  contain more relevant and recent comments on 
- current technology than any textbook or research article.
+ current technologies than any textbook or research article.
  
  In their work, XU predicted whether two questions posted on Stack Overflow are semantically linkable. 
 Specifically, XU define a question along with its entire set of answers posted on Stack Overflow
@@ -261,8 +264,7 @@ Using such a baseline, we can compare our methods to those of XU.
  {\it \textbf{RQ2}: Can   DE   tune a standard learner such that
  it outperforms
   XU's deep learning method?}
- We apply differential evolution  to tune 
-Word Embedding + SVM. In terms of precision, recall and F1-score, we observe that the tuned SVM method outperforms CNN in most evaluation scores.
+ We apply differential evolution  to tune SVM. In terms of precision, recall and F1-score, we observe that the tuned SVM method outperforms CNN in most evaluation scores.
 
 {\it \textbf{RQ3}: Is tuning SVM with DE faster than XU's deep learning method?}
 Our   DE method
@@ -412,19 +414,20 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  bug report. By comparing it to baseline methods~(Naive Bayes~\cite{kim2013should}, learn-to-rank~\cite{ye2014learning}, 
  BugLocator~\cite{zhou2012should}), Lam et al. reported,$16.2-46.4\%$, $8-20.8\%$  and $2.7-20.7\%$ 
  higher top-1 accuracy than baseline methods, respectively~\cite{lam2015combining}. The training time for deep neural
- network was reported from 70 to 122 minutes on a computer with 32 cores 2.00GHz CPU,
+ network was reported from 70 to 122 minutes for 6 projects on a computer with 32 cores 2.00GHz CPU,
  126 GB memory. However,
- the runtime information of the baseline methods was reported.
+ the runtime information of the baseline methods was not reported.
  
  Wang et al.~\cite{wang2016automatically} applied deep belief network to automatically
  learn semantic features from token vectors extracted from the studied software program. After
  applying deep belief network to generate features from software code,
  Naive Bayes, ADTree and Logistic Regression methods are used to evaluate the effectiveness
- of feature generation. In terms of
+ of feature generation, which is compared to same learners using traditional 
+ static code features~(e.g.  McCabe metrics, Halstead's effort metrics and  CK object-oriented code mertics~\cite{kafura1987use,chidamber1994metrics,mccabe1976complexity,halstead1977elements}). In terms of
  runtime, Wang et al. only report time for generating semantics features with deep belief network, which
  ranged from 8 seconds to 32 seconds~\cite{wang2016automatically}. However, the time for training and tuning deep belief network is
  missing. Furthermore, to compare the effectiveness of deep belief network for generating features with extracting traditional 
- static code features(e.g.  McCabe metrics, Halstead's effort metrics and  CK object-oriented code mertics~\cite{kafura1987use,chidamber1994metrics,mccabe1976complexity,halstead1977elements} )in terms of time cost, 
+ static code features in terms of time cost, 
  it would be favorable to include all the time spent on feature extraction, including
  paring source code, token generation and token mapping.
  
@@ -436,10 +439,10 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  regular machine learning techniques, like CART, Random Forests, 
  Linear Regression and Case-Based Reasoning are applied to build the effort
  estimation models. Experimental results show that
- LSTM is reported to have a 
+ LSTM has a 
  significant improvement over the baseline method bag-of-words.
  However, no further information regarding
- runtime as well as hardware  is reported for both methods.
+ runtime as well as experimental hardware  is reported for both methods.
  
  
 \noindent
@@ -451,7 +454,7 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  the average training time for 8 projects were ranging from 34 seconds
   to 2977 seconds for each epoch on a two 3.3 GHz
  CPUs computer and each project required at least 30 epochs~\cite{white2016deep}.
- For the {\it JDK} project in their experiment, it would take 25 hours 
+Specifically, for the {\it JDK} project in their experiment, it would take 25 hours 
  on the same computer to train the models before getting prediction.
  For the time cost for code suggestions, authors did not mention any related information~\cite{white2015toward}.
 
@@ -475,7 +478,7 @@ Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network~(RNN)
  malware detection on Android apps. By training and testing
  the deep learning model with  200 features extracted
  from static analysis and dynamic analysis from 500 sampled Andorid app, they
- got $96.5\%$ accuracy for deep learning method  and $80\%$ for SVM~\cite{yuan2014droid}.
+ got $96.5\%$ accuracy for deep learning method  and $80\%$ for one baseline method, SVM~\cite{yuan2014droid}.
  However, they did not report any runtime comparison between deep learning method and 
  other classic machine learning methods.
  
@@ -485,7 +488,7 @@ which a convolution kernel is designed over programs' abstract
 syntax trees to capture structural information. Results show that their method achieved
 $94\%$ accuracy, which is better than the baseline method RBF SVM $88.2\%$
 on program classification problem~\cite{mou2016convolutional}. However, Mou
-et al.~\cite{mou2016convolutional} did not discuss any runtime comparison between the proposed method with
+et al.~\cite{mou2016convolutional} did not discuss any runtime comparison between the proposed method and
 baseline methods.
 
 
@@ -511,16 +514,16 @@ methods, we select XU~\cite{xu2016predicting} study as a case study. The reasons
 are as follows:
 \bi 
  
-\item Most paper's baseline methods are either not public available or complex to implement~\cite{white2016deep,lam2015combining}. 
+\item Most paper's baseline methods are either not publicly available or too complex to implement~\cite{white2016deep,lam2015combining}. 
 XU's baseline method is simple to implement.
 \item
 Further, it is not
 yet common practice for deep learning researchers
 to share their implementations and data~\cite{white2016deep,white2015toward,lam2015combining,wang2016automatically,choetkiertikul2016deep,gu2016deep}, where a tiny difference may lead to a huge difference in the results. Even though XU do not share their CNN tool, their
-training and testing data are public available, which can be used for our proposed method. Since the same training and testing data are used for XU's CNN and our proposed method,  we can compare results from our method with their CNN results.
+training and testing data are public available, which can be used for our proposed method. Since the same training and testing data are used for XU's CNN and our proposed method,  we can compare results from our method too their CNN results.
 \item Some studies do not report their runtime and experimental environment, which makes it harder for us
 to systematically compare our results with theirs~\cite{choetkiertikul2016deep,yuan2014droid,white2015toward, mou2016convolutional}.
-XU cleary report their experimental hardware and runtime, which will be easier for us compare our runtime to theirs.
+XU clearly report their experimental hardware and runtime, which will be easier for us compare our runtime to theirs.
 \ei
 
 
@@ -546,14 +549,6 @@ discusses related work on parameter tuning.
 Machine learning algorithms are designed to explore the instances
 to learn the bias. However, most of these algorithms are controlled by parameters
 such as:
-\bi
-\item
-The maximum allowed depth
-of decision tree built by CART;
-\item
-The number of trees to be built within a Random Forest.
-\ei
-
 
 %%%%%%%%%%%%%%%% list of parameters%%%%%%%%%%%%%%%%%%%%%
 %\renewcommand\arraystretch{1.2}
@@ -577,6 +572,16 @@ The number of trees to be built within a Random Forest.
 
 %%%%%%%%%%%%%%%% end of list of parameters%%%%%%%%%%%%%%%%%%%%%
 
+\bi
+\item
+The maximum allowed depth
+of decision tree built by CART;
+\item
+The number of trees to be built within a Random Forest.
+\ei
+
+
+
 Adjusting these parameters
 is called hyperparameter optimziation.
 It is a well   well explored approach in other communities ~\cite{bergstra2012random,li2016hyperband}. However, in SE,
@@ -598,7 +603,7 @@ to other data miners for the purposes of defect prediction.
 However, the Elish et al. paper makes no mention of any SVM tuning study~\cite{elish2008predicting}.
 
 In the arena of {\em topic modeling}, Agrawal et al.~\cite{agrawal2016wrong} investigated 
-the impact of parameter tuning on Latent Dirichlet Allocation(LDA).
+the impact of parameter tuning on Latent Dirichlet Allocation~(LDA).
 LDA 
   is a widely used technique in software engineering field
 to find related topics within unstructured text, 
@@ -606,9 +611,9 @@ like topic analytics on Stack Overflow ~\cite{barua2014developers}
 and source code analysis ~\cite{binkley2014understanding}.
  Agrawal et al. found that LDA suffers from conclusion instability
 ~(different input orderings can lead to very different results)
-that are a result of poor choice of the LDA control parameters~\cite{agrawal2016wrong}. 
+that is a result of poor choice of the LDA control parameters~\cite{agrawal2016wrong}. 
 Yet, in their survey of LDA use in SE, they found that very few  
-researchers ~(4 out of 57 papers) explored the benefits of tuning
+researchers ~(4 out of 57 papers) explored the benefits of tuning.
 
 One troubling trend is that, in the few SE papers that perform tuning,
 they do so using methods heavily deprecated in the machine learning community.
@@ -646,17 +651,17 @@ grid search in terms of efficiency and performance.
 
 \section{Method}\label{method}
 In the following, 
-we show that if Word Embedding + SVM is tuned with DE, 
-performs better than the deep learning method, CNN, preferred by XU.
+we show that Word Embedding + SVM tuned with DE performs better than the deep learning method, CNN, preferred by XU.
 Also, that tuning and learning method is 84 times faster. 
 \subsection{Research Problem}\label{problem}
+
+
 
 This section is an overview of the the task and methods 
 used by XU. Their task was to  predict relationships between two questions on Stack Overflow. Specifically, 
 XU  divided linkable knowledge  units 
 into 4 difference categories namely, {\it duplicate}, {\it direct link}, {\it indirect link} and {\it isolated}, 
 based on its relatedness. The definition of these four categories are shown in \tab{classes}~\cite{xu2016predicting}:
-
 %%%%%%% ================table--begin======================
 \begin{table}[!htp]
 \caption{Classes of Knowledge Unit Pairs.}\label{tab:classes}
@@ -695,6 +700,9 @@ TF and IDF values of the words in a pair of knowledge units.
 \ei
 Both of these two baseline methods are compared against the proposed method, Word Embedding + CNN. 
 
+In this study, we select  Word Embedding + SVM as the baseline because it uses word embedding as the input,
+which is the same as the Word Embedding + CNN method.
+
 
 
 
@@ -724,7 +732,7 @@ with low values meaning `far' and high values meaning `close'. {\it coef0} is an
 in sigmod and  polynomial kernel function.
 
 As to why we used the ``Tuning Range'' shown in \tab{parameters}, and not some other ranges,
-we note that (a)~those ranges include the defaults and also XU's values ; (b)~the results shown below
+we note that (a)~those ranges include the defaults and also XU's values; (b)~the results presented below
 show that by exploring those ranges,  we achieved large gains in the performance of our baseline method.
 This is not to say that {\em larger} tuning ranges might not result in {\em greater} improvements.
 However, for the goals of this paper (to show that tuning baseline method do matter), exploring
@@ -737,7 +745,7 @@ just these ranges shown in \tab{parameters} will suffice.
 
 
 \subsection{Learning Word Embedding}\label{embedding}
-Learning word embeddings refers to finding vector representations
+Learning word embeddings refers to find vector representations
 of words such that the similarities between words can be captured by cosine similarity of corresponding 
 vector representations. It is been shown that the words with similar semantic and syntactic are found closed
 to each other in the embedding space~\cite{mikolov2013distributed}.
@@ -755,7 +763,7 @@ The skip-gram model learns vector representations of words
  \begin{equation*}
  \frac{1}{n}\sum_{i=1}^{n} \sum_{-c\leq j \leq c, j \neq 0} log p(w_{i+j}|w_i)
 \end{equation*}
-where $c$ is the context window size and $w_{t+j}$ and $w_{t}$ represent surrounding words and center word, respectively.
+where $c$ is the context window size and $w_{i+j}$ and $w_{i}$ represent surrounding words and center word, respectively.
 The probability of $p(w_{i+j}|w_i)$ is computed according to the softmax function:
 
 \begin{equation*}
@@ -774,7 +782,7 @@ Zucoon et al.~\cite{zuccon2015integrating} found that embedding dimensionality
 and context window size have no consistent impact on retrieval model performance. However,
 Yang et al.~\cite{yang2016using} showed that large context window and dimension
  sizes are preferable to improve the performance when using CNN to solve  classification tasks
- for Twitter. Since this work is to compare performance of  tuning SVM  with CNNs, where
+ for Twitter. Since this work is to compare performance of  tuning SVM  with CNN, where
  skip-gram model is used to generate word vector representations for both of these methods, 
  tuning parameter of skip-gram model is beyond the scope of this paper 
  (but we will explore it in future work).
@@ -817,7 +825,7 @@ techniques such as {\em differential evolution}
 numerous {\em decomposition} approaches that use
     heuristics to decompose the total space into   small problems,   then apply a
     {\em response surface methods}~\cite{krall2015gale};
-     {\em NSGA II} ~\cite{zhang2007multi}and {\em NSGA III}~\cite{mkaouer2014high}.
+     {\em NSGA-II} ~\cite{zhang2007multi}and {\em NSGA-III}~\cite{mkaouer2014high}.
 
 
 
@@ -859,7 +867,7 @@ numerous {\em decomposition} approaches that use
  \begin{figure*}
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=\textwidth,height=4.0in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=\textwidth]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
     \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
     \label{fig:workflow}
 \end{figure*}
@@ -988,12 +996,12 @@ the main steps in DE is described in \fig{optimize}.
 \subsection{Dataset and Experimental Settings}
 Our experimental data comes from Stack Overflow data dump of 
 September 2016\footnote{https://archive.org/details/stackexchange},
-where {\it posts} table includes all the questions and answers posted on Stack Overflow
+where the {\it posts} table includes all the questions and answers posted on Stack Overflow
 up to date and the {\it postlinks} table describes the relationships between posts, 
 e.g., {\it duplicate} and {\it linked}. As mentioned in Section
 \ref{problem}, we have four different types of relationships in knowledge units.
 Therefore,  {\it linked} type is further divided into {\it indirectly linked} and {\it directly linked}.
-Overall, four different types of data are generated according the following rules:
+Overall, four different types of data are generated according the following rules~\cite{xu2016predicting}:
 \bi
 \item Randomly select a pair of posts from the {\it postlinks} table, if the value
 in  {\it PostLinkTypeId} field for this pair of posts is $3$, then this pair of posts is {\it duplicate} posts. 
@@ -1007,12 +1015,13 @@ not linkable, then this pair of posts is {isolated}.
 In this work, we use the same training and testing
 knowledge pairs as XU ~\cite{xu2016predicting}\footnote{https://github.com/XBWer/ASEDataset}, 
 where 6,400 pairs of  knowledge units for training and 1,600 pairs for testing. And each type 
-of linked knowledge units accounts for $1/4$ in both training and testing data. The reasons are:
+of linked knowledge units accounts for $1/4$ in both training and testing data. The reasons that
+we used the same training and testing data as XU are:
 \bi
 \item It is to ensure that  performance of our baseline method is as closed to XU's as possible.
-\item Since deep learning method is way complicated too compared to SVM and a little difference in implementations
-might lead to different results, to fairly compare with XU's result, we can use the  performance scores
-of CNN method from~\cite{xu2016predicting} without any implementation bias introduced.
+\item Since deep learning method is way complicated compared to SVM and a little difference in implementations
+might lead to different results. To fairly compare with XU's result, we can use the  performance scores
+of CNN method from XU's study~\cite{xu2016predicting} without any implementation bias introduced.
 \ei
 
 For training word2vec model, we randomly select 100,000 knowledge
@@ -1061,7 +1070,7 @@ as the evaluation metrics.
 \cline{3-6}
 & & \multicolumn{4}{ c| }{Classified as} \\ \cline{3-6}
 & & $C_1$ & $C_2$ & $C_3$ & $C_4$ \\ \cline{1-6}
-\multicolumn{1}{ |c  }{\multirow{4}{*}{Actual} } &
+\multicolumn{1}{ |c  }{\multirow{4}{*}{\rotatebox[origin=c]{90}{Actual}} } &
 \multicolumn{1}{ |c| }{$C_1$} & $c_{11}$ & $c_{12}$  & $c_{13}$ & $c_{14}$  & \\ \cline{2-6}
 \multicolumn{1}{ |c  }{}                        &
 \multicolumn{1}{ |c| }{$C_2$} & $c_{21}$& $c_{22}$ & $c_{23}$ & $c_{24}$ &  \\ \cline{2-6}
@@ -1090,8 +1099,8 @@ accuracy = \frac{\sum_i c_{ii}}{\sum_{i}\sum_{j}c_{ij}}
 \]}
 where ${\sum_{i}\sum_{j}c_{ij}}$ is the total number of knowledge units.
 For a given type of knowledge units, $C_j$, the  precision is defined as probability of
-predicted knowledge units pairs over the actual number of knowledge unit pairs and
- recall is the percentage of knowledge unit pairs correctly classified. F1-score is the harmonic mean of
+knowledge units pairs correctly classified as $C_j$ over the number of knowledge unit pairs classified as $C_j$ and
+ recall is defined as the percentage of all $C_j$ knowledge unit pairs correctly classified. F1-score is the harmonic mean of
  recall and precision. Mathematically,
   precision, recall and  F1-score of 
 the learner for class $C_j$ can be denoted as follows:
@@ -1103,13 +1112,13 @@ pd_j &= recall_j = \frac{c_{jj}}{\sum_{i}c_{ji}}\\
 F1_{j} &= 2*pd_j*prec_j/(pd_j + prec_j)
 \end{array}
 \]}
-Where ${\sum_{i}c_{ji}}$ is the actual number of knowledge units in class $C_j$
-and $\sum_{i}c_{ij}$ is the predicted number of knowledge units in class $C_j$.
+Where $\sum_{i}c_{ij}$ is the predicted number of knowledge units in class $C_j$ 
+and ${\sum_{i}c_{ji}}$ is the actual number of knowledge units in class $C_j$.
 
 
 Recall from Algorithm~1 that we call differential evolution once for each
 optimization goal. Generally, this goal depends on which metric is most important for
-the business case. In this work, we use $F1$ as the score because it controls
+the business case. In this work, we use $F1$ to score the candidate parameters because it controls
 the trade-off between precision and recall, which is also consistent with XU~\cite{xu2016predicting}
 and is also widely used in software engineering
 community to evaluate classification results~\cite{wang2016automatically,menzies2007data,fu2016tuning,kim2008classifying}.
@@ -1165,18 +1174,33 @@ Since we used the same training and testing data set provide by XU~\cite{xu2016p
 This first question   is    important to our work since, without the original tool released by XU,
 we need to insure that  our reimplementation of their baseline method~(WordEmbedding + SVM) has a similar performance to their work.
 Accordingly, we carefully follow XU's procedure~\cite{xu2016predicting}. We 
-use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mathit{kernel=``rbf''} $. After that, the same training and testing knowledge unit pairs are applied to SVM~\cite{xu2016predicting}.
+use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mathit{kernel=``rbf''} $. After that, the same training and testing knowledge unit pairs are applied to SVM.
 
 
 
 \begin{figure}[!htp]
     \centering
      \includegraphics[width=0.49\textwidth,height=2.3in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in terms of Precision, Recall and F1-score. Positive Values Mean
+    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
             OurSVM is Better than Xu'sSVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
     \label{fig:OurSVM-Xu'sSVM}
 \end{figure}
 
+
+
+
+
+
+
+
+
+ \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our baseline method with
+ XU's in terms of accuracy~\footnote{XU just report overall accuracy, not for each class, hence it is missing in this table.}, precision, recall and F1-score. As we can see, 
+ when predicting these four different types of relatedness between knowledge unit pairs,
+ our Word Embedding + SVM method has  very  similar performance scores to the baseline method
+ reported by XU in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
+ Except for { Duplicate} class, where our baseline 
+has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
 
 \begin{table}[!htp]
 \centering
@@ -1205,20 +1229,8 @@ use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mat
 \end{table}
 
 
-
-
-
-
- \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our baseline method with
- XU's in terms of accuracy~\footnote{XU just report overall accuracy, not for each class, hence it is missing in this table.}, precision, recall and F1-score. As we can see, 
- when predicting these four different types of relatedness between knowledge unit pairs,
- our Word Embedding + SVM method has  very  similar performance scores to the baseline method
- reported by XU in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
- Except for { Duplicate} type, where our baseline 
-has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
-
 \fig{OurSVM-Xu'sSVM} presents the same results in a graphical format.
-Any bar above zero means that our implementation has a better performance score than Xu's on predicting that specific knowledge unit relatedness class. As we can see, most 
+Any bar above zero means that our implementation has a better performance score than XU's on predicting that specific knowledge unit relatedness class. As we can see, most 
 of the differences ($\frac{8}{12}$) are within 0.05 and the score delta of overall performance shows that our
 implementation is a little worse than XU's implementation.
 For this chart we conclude that:
@@ -1228,7 +1240,7 @@ For this chart we conclude that:
  \begin{myshadowbox}
 Overall, our reimplementation of WordEmbedding + SVM
 has very similar performance in all the evaluated metrics 
- compared to the baseline method reported in ~\cite{xu2016predicting}.
+ compared to the baseline method reported in XU's study ~\cite{xu2016predicting}.
 
  \end{myshadowbox}
 The significance of this conclusion is that, moving forward,
@@ -1241,7 +1253,7 @@ the work of XU.
  \begin{figure}[!htp]
     \centering
     \includegraphics[width=0.49\textwidth,height=2.3in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in terms of Precision, Recall and F1-score. Positive Values Mean
+    \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
             TunedSVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
     \label{fig:TunedSVM-CNN}
 \end{figure}
@@ -1249,7 +1261,7 @@ the work of XU.
 
 \begin{table}[!htp]
 \centering
-\caption{Comparison of Tuned SVM with XU's CNN method. The Best Scores are Marked in \textbf{Bold}. }
+\caption{Comparison of Tuned SVM with XU's CNN Method. The Best Scores are Marked in \textbf{Bold}. }
 \resizebox{0.48\textwidth}{!}{
 \begin{tabular} {@{}l l  c c  c c c@{}}
 \hline
@@ -1293,13 +1305,13 @@ In other words, when tuning parameters,  DE expects to find a pair of candidate 
 
 
 \tab{RQ2} presents the performance scores of  XU's baseline, XU's CNN method and Tuned SVM 
-for all metrics. The highest score for KU pair
+for all metrics. The highest score for each relatedness class
   is marked in bold.  Note that: Without tuning, XU's CNN method outperforms
 the baseline SVM in $\frac{10}{12}$ evaluation metrics across all four classes. 
 The largest performance improvement is $0.47$ for {recall} on {Direct Link} class. Note that this result is consistent with XU's conclusion
 that their CNN method is superior to standard SVM.
-After tuning SVM, the deep learning method has no such advantage.  CNN has advantage over tuned SVM happend in $\frac{10}{12}$ evaluation metrics across all four classes. Even when CNN performs better that our DE-based method,
-the largest differences is $0.065$ for Recall on Direct\_Link class, which is less than $0.1$. 
+After tuning SVM, the deep learning method has no such advantage. Specifically, CNN has advantage over tuned SVM happened in $\frac{4}{12}$ evaluation metrics across all four classes. Even when CNN performs better that our tuning SVM method,
+the largest difference is $0.065$ for Recall on Direct\_Link class, which is less than $0.1$. 
 
 \fig{TunedSVM-CNN} presents the same results in a graphical format.
 Any bar above zero indicates that tuned SVM has
@@ -1307,7 +1319,7 @@ a better performance score than CNN.
 In this figure: CNN has a slightly better performance on
 {Duplicate} class for {precision}, {recall} and {F1-score} and
 a higher {recall} on {Direct link} class.  Across all of \fig{TunedSVM-CNN},
-in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores than CNN, with the largest deleta of $0.222$.
+in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores than CNN, with the largest delta of $0.222$.
 
 %and that's
 %$28\%$ improvements over CNN on predicting{Indirect Link} for the{recall} %measure.
@@ -1317,14 +1329,14 @@ in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores tha
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
      \includegraphics[width=0.49\textwidth,height=2.3in]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and XU's Baseline SVM in terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than XU's Baseline SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+    \caption{Score Delta between Tuned SVM and XU's Baseline SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
+            Tuned SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
     \label{fig:TunedSVM-SVM}
 \end{figure}
 
  
 \fig{TunedSVM-SVM} compares the performance delta of tuned SVM with XU's untuned SVM.
- We note that DE-based parameter tuning never degrade SVM's performance
+ We note that DE-based parameter tuning never degrades SVM's performance
  (since there are no negative values in that chart). 
  Tuning dramatically improves scores on predicting some classes of KU relatedness. 
  For example, the {recall} of predicting {Direct\_link} is increased 
@@ -1335,13 +1347,9 @@ in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores tha
 which are $52\%$ and $72\%$ improvement over XU's original report\cite{xu2016predicting}, respectively. 
  A similar pattern can also be observed in {Isolated} class. On average, tuning helps improve the performance
 of XU's SVM by $0.238$, $0.228$ and $0.227$ in terms of {precision}, {recall} and {F1-score}
-for all four KU relatedness classes.
-
-\fig{TunedSVM-OurSVM} compares the tuned SVM with our untuned SVM. We note that we get 
+for all four KU relatedness classes. \fig{TunedSVM-OurSVM} compares the tuned SVM with our untuned SVM. We note that we get 
 the similar patterns that observed in \fig{TunedSVM-SVM}. All the bars are above zero, etc.
-Furthermore, according to Wilcoxon singed rank test, the performance of tuned SVM over 10 runs performs
-statistically better than our untuned SVM in terms of all evaluation measures on all four classes of relatedness and the 
-size of difference is not trivial, except for indirect\_Link. 
+
 % This means no matter compared to
 % XU's untuned SVM or our untuned SVM, parameter tuning improves the baseline method in terms
 % of recall, precision and F1-score  for all relatedness of KU pairs classification.
@@ -1361,7 +1369,11 @@ When discussing this result with colleagues, we are sometimes asked for a statis
 analysis that confirms the above finding.
 However, 
  due the lack of evaluation score distributions of the CNN method in~\cite{xu2016predicting}, we cannot compare
-their single value with our results from 10 repeated runs.
+their single value with our results from 10 repeated runs. However, according to Wilcoxon singed rank test over 10 runs results, tuned SVM performs
+statistically better than our untuned SVM in terms of all evaluation measures on all four relateness classes.
+According to Cliff $\delta$ values, the 
+size of difference between tuned SVM and our untuned SVM is at least medium($|\delta| >$ 0.33) for all evaluation
+measures. 
  
  Overall, the experimental results and our analysis indicate that:
  
@@ -1377,7 +1389,7 @@ the deep learning method, CNN, does not have any performance advantage over our 
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
      \includegraphics[width=0.49\textwidth,height=2.3in]{pic/TunedSVM-OurSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and Our Untuned SVM in terms of Precision, Recall and F1-score. Positive Values Mean
+    \caption{Score Delta between Tuned SVM and Our Untuned SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
             Tuned SVM is Better than Our Untuned SVM in Terms of Different Measures; Otherwise,  Our  SVM is Better.}
     \label{fig:TunedSVM-OurSVM}
 \end{figure}
@@ -1437,7 +1449,7 @@ with new data or wanted to validate the XU result.
 Beyond the specifics of this case study, what general principles
 can we take from the above work?
 
-\subsubsection{Understand the task:}
+\textbf{Understand the task:}
 One reason to try different tools for the same task is to better
 understand the task.
 The more we understand a task, the better we can match tools to that task. Tools that are poorly matched to task are usually complex and/or slow to execute.  In the case study of this paper, we would say that
@@ -1455,14 +1467,14 @@ is not to deprecate deep learning.
 There are many scenarios were we
  believe  deep learning would be a natural
  choice (e.g. when analyzing complex speech or visual data). 
- In SE, it is still an open research question in which scenario deep learning
+ In SE, it is still an open research question that in which scenario deep learning
  is the best choice.
 
 
 
 
 
-\subsubsection{Treat resource constraints as design challenges:}
+\textbf{Treat resource constraints as design challenges:}
 As a general engineering principle,
 we think it insightful to consider the resource cost
 of a tool before applying that tool.
@@ -1486,7 +1498,7 @@ Word Embedding + SVM (baseline 2 method in ~\cite{xu2016predicting}) is not
 publicly available, we have to reimplement our version of Word Embedding + SVM as
 the baseline method in this study. As shown in RQ1, our implementation has
 quite similar results to XU's on the same data sets. Hence, we believe that our implementation reflect the original
- baseline method in ~\cite{xu2016predicting}. 
+ baseline method in Xu's study~\cite{xu2016predicting}. 
  
 %  In RQ3, when comparing the runtime of tuning
 %  SVM and CNN, we run SVM with parameter tuning experiment on a different environment
@@ -1503,7 +1515,7 @@ quite similar results to XU's on the same data sets. Hence, we believe that our 
  other cases, or the ability to generalize the observations in a study. In this study,
  we compare our tuning baseline method with deep learning method, CNN, in terms of
  precision, recall, F1-score and accuracy. The experimental results are quite consistent
- for this knowledge units relatedness prediction tasks, i.e.,  multi-classification problem, in text mining. 
+ for this knowledge units relatedness prediction task, i.e.,  multi-classification problem in text mining. 
  Nonetheless, we do not claim that our findings can be generalized to all software analytics tasks. 
  However, those other software analytics tasks often apply deep learning
  methods~\cite{choetkiertikul2016deep, wang2016automatically} 
@@ -1516,7 +1528,7 @@ quite similar results to XU's on the same data sets. Hence, we believe that our 
 
 \section{Conclusion}\label{conclusion}
 
-In this paper, we perform an comparative study to investigate
+In this paper, we perform a comparative study to investigate
 how tuning can improve the baseline method compared with
  state-of-the-art deep learning method  for predicting
 knowledge units relatedness on Stack Overflow. Our experimental
