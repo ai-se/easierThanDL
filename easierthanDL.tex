@@ -970,7 +970,7 @@ the main steps in DE is described in \fig{optimize}.
 
 
 
-\section{Experiment Design}\label{experiment}
+\section{Experimental Setup}\label{experiment}
 \subsection{Research Questions}\label{RQ}
  To systematically investigate whether tuning can improve the 
  performance of baseline methods compared with deep learning method, we set
@@ -993,7 +993,7 @@ the main steps in DE is described in \fig{optimize}.
  
 
 
-\subsection{Dataset and Experimental Settings}
+\subsection{Dataset and Experimental Design}
 Our experimental data comes from Stack Overflow data dump of 
 September 2016\footnote{https://archive.org/details/stackexchange},
 where the {\it posts} table includes all the questions and answers posted on Stack Overflow
@@ -1370,9 +1370,9 @@ analysis that confirms the above finding.
 However, 
  due the lack of evaluation score distributions of the CNN method in~\cite{xu2016predicting}, we cannot compare
 their single value with our results from 10 repeated runs. However, according to Wilcoxon singed rank test over 10 runs results, tuned SVM performs
-statistically better than our untuned SVM in terms of all evaluation measures on all four relateness classes.
+statistically better than our untuned SVM in terms of all evaluation measures on all four classes~($p<0.05$).
 According to Cliff $\delta$ values, the 
-size of difference between tuned SVM and our untuned SVM is at least medium($|\delta| >$ 0.33) for all evaluation
+magnitude of difference between tuned SVM and our untuned SVM is not trivial~($|\delta| > 0.147$) for all evaluation
 measures. 
  
  Overall, the experimental results and our analysis indicate that:
@@ -1449,7 +1449,7 @@ with new data or wanted to validate the XU result.
 Beyond the specifics of this case study, what general principles
 can we take from the above work?
 
-\textbf{Understand the task:}
+\textbf{Understand the task.}
 One reason to try different tools for the same task is to better
 understand the task.
 The more we understand a task, the better we can match tools to that task. Tools that are poorly matched to task are usually complex and/or slow to execute.  In the case study of this paper, we would say that
@@ -1474,7 +1474,7 @@ There are many scenarios were we
 
 
 
-\textbf{Treat resource constraints as design challenges:}
+\textbf{Treat resource constraints as design challenges.}
 As a general engineering principle,
 we think it insightful to consider the resource cost
 of a tool before applying that tool.
