@@ -6,12 +6,9 @@
 \usepackage{algpseudocode}% pseudo code
 \usepackage{multirow}
 \usepackage{tabu}
-\usepackage{epstopdf}
 \usepackage{enumitem} % handle itemize, enumerate 
-%  \usepackage{epstopdf}
-%   \epstopdfDeclareGraphicsRule{.pdf}{png}{.png}{convert #1 \OutputFile}
-%   \DeclareGraphicsExtensions{.png,.pdf}
-%  \usepackage{graphicx}
+
+
 \captionsetup{belowskip=2pt,aboveskip=2pt} % space between caption and content
 
 
@@ -1051,9 +1048,9 @@ SVM will be evaluated on the {testing data}.
 
 To reduce the potential variance caused
 by how the original training data is divided, {\it 10-fold cross-validation} is performed. Specifically, 
-each time one fold with $640$ knowledge units pairs is used as the tuning data, and the remaining folds with $5,760$
-knowledge units are used as  the new training data, then the output SVM model will be evaluated on the testing data. Since we notice that there is some variance in the performance of different word2vec models trained by randomly selected 100,000 knowledge units, we generate 10 different word2vec models by using different random seeds, each of which will be used for a {\it 10-fold cross-validation}. Therefore,
-all the performance scores reported below are median values over 100 runs.
+each time one fold with $640$ knowledge units pairs is used as the tuning data, and the remaining folds with $5760$
+knowledge units are used as  the new training data, then the output SVM model will be evaluated on the testing data. Therefore,
+all the performance scores reported below are averaged values over 10 runs.
 
 
 In this study, we use Wilcoxon single ranked test to statistically compare
@@ -1069,10 +1066,6 @@ negligible ($|\delta|<0.147$ ), small ($ 0.147<|\delta|<0.33$), medium ($0.33<|\
 
 
 \subsection{Evaluation Metrics}
-When evaluating the performance of tuning SVM on the
-multi-class linkable knowledge units prediction problem,
-consistent with XU~\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
-as the evaluation metrics.
 
 \begin{table}[htp]
 \caption {Confusion Matrix.}
@@ -1095,6 +1088,13 @@ as the evaluation metrics.
 \label{tab:confusion}
 \end{table}
 
+When evaluating the performance of tuning SVM on the
+multi-class linkable knowledge units prediction problem,
+consistent with XU~\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
+as the evaluation metrics.
+
+
+
 Given a multi-classification problem with true labels $C_1$, 
 $C_2$, $C_3$ and $C_4$, we can generate a confusion matrix like \tab{confusion}, 
 where the value of $c_{ii}$ represents the number of instances that are correctly classified
@@ -1111,7 +1111,7 @@ accuracy = \frac{\sum_i c_{ii}}{\sum_{i}\sum_{j}c_{ij}}
 \]}
 where ${\sum_{i}\sum_{j}c_{ij}}$ is the total number of knowledge units.
 For a given type of knowledge units, $C_j$, the  precision is defined as probability of
-knowledge unit pairs correctly classified as $C_j$ over the number of knowledge unit pairs classified as $C_j$ and
+knowledge units pairs correctly classified as $C_j$ over the number of knowledge unit pairs classified as $C_j$ and
  recall is defined as the percentage of all $C_j$ knowledge unit pairs correctly classified. F1-score is the harmonic mean of
  recall and precision. Mathematically,
   precision, recall and  F1-score of 
@@ -1141,85 +1141,11 @@ In this section, we present our experimental results. To answer research questio
 Section~\ref{RQ}, we conducted two experiments:
 \bi
 \item
-Compare   XU's Word Embedding + SVM  with our implementation;
+Compare   Word Embedding + SVM using XU's code and our code;
 \item
 Compare our tuning SVM method with XU's CNN.
 
 \ei
-
-
-
-\begin{figure}[!htp]
-    \centering
-     \includegraphics[width=0.49\textwidth,height=2.3in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Our SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
-    \label{fig:OurSVM-Xu'sSVM}
-\end{figure}
-
-
-% %%%%%%%%%%%%%%%% XU-Wei-baseline-old begin%%%%%%%%%%%%%%%%%%%%%
-
-% \begin{table}[!htp]
-% \centering
-% \caption{Comparison of Our Baseline Method with XU's. The Best Scores are Marked in \textbf{Bold}.}
-% \resizebox{0.48\textwidth}{!}{
-% \begin{tabular} {@{}l l  c c  c c c@{}}
-% \hline
-%   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
-%   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
-%   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
-%   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
-%   \multirow{2}{*}{Precision}
-%     & Our SVM &\textbf{0.724} &0.514 & 0.779 &0.601& 0.655 \\
-%   & XU's SVM &0.611 &\textbf{0.560} &\textbf{0.787}&\textbf{0.676}&\textbf{0.659} \\ \hline
-%   \multirow{2}{*}{Recall} 
-%   & Our SVM & 0.525& \textbf{0.492} & 0.970 & \textbf{0.645}  & 0.658 \\ 
-%   & XU's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
-%   \multirow{2}{*}{F1-score}
-%   & Our SVM & 0.609 &  \textbf{0.503} &0.864  &  \textbf{0.622}&0.650 \\ 
-%   & XU's SVM & \textbf{0.663} &  0.488  & \textbf{0.873} &  0.600 &\textbf{0.656} \\ \hline
-%   \multirow{2}{*}{Accuracy} 
-%    &  Our SVM&0.525  &  0.493 & 0.970 & 0.645 &0.658 \\
-%   & XU's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
-%  \end{tabular}}
-% \label{tab:baseline}
-% \end{table}
-
-% %%%%%%%%%%%%%%%% XU-Wei-baseline-old end%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%% XU-Wei-baseline begin%%%%%%%%%%%%%%%%%%%%%
-
-\begin{table}[!htp]
-\centering
-\caption{Comparison of Our Baseline Method with XU's. The Best Scores are Marked in \textbf{Bold}.}
-\resizebox{0.48\textwidth}{!}{
-\begin{tabular} {@{}l l  c c  c c c@{}}
-\hline
-   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
-   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
-   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
-   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
-   \multirow{2}{*}{Precision}
-    & Our SVM &\textbf{0.651} &0.471 & 0.749 &0.390& 0.566 \\
-   & XU's SVM &0.611 &\textbf{0.560} &\textbf{0.787}&\textbf{0.676}&\textbf{0.659} \\ \hline
-   \multirow{2}{*}{Recall} 
-   & Our SVM & 0.446& 0.286 & 0.629 & \textbf{0.736}  & 0.524 \\ 
-   & XU's SVM  & \textbf{0.725} &\textbf{0.433}    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
-   \multirow{2}{*}{F1-score}
-   & Our SVM & 0.529 &  0.357 &0.684  &  0.510&0.520 \\ 
-   & XU's SVM & \textbf{0.663} &  \textbf{ 0.488}  & \textbf{0.873} &  \textbf{0.600} &\textbf{0.656} \\ \hline
-  \multirow{2}{*}{Accuracy} 
- &  Our SVM&0.445  &  0.286 & 0.628 & 0.735 &0.524 \\
-  & XU's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
- \end{tabular}}
-\label{tab:baseline}
-\end{table}
-
-%%%%%%%%%%%%%%%% XU-Wei-baseline end%%%%%%%%%%%%%%%%%%%%%
-
-
 Since we used the same training and testing data set provide by XU~\cite{xu2016predicting} and conducted our experiment in the same procedure and metrics, we simply used the results reported in the work by XU~\cite{xu2016predicting} for performance comparison. 
 
 
@@ -1252,6 +1178,44 @@ Since we used the same training and testing data set provide by XU~\cite{xu2016p
 %\label{tab:baseline}
 %\end{table}
 
+
+\begin{figure}[!htp]
+    \centering
+     \includegraphics[width=0.49\textwidth,height=2.3in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
+            Our SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+    \label{fig:OurSVM-Xu'sSVM}
+\end{figure}
+
+
+
+\begin{table}[!htp]
+\centering
+\caption{Comparison of Our Baseline Method with XU's. The Best Scores are Marked in \textbf{Bold}.}
+\resizebox{0.48\textwidth}{!}{
+\begin{tabular} {@{}l l  c c  c c c@{}}
+\hline
+   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
+   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
+   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
+   \multirow{2}{*}{Precision}
+    & Our SVM &\textbf{0.724} &0.514 & 0.779 &0.601& 0.655 \\
+   & XU's SVM &0.611 &\textbf{0.560} &\textbf{0.787}&\textbf{0.676}&\textbf{0.659} \\ \hline
+   \multirow{2}{*}{Recall} 
+   & Our SVM & 0.525& \textbf{0.492} & 0.970 & \textbf{0.645}  & 0.658 \\ 
+   & XU's SVM  & \textbf{0.725} &0.433    &\textbf{0.980}  & 0.538 &\textbf{0.669}  \\ \hline
+   \multirow{2}{*}{F1-score}
+   & Our SVM & 0.609 &  \textbf{0.503} &0.864  &  \textbf{0.622}&0.650 \\ 
+   & XU's SVM & \textbf{0.663} &  0.488  & \textbf{0.873} &  0.600 &\textbf{0.656} \\ \hline
+   \multirow{2}{*}{Accuracy} 
+   &  Our SVM&0.525  &  0.493 & 0.970 & 0.645 &0.658 \\
+   & XU's SVM & - &  -  &- &  - &\textbf{0.669} \\ \hline
+ \end{tabular}}
+\label{tab:baseline}
+\end{table}
+
+
 \textbf{RQ1: Can we reproduce XU's baseline results (Word Embedding + SVM)?}
  
  
@@ -1260,7 +1224,7 @@ Since we used the same training and testing data set provide by XU~\cite{xu2016p
 This first question   is    important to our work since, without the original tool released by XU,
 we need to insure that  our reimplementation of their baseline method~(WordEmbedding + SVM) has a similar performance to their work.
 Accordingly, we carefully follow XU's procedure~\cite{xu2016predicting}. We 
-use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mathit{kernel}=$``rbf''. After that, the same training and testing knowledge unit pairs are applied to SVM.
+use the SVM learner from scikit-learn with the setting $\gamma = \frac{1}{200}$ and $\mathit{kernel=}$``rbf'', which are used by XU. After that, the same training and testing knowledge unit pairs are applied to SVM.
 
 
 
@@ -1272,62 +1236,27 @@ use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mat
 
 
 
- \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our baseline method with
+
+ \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our implementation of WordEmbedding + SVM  with
  XU's in terms of accuracy~\footnote{XU just report overall accuracy, not for each class, hence it is missing in this table.}, precision, recall and F1-score. As we can see, 
  when predicting these four different types of relatedness between knowledge unit pairs,
- our Word Embedding + SVM method has  very  similar or worse performance scores than the baseline method
- reported by XU in ~\cite{xu2016predicting}, with the maximum difference is $0.374$ for Isolated class in  terms of precision.  
-%  Except that we have higher precision for Duplicate class~(i.e., $0.651$ v.s. $0.611$) and higher recall for Isolated class(i.e., $0.736$ v.s. $0.538$)
-%  Except for { Duplicate} class, where our baseline 
-% has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
+ our Word Embedding + SVM method has  very  similar performance scores to the baseline method
+ reported by XU in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
+ Except for { Duplicate} class, where our baseline 
+has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
 
 
 
+ 
  \begin{figure}[!htp]
     \centering
     \includegraphics[width=0.49\textwidth,height=2.3in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
     \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
+            TunedSVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
     \label{fig:TunedSVM-CNN}
 \end{figure}
 
 
-
-
-% %%%%%%%%%%%%%%%% XU-Wei-CNN-old begin%%%%%%%%%%%%%%%%%%%%%
-% \begin{table}[!htp]
-% \centering
-% \caption{Comparison of Tuned SVM with XU's CNN Method. The Best Scores are Marked in \textbf{Bold}. }
-% \resizebox{0.48\textwidth}{!}{
-% \begin{tabular} {@{}l l  c c  c c c@{}}
-% \hline
-%   \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
-%   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Direct \\ Link\end{tabular}} &
-%   \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Indirect \\ Link\end{tabular}} & 
-%   \multirow{2}{*}{Isolated} &  \multirow{2}{*}{Overall} \\ \\ \hline
-%   \multirow{3}{*}{Precision} 
-%  % & Our SVM &0.736 &0.521 & 0.793 &0.606& 0.664 \\
-%   & XU's SVM&0.611 &0.560 &0.787&0.676&0.658 \\ 
-%   & XU's CNN&\textbf{0.898} & 0.758&0.840 &0.890 &0.847 \\
-%   & Tuned SVM&0.885 & \textbf{0.851}&\textbf{0.944} &\textbf{0.903} &\textbf{0.896}\\ \hline
-%   \multirow{3}{*}{Recall} 
-%   %& Our SVM & 0.550& 0.502 & 0.970 & 0.645  & 0.667 \\ 
-%   & XU's SVM& 0.725 &0.433    &0.980  & 0.538 &0.669  \\
-%   & XU's CNN& \textbf{0.898}&\textbf{0.903}    &0.773  & 0.793 &0.842  \\ 
-%   & Tuned SVM& 0.860 &0.828    &\textbf{0.995}  & \textbf{0.905} &\textbf{0.897}  \\  \hline
-%   \multirow{3}{*}{F1-score}
-%   %&Our SVM & 0.629 &  0.511 &0.873  &  0.625&0.660 \\ 
-%   & XU's SVM& 0.663 &  0.488  & 0.873 &  0.600 &0.656 \\ 
-%   & XU's CNN& \textbf{0.898} &  0.824  & 0.805 &  0.849 &0.841 \\
-%   & Tuned SVM& 0.878 & \textbf{ 0.841}  &\textbf{ 0.969} &  \textbf{0.909} &\textbf{0.899} \\\hline
-% %   \multirow{2}{*}{Accuracy} &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
-%  %  & Xu's SVM& - &  -  &- &  - &0.669 \\ \hline
-%  \end{tabular}}
-% \label{tab:RQ2}
-% \end{table}
-% %%%%%%%%%%%%%%%% XU-Wei-CNN-old end%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%% XU-Wei-CNN-old begin%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[!htp]
 \centering
 \caption{Comparison of Tuned SVM with XU's CNN Method. The Best Scores are Marked in \textbf{Bold}. }
@@ -1341,49 +1270,49 @@ use the SVM learner from scikit-learn setting $\gamma = \frac{1}{200}$ and $\mat
   \multirow{3}{*}{Precision} 
  % & Our SVM &0.736 &0.521 & 0.793 &0.606& 0.664 \\
    & XU's SVM&0.611 &0.560 &0.787&0.676&0.658 \\ 
-   & XU's CNN& 0.898 & 0.758&0.840 &0.890 &0.847 \\
-   & Tuned SVM&\textbf{0.907} & \textbf{0.867}&\textbf{0.943} &\textbf{0.919} &\textbf{0.909}\\ \hline
+   & XU's CNN&\textbf{0.898} & 0.758&0.840 &0.890 &0.847 \\
+   & Tuned SVM&0.885 & \textbf{0.851}&\textbf{0.944} &\textbf{0.903} &\textbf{0.896}\\ \hline
    \multirow{3}{*}{Recall} 
    %& Our SVM & 0.550& 0.502 & 0.970 & 0.645  & 0.667 \\ 
    & XU's SVM& 0.725 &0.433    &0.980  & 0.538 &0.669  \\
    & XU's CNN& \textbf{0.898}&\textbf{0.903}    &0.773  & 0.793 &0.842  \\ 
-   & Tuned SVM& 0.864 &0.860    &\textbf{0.994}  & \textbf{0.925} &\textbf{0.911}  \\  \hline
+   & Tuned SVM& 0.860 &0.828    &\textbf{0.995}  & \textbf{0.905} &\textbf{0.897}  \\  \hline
    \multirow{3}{*}{F1-score}
    %&Our SVM & 0.629 &  0.511 &0.873  &  0.625&0.660 \\ 
    & XU's SVM& 0.663 &  0.488  & 0.873 &  0.600 &0.656 \\ 
    & XU's CNN& \textbf{0.898} &  0.824  & 0.805 &  0.849 &0.841 \\
-   & Tuned SVM& 0.885 & \textbf{ 0.862}  &\textbf{ 0.968} &  \textbf{0.922} &\textbf{0.909} \\\hline
+   & Tuned SVM& 0.878 & \textbf{ 0.841}  &\textbf{ 0.969} &  \textbf{0.909} &\textbf{0.899} \\\hline
 %   \multirow{2}{*}{Accuracy} &  Our SVM&0.550  &  0.402 & 0.970 & 0.645 &0.667 \\
  %  & Xu's SVM& - &  -  &- &  - &0.669 \\ \hline
  \end{tabular}}
 \label{tab:RQ2}
 \end{table}
-%%%%%%%%%%%%%%%% XU-Wei-CNN-old end%%%%%%%%%%%%%%%%%%%%%
+
 
 \fig{OurSVM-Xu'sSVM} presents the same results in a graphical format.
-Any bar above zero means that our implementation has a better performance score than XU's on predicting that specific knowledge unit relatedness class. As we can see, most
-of the score delta ($\frac{10}{12}$) are negative, which means  that our
-implementation is worse than XU's implementation and we do not have any advantage in our baseline method implementation .
+Any bar above zero means that our implementation has a better performance score than XU's on predicting that specific knowledge unit relatedness class. As we can see, most 
+of the differences ($\frac{8}{12}$) are within 0.05 and the score delta of overall performance shows that our
+implementation is a little worse than XU's implementation.
 For this chart we conclude that:
 
 
 \vskip 1ex
  \begin{myshadowbox}
 Overall, our reimplementation of WordEmbedding + SVM
-has  similar or worse performance in all the evaluated metrics 
+has very similar performance in all the evaluated metrics 
  compared to the baseline method reported in XU's study ~\cite{xu2016predicting}.
 
  \end{myshadowbox}
 The significance of this conclusion is that, moving forward,
-we can  use the performance of our  reimplementation as  a valid lower bound surrogate for
-the work of XU.
+we are confident that we can  use our  reimplementation of WordEmbedding+SVM as  a valid surrogate for
+the baseline method of XU.
+
+
+
 
 
 
  
-
-
-
 
 
  
@@ -1553,7 +1482,7 @@ The more we understand a task, the better we can match tools to that task. Tools
 Deep learning is a poor match to the task of predicting whether two questions posted on Stack Overflow are semantically linkable
 since it is so slow;
 \item
-Differential evolution is a much better match since it is so fast and obtain competitive performance.
+Differential evolution tuning SVM is a much better match since it is so fast and obtain competitive performance.
 \ei
 That said, 
 it  is important to stress that the point of this study
@@ -1562,7 +1491,11 @@ There are many scenarios were we
  believe  deep learning would be a natural
  choice (e.g. when analyzing complex speech or visual data). 
  In SE, it is still an open research question that in which scenario deep learning
- is the best choice.
+ is the best choice. Results from this paper show that, at least for classification tasks like 
+ knowledge unit relatedness classification on Stack Overflow,
+ deep learning does not have much advantage over well tuned conventional machine learning methods. 
+However, as we better understand SE tasks, deep learning could be used to address more SE problems,
+which require more advanced artificial intelligence. 
 
 
 
