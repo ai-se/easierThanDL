@@ -267,8 +267,8 @@ Our   DE method
  is  $84$ times faster than CNN. 
  
 We offer these results as a cautionary tale to the software analytics community.
-While deep learner is an exciting new technique, the benefits of this
-method need to be carefully assessed w.r.t. its computational cost. 
+While deep learning is an exciting new technique, the benefits of this
+method need to be carefully assessed with respect to its computational cost. 
 More generally,
 if researchers deploy some new and expensive process (like deep learning), that work should be baselined against some simpler and faster alternatives
  
@@ -312,7 +312,7 @@ files from bug reports~\cite{lam2015combining}.
 \item Gu et al. spent $240$ hours of GPU time  to train a deep learning based method to generate API usage sequences for given natural language query~\cite{gu2016deep}. 
 \ei 
 Note that the above problem is not solvable by waiting for faster CPUs/GPUs. We 
-can no longer rely on Moore's Law ~\cite{moore1998cramming} to double our computational power every 18 months. Power consumption and heat dissipation issues effect block further exponential increases to CPU clock frequencies~\cite{kumar2003single}. Cloud computing environments are extensively monetized so the total financial cost of training models can be prohibitive, particularly for long running tasks; For example, it would take 15 years of CPU time to learn the tuning parameters of software clone detectors proposed in ~\cite{wang2013searching}. Much of that CPU time can be saved if there is a faster  way.
+can no longer rely on Moore's Law ~\cite{moore1998cramming} to double our computational power every 18 months. Power consumption and heat dissipation issues effect block further exponential increases to CPU clock frequencies~\cite{kumar2003single}. Cloud computing environments are extensively monetized so the total financial cost of training models can be prohibitive, particularly for long running tasks. For example, it would take 15 years of CPU time to learn the tuning parameters of software clone detectors proposed in ~\cite{wang2013searching}. Much of that CPU time can be saved if there is a faster  way.
 
 
 % \subsection{Why not just use more of the Cloud?}
@@ -449,8 +449,8 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  recurrent neural networks, a type of  deep learning techniques, 
  to address code clone detection and code suggestion. They reported,
  the average training time for 8 projects were ranging from 34 seconds
-  to 2977 seconds for each epoch on a two 3.3 GHz
- CPUs computer and each project required at least 30 epochs~\cite{white2016deep}.
+  to 2977 seconds for each epoch on a computer with two 3.3 GHz
+ CPUs and each project required at least 30 epochs~\cite{white2016deep}.
 Specifically, for the {\it JDK} project in their experiment, it would take 25 hours 
  on the same computer to train the models before getting prediction.
  For the time cost for code suggestions, authors did not mention any related information~\cite{white2015toward}.
@@ -474,9 +474,9 @@ Gu et al.~\cite{gu2016deep} proposed  a recurrent neural network~(RNN)
  Yuan et al.~\cite{yuan2014droid} proposed a deep belief network based method for
  malware detection on Android apps. By training and testing
  the deep learning model with  200 features extracted
- from static analysis and dynamic analysis from 500 sampled Andorid app, they
+ from static analysis and dynamic analysis from 500 sampled Android app, they
  got $96.5\%$ accuracy for deep learning method  and $80\%$ for one baseline method, SVM~\cite{yuan2014droid}.
- However, they did not report any runtime comparison between deep learning method and 
+ However, they did not report any runtime comparison between the deep learning method and 
  other classic machine learning methods.
  
  Mou et al.~\cite{mou2016convolutional} proposed a  tree-based convolutional neural network
@@ -703,10 +703,10 @@ which is the same as the Word Embedding + CNN method by XU.
 	\cline{1-5}
 	Parameters & Default &Xue et al.&Tuning Range& 
 \multicolumn{1}{c|}{Description} \\ \hline
-	C & 1.0 &unkown&[1, 50]& Penalty parameter C of the error term.\\ \cline{1-5} 
+	C & 1.0 &unknown&[1, 50]& Penalty parameter C of the error term.\\ \cline{1-5} 
 	 kernel & `rbf' &`rbf'&[`liner', `poly', `rbf', `sigmoid']& Specify the kernel type to be used in the algorithms. \\ \cline{1-5} 
 	 gamma & {1/n\_features} &$1/200$& [0, 1]& Kernel coefficient for `rbf', `poly' and `sigmoid'. \\ \cline{1-5} 
-	 coef0 & 0 & unkown & [0, 1] &  Independent term in kernel function. It is only used in `poly' and `sigmoid'. \\ \cline{1-5}
+	 coef0 & 0 & unknown & [0, 1] &  Independent term in kernel function. It is only used in `poly' and `sigmoid'. \\ \cline{1-5}
 \hline
 	\end{tabular}}
 \label{tab:parameters}
@@ -722,7 +722,7 @@ margin is defined as the sum of the distances of the
 hyperplane from the closest point of the two classes~\cite{joachims1998text}).
 
 Like most machine learning algorithms, there are some parameters associated with
-SMV to control how it learns.  In XU's experiment, they used a radial-bias function~(RBF) for their SVM kernel
+SVM to control how it learns.  In XU's experiment, they used a radial-bias function~(RBF) for their SVM kernel
 and set $\gamma$ to $1/k$, where $k$ is $36$ for TF-IDF + SVM method
 and $200$ for Word Embedding + SVM method. For other parameters, 
 XU mentioned that grid search was applied to optimize the SVM parameters, 
@@ -760,7 +760,7 @@ to each other in the embedding space~\cite{mikolov2013distributed}.
 Several methods have been proposed to generate word embeddings, 
 like skip-gram~\cite{mikolov2013distributed}, GloVe ~\cite{pennington2014glove}
 and PCA on the word co-occurrence matrix~\cite{lebret2013word}. To replicate XU work,
-we used continuous skip-gram model~(word2vec),  which is a unsupervised word representation learning method based on
+we used the continuous skip-gram model~(word2vec),  which is a unsupervised word representation learning method based on
 neural networks and also used by  XU~\cite{xu2016predicting}. 
 
 The skip-gram model learns vector representations of words
@@ -1253,7 +1253,7 @@ has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $
     \centering
     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
     \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            TunedSVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
+            Tuned SVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
     \label{fig:TunedSVM-CNN}
 \end{figure}
 
@@ -1334,7 +1334,7 @@ for all metrics. The highest score for each relatedness class
 the baseline SVM in $\frac{10}{12}$ evaluation metrics across all four classes. 
 The largest performance improvement is $0.47$ for {recall} on {Direct Link} class. Note that this result is consistent with XU's conclusion
 that their CNN method is superior to standard SVM.
-After tuning SVM, the deep learning method has no such advantage. Specifically, CNN has advantage over tuned SVM happened in $\frac{4}{12}$ evaluation metrics across all four classes. Even when CNN performs better that our tuning SVM method,
+After tuning SVM, the deep learning method has no such advantage. Specifically, CNN has advantage over tuned SVM in $\frac{4}{12}$ evaluation metrics across all four classes. Even when CNN performs better that our tuning SVM method,
 the largest difference is $0.065$ for Recall on Direct\_Link class, which is less than $0.1$. 
 
 \fig{TunedSVM-CNN} presents the same results in a graphical format.
