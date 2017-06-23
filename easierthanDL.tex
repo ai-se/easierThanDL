@@ -103,6 +103,14 @@ shadow=false
 
 \acmPrice{15.00}
 
+\setcopyright{none}
+\acmDOI{10.1145/3106237.3106256}
+\acmISBN{978-1-4503-5105-8/17/09}
+\acmConference[ESEC/FSE'17]{2017 11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{September 4-8, 2017}{Paderborn, Germany} 
+\acmYear{2017}
+\copyrightyear{2017}
+\acmPrice{15.00}
+
 
 \begin{document} 
 % \title{ Swifter than Deep Learning:\\
@@ -117,12 +125,10 @@ shadow=false
 %   \texttt{acmart.pdf} document}
 
 
-\author{Wei Fu and Tim Menzies}
+\author{Wei Fu,  Tim Menzies}
 % \orcid{1234-5678-9012}
 \affiliation{%
-  \institution{ Computer Science Department, North Carolina State University}
-  \city{Raleigh} 
-  \state{North Carolina, USA} 
+  \institution{ Com.Sci., NC State, USA}
 }
 \email{wfu@ncsu.edu, tim.menzies@gmail.com}
 
@@ -139,7 +145,7 @@ shadow=false
 % \pagestyle{plain}
 \begin{abstract}
 While deep learning is an exciting new technique, the benefits of this
-method need to be  assessed w.r.t. its computational cost. 
+method need to be  assessed with respect to its computational cost. 
 This is particularly important for deep learning since these learners need 
  hours (to  weeks) to train the model.
 Such long training time limits the ability
@@ -817,14 +823,6 @@ techniques. More details can be found in Mikolove et al.'s study~\cite{mikolov20
 \end{figure}
 
 
- \begin{figure*}
-    \centering
-%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=\textwidth,height=3.5in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
-    \label{fig:workflow}
-\end{figure*}
-
 
 
 
@@ -1041,6 +1039,16 @@ For training word2vec model, we randomly select 100,000 knowledge
  used in this paper are converted into word embedding representations by looking up
  each word in wrod2vec model as described in Section~\ref{embedding}.
  
+ 
+ \begin{figure}
+    \centering
+%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=.47\textwidth]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
+    \label{fig:workflow}
+\end{figure}
+
+
 As seen in \fig{workflow}, instead of using all the 6,400 knowledge units as training data, 
 we split the original training data into { new training data} and {tuning data}, which are
 used during parameter tuning procedure for training SVM and evaluating candidate
@@ -1140,6 +1148,15 @@ community to evaluate classification results~\cite{wang2016automatically,menzies
 \section{Results}\label{results}
 In this section, we present our experimental results. To answer research questions raised in
 Section~\ref{RQ}, we conducted two experiments:
+
+\begin{figure}[!htp]
+    \centering
+     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
+            Our SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+    \label{fig:OurSVM-Xu'sSVM}
+\end{figure}
+
 \bi
 \item
 Compare  performance of Word Embedding + SVM method in XU~\cite{xu2016predicting} and our implementation;
@@ -1180,13 +1197,7 @@ Since we used the same training and testing data sets provided by XU~\cite{xu201
 %\end{table}
 
 
-\begin{figure}[!htp]
-    \centering
-     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Our SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
-    \label{fig:OurSVM-Xu'sSVM}
-\end{figure}
+
 
 
 
@@ -1236,7 +1247,13 @@ use the SVM learner from scikit-learn with the setting $\gamma = \frac{1}{200}$ 
 
 
 
-
+ \begin{figure}[!htp]
+    \centering
+    \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
+            Tuned SVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
+    \label{fig:TunedSVM-CNN}
+\end{figure}
 
  \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our implementation of WordEmbedding + SVM  with
  XU's in terms of accuracy~\footnote{XU just report overall accuracy, not for each class, hence it is missing in this table.}, precision, recall and F1-score. As we can see, 
@@ -1249,13 +1266,7 @@ has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $
 
 
  
- \begin{figure}[!htp]
-    \centering
-    \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
-    \label{fig:TunedSVM-CNN}
-\end{figure}
+
 
 
 
@@ -1472,10 +1483,18 @@ with new data or wanted to validate the XU result.
 
 \subsection{Why DE+SVM works?}
 
-\textbf{Parameter tuning matters}. As mentioned in Section \ref{tuning}, the default parameter values set by the algorithm designers could generate a good performance on average but can not guarantee the best performance for the local data~\cite{bergstra2012random,fu2016tuning}. As we notice in the literature\cite{fu2016tuning,fu2016differential,agrawal2016wrong}, most SE researchers ignore the impacts of
-parameter tuning when they utilize various machine learning methods to conduct software analytics. Therefore, it is important to stress that any future software analytics should tune parameters of learners using local data.
+\textbf{Parameter tuning matters}. As mentioned in Section \ref{tuning}, the default parameter values set by the algorithm designers could generate a good performance on average but may not guarantee the best performance for the local data~\cite{bergstra2012random,fu2016tuning}. Given that,
+it is most strange to report that  most SE researchers ignore the impacts of
+parameter tuning when they utilize various machine learning methods to conduct software analytic (evidence: see our reviews in \cite{fu2016tuning,fu2016differential,agrawal2016wrong}). 
+The conclusion of this work must be to stress the importance of this kind of tuning, using local data, for any future software analytics study.
+ 
 
-\textbf{Better explore the searching space}.  For the case study considered, we note that in XU's work, they did perform parameter tuning with grid search but did not succeed. Their failure of tuning might be explained by Bergstra et al.\cite{bergstra2012random} that grid search jumps through different parameter settings between some {\it min} and {\it max} values of pre-defined tuning range and it will skip the critical tuning values. On the contrary, DE tuning values are adjusted based on better candidates from previous generations. Hence DE is more likely than grid search to ``fill in the gaps'' between the initialized values. Although DE +SVM works in this study, it does not mean DE is the best parameter tuner for all SE tasks. We encourage more researchers to explore faster and more effective parameter tuners in this direction.
+\textbf{Better explore the searching space}.  It turns out that one exception to our statement that ``most researchers do not tune''
+is the XU study. In that work, they unsuccessfully perform parameter tuning, but with with grid search. In such a grid search, for $N$ parameters to be tuned, $N$ for loops are created
+to run over a range of settings for each parameter. While a widely used method,  it is often deprecated. For example,  Bergstra et al.\cite{bergstra2012random} note that  grid search jumps through different parameter settings between some {\it min} and {\it max} values of pre-defined tuning range. They warn that such jumps may actually
+skip over the  critical tuning values. On the other hand, DE tuning values are adjusted based on better candidates from previous generations. Hence DE is more likely than grid search to ``fill in the gaps'' between the initialized values. 
+
+That said, although DE +SVM works in this study, it does not mean DE is the best parameter tuner for all SE tasks. We encourage more researchers to explore faster and more effective parameter tuners in this direction.
  
 \subsection{Implication}
 
@@ -1579,6 +1598,15 @@ it performs as well as the proposed CNN method in ~\cite{xu2016predicting}.
 In this study, tuning SVM runs $84X$ faster than CNN method.
 \ei
 
+\section{Addendum}
+As this paper was going to going to press we learned of a new deep learning methods that, according to its
+creators, runs 20 times faster than standard deep learning~\cite{spring2016scalable}. 
+Note that in that paper, the authors say  their faster method does not produce better results-- 
+in fact, their method generated solutions that were a small fraction worse than ``classic'' deep learning. Hence, that paper does not invalidate our result since (a)~our DE-based
+method sometimes produced {\em better} results than classic deep learning and (b)~our DE runs 84 times faster (i.e. much faster runtimes than those reported in~\cite{spring2016scalable}).
+
+That said, this new fast deep learner deserves our close attention since, using it, we conjecture that our DE tools
+could solve an open problem in the deep learning community; i.e. how to find the best configurations for the networks inside a deep learner.
 
 % Our findings have important implications for the software engineering community.
 % Although deep learning methods have widely and successfully applied in other community
@@ -1611,7 +1639,7 @@ As to the future work, we will explore more simple techniques to solve SE tasks 
 investigate how deep learning techniques could be applied effectively in software engineering
 field. 
 
-\section{ACKNOWLEDGEMENT}
+\section*{ACKNOWLEDGEMENTS}
 The work is partially funded by an NSF award \#1302169.
 
 
