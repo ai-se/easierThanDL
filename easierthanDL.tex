@@ -409,7 +409,7 @@ We find that this work   can be divided into   two categories:
 \item Solve problems directly with  deep learning~\cite{gu2016deep,xu2016predicting,white2016deep,white2015toward,yuan2014droid,mou2016convolutional}.
 \ei
 \noindent
-\subsubsection{Deep Learning as  Pre-Processor:}
+\subsubsection{Deep Learning as  Pre-Processor}
 
 Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural network
  in combination with rVSM to automatically locate the potential buggy files for a given
@@ -449,7 +449,7 @@ Lam et al.~\cite{lam2015combining}  proposed an approach to apply deep neural ne
  
  
 \noindent
-\subsubsection{Deep Learning as  a Problem Solver:}
+\subsubsection{Deep Learning as  a Problem Solver}
 
  White et al.~\cite{white2015toward, white2016deep} applied
  recurrent neural networks, a type of  deep learning techniques, 
@@ -498,7 +498,7 @@ baseline methods.
 
  
  
- \subsubsection{Issues with Deep Learning:}
+ \subsubsection{Issues with Deep Learning}
  In summary,  deep learning is used extensively in software
  engineering community.  A common pattern
  in that research is to:
@@ -1077,6 +1077,12 @@ negligible ($|\delta|<0.147$ ), small ($ 0.147<|\delta|<0.33$), medium ($0.33<|\
 
 \subsection{Evaluation Metrics}
 
+
+When evaluating the performance of tuning SVM on the
+multi-class linkable knowledge units prediction problem,
+consistent with XU~\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
+as the evaluation metrics.
+
 \begin{table}[htp]
 \caption {Confusion Matrix.}
 \scriptsize
@@ -1097,12 +1103,6 @@ negligible ($|\delta|<0.147$ ), small ($ 0.147<|\delta|<0.33$), medium ($0.33<|\
 
 \label{tab:confusion}
 \end{table}
-
-When evaluating the performance of tuning SVM on the
-multi-class linkable knowledge units prediction problem,
-consistent with XU~\cite{xu2016predicting}, we use accuracy, precision, recall and F1-score
-as the evaluation metrics.
-
 
 
 Given a multi-classification problem with true labels $C_1$, 
@@ -1292,6 +1292,34 @@ the baseline method of XU.
 
 
 
+
+ 
+
+
+ 
+\textbf{RQ2: Can DE tune a standard learner such that it outperforms XU's deep learning method?}
+
+To answer this question, we run the workflow of \fig{workflow}, where DE is applied to 
+find the optimal parameters of SVM based on the training and tuning data. The optimal tunings are then applied on the SVM model and  the built learner is evaluated on testing data. Note that, in this study,
+since we mainly focus on {precision}, {recall} and {F1-score} measures where {F1-score} is the
+harmonic mean of {precision} and {recall}, we use {F1-score} as the tuning goal for DE.
+In other words, when tuning parameters,  DE expects to find a pair of candidate parameters that maximize
+ F1-score. 
+%For CNN method, we simply adopt the XU's results in ~\cite{xu2016predicting} because(1)deep learning method is not as easy as implementing SVM method, where a little difference in the structure might lead to significant result;(2) we are evaluating the learners with the same measures and use the same training and testing data.
+
+
+ \begin{figure}[!t]
+    \centering
+%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
+     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score Delta between Tuned SVM and XU's Baseline SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
+            Tuned SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+    \label{fig:TunedSVM-SVM}
+\end{figure}
+
+ 
+ 
+ 
 \begin{table}[!htp]
 \centering
 \caption{Comparison of Tuned SVM with XU's CNN Method. The Best Scores are Marked in \textbf{Bold}. }
@@ -1323,22 +1351,6 @@ the baseline method of XU.
 \label{tab:RQ2}
 \end{table}
 
-
- 
-
-
- 
-\textbf{RQ2: Can DE tune a standard learner such that it outperforms XU's deep learning method?}
-
-To answer this question, we run the workflow of \fig{workflow}, where DE is applied to 
-find the optimal parameters of SVM based on the training and tuning data. The optimal tunings are then applied on the SVM model and  the built learner is evaluated on testing data. Note that, in this study,
-since we mainly focus on {precision}, {recall} and {F1-score} measures where {F1-score} is the
-harmonic mean of {precision} and {recall}, we use {F1-score} as the tuning goal for DE.
-In other words, when tuning parameters,  DE expects to find a pair of candidate parameters that maximize
- F1-score. 
-%For CNN method, we simply adopt the XU's results in ~\cite{xu2016predicting} because(1)deep learning method is not as easy as implementing SVM method, where a little difference in the structure might lead to significant result;(2) we are evaluating the learners with the same measures and use the same training and testing data.
-
-
 \tab{RQ2} presents the performance scores of  XU's baseline, XU's CNN method and Tuned SVM 
 for all metrics. The highest score for each relatedness class
   is marked in bold.  Note that: Without tuning, XU's CNN method outperforms
@@ -1360,14 +1372,6 @@ in $\frac{8}{12}$ evaluation scores, Tuned SVM has better performance scores tha
 %$28\%$ improvements over CNN on predicting{Indirect Link} for the{recall} %measure.
 
 
- \begin{figure}[!t]
-    \centering
-%    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and XU's Baseline SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
-    \label{fig:TunedSVM-SVM}
-\end{figure}
 
  
 \fig{TunedSVM-SVM} compares the performance delta of tuned SVM with XU's untuned SVM.
@@ -1606,7 +1610,7 @@ in fact, their method generated solutions that were a small fraction worse than 
 method sometimes produced {\em better} results than classic deep learning and (b)~our DE runs 84 times faster (i.e. much faster runtimes than those reported in~\cite{spring2016scalable}).
 
 That said, this new fast deep learner deserves our close attention since, using it, we conjecture that our DE tools
-could solve an open problem in the deep learning community; i.e. how to find the best configurations for the networks inside a deep learner.
+could solve an open problem in the deep learning community; i.e. how to find the best configurations inside a deep learner faster.
 
 % Our findings have important implications for the software engineering community.
 % Although deep learning methods have widely and successfully applied in other community
