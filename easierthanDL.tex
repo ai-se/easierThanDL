@@ -97,21 +97,31 @@ shadow=false
 % \acmISBN{123-4567-24-567/08/06}
 
 %Conference
-\acmConference[FSE'2017]{ACM SIGSOFT SYMPOSIUM ON THE FOUNDATIONS OF SOFTWARE ENGINEERING}{September 2017}{PADERBORN, GERMANY} 
-\acmYear{2017}
-\copyrightyear{2017}
+% \acmConference[FSE'2017]{ACM SIGSOFT SYMPOSIUM ON THE FOUNDATIONS OF SOFTWARE ENGINEERING}{September 2017}{PADERBORN, GERMANY} 
+% \acmYear{2017}
+% \copyrightyear{2017}
 
-\acmPrice{15.00}
+% \acmPrice{15.00}
 
-\setcopyright{none}
+% \setcopyright{none}
+% \acmDOI{10.1145/3106237.3106256}
+% \acmISBN{978-1-4503-5105-8/17/09}
+% \acmConference[ESEC/FSE'17]{2017 11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{September 4-8, 2017}{Paderborn, Germany} 
+% \acmYear{2017}
+% \copyrightyear{2017}
+% \acmPrice{15.00}
+
+%%% The following is specific to ESEC/FSE'17 and the paper
+%%% 'Easy over Hard: A Case Study on Deep Learning'
+%%% by Wei Fu and Tim Menzies.
+%%%
+\setcopyright{acmcopyright}
 \acmDOI{10.1145/3106237.3106256}
 \acmISBN{978-1-4503-5105-8/17/09}
-\acmConference[ESEC/FSE'17]{2017 11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{September 4-8, 2017}{Paderborn, Germany} 
+\acmConference[ESEC/FSE'17]{2017 11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{September 4--8, 2017}{Paderborn, Germany} 
 \acmYear{2017}
 \copyrightyear{2017}
 \acmPrice{15.00}
-
-
 \begin{document} 
 % \title{ Swifter than Deep Learning:\\
 % A Case Study on Stack Overflow Knowledge Linking}
@@ -205,6 +215,49 @@ every new innovation should be applied without critical analysis. If researchers
 
 % We no longer use \terms command
 %\terms{Theory}
+\begin{CCSXML}
+<ccs2012>
+
+
+<concept>
+<concept_id>10010147.10010257.10010293.10010294</concept_id>
+<concept_desc>Computing methodologies~Neural networks</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+
+<concept>
+<concept_id>10003752.10003809.10003716.10011136.10011797.10011799</concept_id>
+<concept_desc>Theory of computation~Evolutionary algorithms</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+
+
+<concept>
+<concept_id>10011007.10011074.10011784</concept_id>
+<concept_desc>Software and its engineering~Search-based software
+engineering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+
+
+<concept>
+<concept_id>10011007.10011074.10011134</concept_id>
+<concept_desc>Software and its engineering~Collaboration in software
+development</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+
+</ccs2012>
+\end{CCSXML}
+
+
+
+\ccsdesc[500]{Computing  methodologies~Neural networks}
+\ccsdesc[500]{Theory of computation~Evolutionary algorithms}
+
+\ccsdesc[500]{Software and its engineering~Search-based software engineering}
+\ccsdesc[500]{Software and its engineering~Collaboration in software
+development}
 
 \keywords{Search based software engineering, software analytics, parameter tuning,
 data analytics for software engineering,
@@ -601,6 +654,32 @@ that is a result of poor choice of the LDA control parameters~\cite{agrawal2016w
 Yet, in their survey of LDA use in SE, they found that very few  
 researchers ~(4 out of 57 papers) explored the benefits of parameter tuning for LDA.
 
+
+
+
+%%%%%%% ================table--begin======================
+\begin{table}[!htp]
+\caption{Classes of knowledge unit pairs.}\label{tab:classes}
+\centering
+ \resizebox{0.45\textwidth}{!}{
+\begin{tabular}{l|l}
+\hline
+\rowcolor{lightgray}
+Class & Description  \\\hline
+\multirow{2}{*}{Duplicate} & These two knowledge units are addressing the\\
+                          & same  question.\\ \hline
+\multirow{2}{*}{Direct link}& One knowledge unit can help to  answer the\\ 
+                         &  question in the other  knowledge unit.\\ \hline
+\multirow{3}{*}{Indirect link}& One knowledge provides similar information to\\
+                         &  solve the  question in the other knowledge unit, \\
+                         &  but not a direct answer.\\ \hline
+\multirow{2}{*}{Isolated}& These two knowledge units discuss unrelated \\
+                         & questions.\\ \hline
+\end{tabular}
+ }
+\end{table}
+%%%%%% ================table--end======================
+
 One troubling trend is that, in the few SE papers that perform tuning,
 they do so using methods heavily deprecated in the machine learning community.
 For example, two SE papers that use tuning~\cite{lessmann2008benchmarking,tantithamthavorn2016automated}, 
@@ -641,28 +720,7 @@ grid search in terms of efficiency and performance.
 % we show that Word Embedding + SVM tuned with DE performs better than the deep learning method, CNN, preferred by XU.
 % Also, that tuning SVM with DE method is 84 times faster than CNN. 
 
-%%%%%%% ================table--begin======================
-\begin{table}[!htp]
-\caption{Classes of Knowledge Unit Pairs.}\label{tab:classes}
-\centering
-% \resizebox{0.48\textwidth}{!}{
-\begin{tabular}{l|l}
-\hline
-\rowcolor{lightgray}
-Class & Description  \\\hline
-\multirow{2}{*}{Duplicate} & These two knowledge units are addressing the\\
-                          & same  question.\\ \hline
-\multirow{2}{*}{Direct link}& One knowledge unit can help to  answer the\\ 
-                         &  question in the other  knowledge unit.\\ \hline
-\multirow{3}{*}{Indirect link}& One knowledge provides similar information to\\
-                         &  solve the  question in the other knowledge unit, \\
-                         &  but not a direct answer.\\ \hline
-\multirow{2}{*}{Isolated}& These two knowledge units discuss unrelated \\
-                         & questions.\\ \hline
-\end{tabular}
-% }
-\end{table}
-%%%%%% ================table--end======================
+
 
 
 \subsection{Research Problem}\label{problem}
@@ -702,7 +760,7 @@ which is the same as the Word Embedding + CNN method by XU.
 %\renewcommand\arraystretch{1.2}
 \begin{table*}[htp]
 %\scriptsize
-   \caption {List of Parameters Tuned by This Paper.}
+   \caption {List of parameters tuned by this paper.}
 \centering
 \resizebox{\textwidth}{!}{
 	\begin{tabular}{|c|c|c|c|l|}
@@ -1044,7 +1102,7 @@ For training word2vec model, we randomly select 100,000 knowledge
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
      \includegraphics[width=.47\textwidth]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{The Overall Workflow of Building Knowledge Units Predictor with Tuned SVM}
+    \caption{The overall workflow of building knowledge units predictor with tuned SVM}
     \label{fig:workflow}
 \end{figure}
 
@@ -1084,9 +1142,9 @@ consistent with XU~\cite{xu2016predicting}, we use accuracy, precision, recall a
 as the evaluation metrics.
 
 \begin{table}[htp]
-\caption {Confusion Matrix.}
+\caption {Confusion matrix.}
 \scriptsize
-\resizebox{0.32\textwidth}{!}{
+\resizebox{0.30\textwidth}{!}{
 \begin{tabular} {@{}cc|c|c|c|c|l@{}}
 \cline{3-6}
 & & \multicolumn{4}{ c| }{Classified as} \\ \cline{3-6}
@@ -1110,7 +1168,7 @@ $C_2$, $C_3$ and $C_4$, we can generate a confusion matrix like \tab{confusion},
 where the value of $c_{ii}$ represents the number of instances that are correctly classified
 by the learner for class $C_i$. 
 
-{\it Accuracy} of the learner is defined as the number of  correctly
+{\it Accuracy} is defined as the number of  correctly
 classified knowledge units over the total number of knowledge units, i.e.,
 
 {\[
@@ -1151,9 +1209,9 @@ Section~\ref{RQ}, we conducted two experiments:
 
 \begin{figure}[!htp]
     \centering
-     \includegraphics[width=0.49\textwidth,height=2.2in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Our SVM with XU's SVM in ~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Our SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+     \includegraphics[width=0.47\textwidth,height=2.2in]{pic/OurSVM-Xu'sSVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score delta between our SVM with XU's SVM in ~\cite{xu2016predicting} in terms of precision, recall and F1-score. Positive values mean
+            our SVM is better than XU's SVM in terms of different measures; Otherwise, XU's SVM is better.}
     \label{fig:OurSVM-Xu'sSVM}
 \end{figure}
 
@@ -1215,10 +1273,22 @@ use the SVM learner from scikit-learn with the setting $\gamma = \frac{1}{200}$ 
 
 
 
+
+
+ \begin{figure}[!htp]
+    \centering
+    \includegraphics[width=0.47\textwidth,height=2.2in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score delta between tuned SVM and CNN method~\cite{xu2016predicting} in terms of precision, recall and F1-score. Positive values mean
+            tuned SVM is better than CNN in terms of different measures; Otherwise, CNN is better.}
+    \label{fig:TunedSVM-CNN}
+\end{figure}
+
+
+
 \begin{table}[!htp]
 \centering
-\caption{Comparison of Our Baseline Method with XU's. The Best Scores are Marked in \textbf{Bold}.}
-\resizebox{0.48\textwidth}{!}{
+\caption{Comparison of our baseline method with XU's. The best scores are marked in \textbf{bold}.}
+\resizebox{0.47\textwidth}{!}{
 \begin{tabular} {@{}l l  c c  c c c@{}}
 \hline
    \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
@@ -1245,23 +1315,13 @@ use the SVM learner from scikit-learn with the setting $\gamma = \frac{1}{200}$ 
 
 
 
-
-
- \begin{figure}[!htp]
-    \centering
-    \includegraphics[width=0.49\textwidth,height=2.2in]{pic/TunedSVM-CNN.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and CNN method~\cite{xu2016predicting} in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than CNN in Terms of Different Measures; Otherwise, CNN is better.}
-    \label{fig:TunedSVM-CNN}
-\end{figure}
-
  \tab{baseline}  and \fig{OurSVM-Xu'sSVM} show the performance scores and corresponding score delta between our implementation of WordEmbedding + SVM  with
  XU's in terms of accuracy~\footnote{XU just report overall accuracy, not for each class, hence it is missing in this table.}, precision, recall and F1-score. As we can see, 
  when predicting these four different types of relatedness between knowledge unit pairs,
  our Word Embedding + SVM method has  very  similar performance scores to the baseline method
  reported by XU in ~\cite{xu2016predicting}, with the maximum difference less than $0.2$.  
  Except for { Duplicate} class, where our baseline 
-has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s.$0.725$). 
+has a higher precision~(i.e., $0.724$ v.s. $0.611$) but a lower  recall (i.e., $0.525$ v.s. $0.725$). 
 
 
 
@@ -1299,31 +1359,22 @@ the baseline method of XU.
  
 \textbf{RQ2: Can DE tune a standard learner such that it outperforms XU's deep learning method?}
 
-To answer this question, we run the workflow of \fig{workflow}, where DE is applied to 
-find the optimal parameters of SVM based on the training and tuning data. The optimal tunings are then applied on the SVM model and  the built learner is evaluated on testing data. Note that, in this study,
-since we mainly focus on {precision}, {recall} and {F1-score} measures where {F1-score} is the
-harmonic mean of {precision} and {recall}, we use {F1-score} as the tuning goal for DE.
-In other words, when tuning parameters,  DE expects to find a pair of candidate parameters that maximize
- F1-score. 
-%For CNN method, we simply adopt the XU's results in ~\cite{xu2016predicting} because(1)deep learning method is not as easy as implementing SVM method, where a little difference in the structure might lead to significant result;(2) we are evaluating the learners with the same measures and use the same training and testing data.
-
 
  \begin{figure}[!t]
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=0.49\textwidth,height=2.2in]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and XU's Baseline SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than XU's SVM in Terms of Different Measures; Otherwise, XU's SVM is better.}
+     \includegraphics[width=0.47\textwidth,height=2.2in]{pic/TunedSVM-SVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score delta between the tuned SVM and XU's baseline SVM in terms of precision, recall and F1-score. Positive values mean
+            the tuned SVM is better than XU's SVM in terms of different measures; Otherwise, XU's SVM is better.}
     \label{fig:TunedSVM-SVM}
 \end{figure}
 
  
- 
- 
+  
 \begin{table}[!htp]
 \centering
-\caption{Comparison of Tuned SVM with XU's CNN Method. The Best Scores are Marked in \textbf{Bold}. }
-\resizebox{0.48\textwidth}{!}{
+\caption{Comparison of the tuned SVM with XU's CNN method. The best scores are marked in \textbf{bold}. }
+\resizebox{0.47\textwidth}{!}{
 \begin{tabular} {@{}l l  c c  c c c@{}}
 \hline
    \multirow{2}{*}{Metrics} &  \multirow{2}{*}{Methods} &  \multirow{2}{*}{Duplicate} &  
@@ -1350,6 +1401,18 @@ In other words, when tuning parameters,  DE expects to find a pair of candidate 
  \end{tabular}}
 \label{tab:RQ2}
 \end{table}
+
+
+To answer this question, we run the workflow of \fig{workflow}, where DE is applied to 
+find the optimal parameters of SVM based on the training and tuning data. The optimal tunings are then applied on the SVM model and  the built learner is evaluated on testing data. Note that, in this study,
+since we mainly focus on {precision}, {recall} and {F1-score} measures where {F1-score} is the
+harmonic mean of {precision} and {recall}, we use {F1-score} as the tuning goal for DE.
+In other words, when tuning parameters,  DE expects to find a pair of candidate parameters that maximize
+ F1-score. 
+%For CNN method, we simply adopt the XU's results in ~\cite{xu2016predicting} because(1)deep learning method is not as easy as implementing SVM method, where a little difference in the structure might lead to significant result;(2) we are evaluating the learners with the same measures and use the same training and testing data.
+
+
+
 
 \tab{RQ2} presents the performance scores of  XU's baseline, XU's CNN method and Tuned SVM 
 for all metrics. The highest score for each relatedness class
@@ -1427,9 +1490,9 @@ the deep learning method, CNN, does not have any performance advantage over our 
   \begin{figure}[!t]
     \centering
 %    \includegraphics[width=0.48\textwidth,height=2.7in]{pic/workflow.pdf} % THIS IS FOR SINGLE COLUM
-     \includegraphics[width=0.49\textwidth,height=2.1in]{pic/TunedSVM-OurSVM.pdf} % THIS IS FOR SINGLE COLUM
-    \caption{Score Delta between Tuned SVM and Our Untuned SVM in Terms of Precision, Recall and F1-score. Positive Values Mean
-            Tuned SVM is Better than Our Untuned SVM in Terms of Different Measures; Otherwise,  Our  SVM is Better.}
+     \includegraphics[width=0.47\textwidth,height=2.1in]{pic/TunedSVM-OurSVM.pdf} % THIS IS FOR SINGLE COLUM
+    \caption{Score delta between tuned SVM and Our Untuned SVM in terms of precision, recall and F1-score. Positive values mean
+            the tuned SVM is better than our untuned SVM in terms of different measures; Otherwise,  our  SVM is better.}
     \label{fig:TunedSVM-OurSVM}
 \end{figure}
 
@@ -1449,8 +1512,8 @@ When comparing the runtime of two learning methods, it obviously should be condu
 
  \begin{table}[!h]
 \centering
-\caption{Comparison of Experimental Environment  }
-% \resizebox{0.48\textwidth}{!}{
+\caption{Comparison of experimental environment  }
+ \resizebox{0.48\textwidth}{!}{
 \begin{tabular} {@{}l  l l l @{}}
 \hline
 Methods&OS&CPU&RAM \\ \hline
@@ -1458,7 +1521,7 @@ Tuning SVM & MacOS 10.12 & Intel Core i5 2.7 GHz & 8 GB  \\
 CNN& Windows 7 &Intel Core i7 2.5 GHz & 16 GB \\
 \hline
 \end{tabular}
-% }
+ }
 \label{tab:env}
 \end{table}
 
@@ -1556,8 +1619,7 @@ it perform compared with deep learning method. We select
 XU's  Word Embedding + SVM baseline method as a case study. Since the original implementation of 
 Word Embedding + SVM (baseline 2 method in ~\cite{xu2016predicting}) is not 
 publicly available, we have to reimplement our version of Word Embedding + SVM as
-the baseline method in this study. As shown in RQ1, our implementation has
-quite similar results to XU's on the same data sets. Hence, we believe that our implementation reflect the original
+the baseline method in this study. As shown in RQ1, our implementation similar results to XU's on the same data sets. Hence, we believe that our implementation reflect the original
  baseline method in Xu's study~\cite{xu2016predicting}. 
  
 %  In RQ3, when comparing the runtime of tuning
@@ -1607,9 +1669,9 @@ As this paper was going to going to press we learned of a new deep learning meth
 creators, runs 20 times faster than standard deep learning~\cite{spring2016scalable}. 
 Note that in that paper, the authors say  their faster method does not produce better results-- 
 in fact, their method generated solutions that were a small fraction worse than ``classic'' deep learning. Hence, that paper does not invalidate our result since (a)~our DE-based
-method sometimes produced {\em better} results than classic deep learning and (b)~our DE runs 84 times faster (i.e. much faster runtimes than those reported in~\cite{spring2016scalable}).
+method sometimes produced {\em better} results than classic deep learning and (b)~our DE runs 84 times faster (i.e. much faster than those reported in~\cite{spring2016scalable}).
 
-That said, this new fast deep learner deserves our close attention since, using it, we conjecture that our DE tools
+That said, this new fast deep learning method deserves our close attention since, using it, we conjecture that our DE tools
 could solve an open problem in the deep learning community; i.e. how to find the best configurations inside a deep learner faster.
 
 % Our findings have important implications for the software engineering community.
@@ -1649,7 +1711,7 @@ The work is partially funded by an NSF award \#1302169.
 
 \bibliographystyle{ACM-Reference-Format}
 \balance
-\bibliography{0.main} 
+\bibliography{easierthanDL} 
 
 
 \end{document}
